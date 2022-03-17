@@ -12,6 +12,6 @@ def get_asset_description( issueReq: IssuingRequest, liquid_address, planetmint_
         'ipld': ipld,
         #'asset_proof': "https://lab.r3c.network/.well-knwon/liquid-asset-proof-"+ str(asset_id)
     }
-    return {'data': { 'Issued Token' : nft_asset } }
+    return nft_asset
 
     

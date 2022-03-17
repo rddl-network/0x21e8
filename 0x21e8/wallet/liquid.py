@@ -23,13 +23,11 @@ Private key: L16DiAf7jTcNuDa8cuj5HagRAZ8ECc2xbda9y6o2NLERiVtuft7L
 import os
 import wallycore as wally
 
-def get_liquid_keys():
+def get_liquid_keys( mnemonic ) :
 
     address_prefix = wally.WALLY_CA_PREFIX_LIQUID
     network = wally.WALLY_NETWORK_LIQUID
     wif_prefix = wally.WALLY_ADDRESS_VERSION_WIF_MAINNET
-
-    mnemonic = "supreme layer police brand month october rather rack proud strike receive joy limit random hill inside brand depend giant success quarter brain butter mechanic"
 
     # start-create_p2pkh_address
     _, seed = wally.bip39_mnemonic_to_seed512(mnemonic, '')
@@ -52,10 +50,6 @@ def get_liquid_keys():
     print( F"derived priv key (hexlified) {binascii.hexlify(wally.bip32_key_get_priv_key(wallet_derived_key))}")
     print(binascii.hexlify(wally.bip32_key_get_priv_key(wallet_derived_key)).decode())
     
-
-
-
-
     # start-derive_blinding_key
     master_blinding_key = wally.asset_blinding_key_from_seed(seed)
     script_pubkey = wally.address_to_scriptpubkey(
