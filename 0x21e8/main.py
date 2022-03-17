@@ -1,33 +1,25 @@
 from typing import Optional
 
 from fastapi import FastAPI
-from pydantic import BaseModel
+from model import IssuingRequest, TokenRelatedAccounts, accounts_to_json
+from notarize import get_asset_description
 
-from planetmint_driver import Planetmint
-from cryptoconditions.crypto import Ed25519SigningKey, Ed25519VerifyingKey
-#from planetmint_driver.crypto import generate_keypair, ed25519_generate_key_pair
-
-from nacl.signing import SigningKey, VerifyKey
-from nacl.encoding import HexEncoder
 import binascii
+from planetmint_driver import Planetmint
+from ipld import marshal, multihash
+from wallet.liquid import get_liquid_keys, register_asset_id, register_asset_id_on_liquid
+from wallet.issue2liquid import issue_tokens
+from wallet.planetmint import get_planetmint_keys
 
-class IssuingRequest(BaseModel):
-    name: str
-    ticker: str
-    amount: int
-    precision: int
 
-class TokenRelatedAccounts(BaseModel):
-    lq_issuer_address: str
-    pl_issuer_address: str
-    #lq_initial_beneficemy_vk.verify(b'hello world', sig)ry_addresses: []
-    
+
+#plntmnt = Planetmint('http://lab.r3c.network:9984')    
+plntmnt = Planetmint('https://test.ipdb.io')    
 
 app = FastAPI()
 
 @app.get("/")
 async def root():
-    
     plntmnt = Planetmint('http://lab.r3c.network:9984')
     sk_raw=Ed25519SigningKey.generate_with_seed(binascii.unhexlify(b'2b4be7f19ee27bbf30c667b642d5f4aa69fd169872f8fc3059c08ebae2eb19e7'))
     my_vk = sk_raw.get_verifying_key().encode(encoding='base58')
@@ -38,13 +30,52 @@ async def root():
         asset={'data': {'message': 'Blockchain all the things!'}})
     signed_tx = plntmnt.transactions.fulfill( tx, private_keys=sk )
     ret = plntmnt.transactions.send_commit(signed_tx)
+
+    return {"message"}
     
-    return {"message": ret }
 
+@app.get("/keypairs")
+async def getkeypairs():    
+    accounts = TokenRelatedAccounts
+    accounts.plpriv , accounts.plpub = get_planetmint_keys()
+    accounts.plpriv = accounts.plpriv.decode()
+    accounts.plpub = accounts.plpub.decode()
+    accounts.lqpriv, accounts.lqpub = get_liquid_keys()
+    return accounts_to_json( accounts )    
 
+from cryptoconditions.crypto import Ed25519SigningKey, Ed25519VerifyingKey
 @app.post("/issuetokens")
 async def issuetokens(issueTokens: IssuingRequest):
-    relAccounts = TokenRelatedAccounts
-    relAccounts.lq_issuer_address = "testi1"
-    relAccounts.pl_issuer_address = "testi2"
-    return {"message": issueTokens, "accounts": [ relAccounts.lq_issuer_address, relAccounts.pl_issuer_address]}
+    # get wallet addresses (issuer, private & pub for )
+    pl_sk, pl_vk = get_planetmint_keys()
+    lq_sk, lq_vk = get_liquid_keys()
+    print ( pl_vk)
+    asset_insurance = { "insurance_contract": "aösjfaölkdjfaoijdfäpowkeßf0iküpfokasüdfpwokfüisajfüoasjfopiajdfüoja" } # random string representing a asset insuring contract
+    marshalled = marshal( asset_insurance )
+    hashed_marshalled = multihash(marshalled)
+
+    sk_raw=Ed25519SigningKey.generate_with_seed(binascii.unhexlify(b'2b4be7f19ee27bbf30c667b642d5f4aa69fd169872f8fc3059c08ebae2eb19e7'))
+    my_vk = sk_raw.get_verifying_key().encode(encoding='base58')
+    sk = sk_raw.encode(encoding='base58')
+        
+    print( my_vk)
+    print(sk)
+    # create the token NFT - e.g. the token notarization on planetmint
+    nft_asset=get_asset_description( issueTokens, lq_vk, pl_vk, hashed_marshalled)
+    tx = plntmnt.transactions.prepare(
+        operation='CREATE',
+        signers=my_vk,
+        asset= { 'data': {'message': 'teste' } } )        #nft_asset)
+    signed_tx = plntmnt.transactions.fulfill( tx, private_keys=sk )
+    token_nft = plntmnt.transactions.send_commit(signed_tx)
+    
+    # issue tokens
+    asset_id = issue_tokens( issueTokens, lq_vk, token_nft.id, hashed_marshalled)
+    print( "created asset : "+ asset_id)
+    # register assets on local node
+    register_asset_id( asset_id )
+    
+    #register assests on liquid
+    #register_asset_id_on_liquid( asset_id )
+        
+    return { "token NFT": token_nft.id, "signed tx" : signed_tx, "ipdl": hashed_marshalled, "asset_id": asset_id }
