@@ -6,6 +6,13 @@ name = "pypi"
 [packages]
 pydantic = "*"
 planetmint-driver = "*"
+bitcoin-utils = "*"
+wallycore = "*"
+paramiko = "*"
+bitcoinrpc = "*"
+Pipfile = "*"
+uvicorn = "*"
+fastapi = "*"
 
 [dev-packages]
 
