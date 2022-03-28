@@ -12,7 +12,6 @@ from wallet.issue2liquid import issue_tokens
 from wallet.planetmint import get_planetmint_keys
 
 
-
 #plntmnt = Planetmint('http://lab.r3c.network:9984')    
 plntmnt = Planetmint('https://test.ipdb.io')    
 MNEMONIC_PHRASE = "supreme layer police brand month october rather rack proud strike receive joy limit random hill inside brand depend giant success quarter brain butter mechanic"
@@ -49,6 +48,8 @@ async def issuetokens(issueTokens: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
     pl_sk, pl_vk = get_planetmint_keys( MNEMONIC_PHRASE )
     lq_sk, lq_vk = get_liquid_keys( MNEMONIC_PHRASE )
+    
+    
 
     asset_insurance = { "insurance_contract": "aösjfaölkdjfaoijdfäpowkeßf0iküpfokasüdfpwokfüisajfüoasjfopiajdfüoja" } # random string representing a asset insuring contract
 #    marshalled = marshal( asset_insurance )

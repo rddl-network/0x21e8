@@ -4,6 +4,9 @@
 ## Roadmap
 
 1.  wallet with mnemonic phrase (initially host based)
+    1.  inlcude hw wallet 
+    2.  lua code
+    3.  c-lib to do so
 2.  deriving issuer wallet from mnemonic phrase for
     1.  liquid
     2.  planetmint
@@ -20,3 +23,10 @@
 
 Ile UI
 commit zenroom fixes on planetmint
+
+## Prepare the environment
+```bash
+sudo apt install pipenv
+```
+
+
