@@ -5,15 +5,15 @@ name = "pypi"
 
 [packages]
 pydantic = "*"
-planetmint-driver = "*"
 bitcoin-utils = "*"
 wallycore = "*"
 paramiko = "*"
 bitcoinrpc = "*"
-Pipfile = "*"
+pipfile = "*"
 uvicorn = "*"
 fastapi = "*"
 mnemonic = "*"
+planetmint-driver = "*"
 
 [dev-packages]
 
