@@ -14,6 +14,7 @@ uvicorn = "*"
 fastapi = "*"
 mnemonic = "*"
 planetmint-driver = "*"
+cython = "*"
 
 [dev-packages]
 

@@ -10,7 +10,7 @@ from planetmint_driver.offchain import fulfill_with_signing_delegation
 #from ipld import marshal, multihash
 from wallet.liquid import get_liquid_keys, register_asset_id, register_asset_id_on_liquid
 from wallet.issue2liquid import issue_tokens
-from wallet.planetmint import get_planetmint_keys
+from wallet.planetmint import get_planetmint_keys, get_planetmint_keys_tc
 
 app = FastAPI()
 
@@ -26,24 +26,25 @@ async def root():
 @app.get("/keypairs")
 async def getkeypairs():    
     accounts = TokenRelatedAccounts
-    accounts.plpriv , accounts.plpub = get_planetmint_keys()
+    accounts.plpriv , accounts.plpub = get_planetmint_keys( MNEMONIC_PHRASE )
     accounts.plpriv = accounts.plpriv.decode()
     accounts.plpub = accounts.plpub.decode()
-    accounts.lqpriv, accounts.lqpub = get_liquid_keys()
+    accounts.lqpriv, accounts.lqpub = get_liquid_keys( MNEMONIC_PHRASE )
     return accounts_to_json( accounts )    
 
 @app.post("/issuetokens")
 async def issuetokens(issueTokens: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
-    pl_sk, pl_vk = get_planetmint_keys( MNEMONIC_PHRASE )
+    pl_sk, pl_vk = get_planetmint_keys_tc( MNEMONIC_PHRASE )
     lq_sk, lq_vk = get_liquid_keys( MNEMONIC_PHRASE )
 
     def pl_signing_function(tx, message):
         import base58
         from nacl.signing import SigningKey
-        
-        sk, vk = get_planetmint_keys( MNEMONIC_PHRASE )
-        ncal_sk = SigningKey( base58.b58decode(sk.encode(encoding='base58')) )
+
+        sk, vk = get_planetmint_keys_tc( MNEMONIC_PHRASE )
+        #print(sk.encode(encoding='base58'))
+        ncal_sk = SigningKey( base58.b58decode(sk) )
         res = ncal_sk.sign(message).signature
         return res
 

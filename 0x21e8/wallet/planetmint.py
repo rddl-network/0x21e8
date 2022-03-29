@@ -2,7 +2,38 @@ from cryptoconditions.crypto import Ed25519SigningKey
 from mnemonic import Mnemonic
 from wallet.keymanagement import seed_to_extended_key
 import binascii
+import TrezorCrypto
 
+
+
+
+
+def get_planetmint_keys_tc( mnemonic_phrase ):
+    PLANET_VERSION_PUBLIC = 0x02d41400
+    PLANET_VERSION_PRIVATE = 0x02d40fc0
+    MNEMONIC_PHRASE = 'supreme layer police brand month october rather rack proud strike receive joy limit random hill inside brand depend giant success quarter brain butter mechanic'
+    
+    if not mnemonic_phrase : mnemonic_phrase = MNEMONIC_PHRASE
+    seed = Mnemonic.to_seed( mnemonic_phrase, '0x21e8' )
+    print (f' seed { seed }')
+    print (f' seed { binascii.hexlify( seed ) }')
+
+    node = TrezorCrypto.HDNode( )
+    node.from_seed(seed, 16)
+    node = node.private_ckd(0x80000000)
+    sk_raw = node.private_key_raw()
+    print( f"raw private key : { binascii.hexlify(sk_raw)}")
+    b = TrezorCrypto.b58()
+    pl_sk = b.b58_encode_check(sk_raw, 20, 0)
+    print( f"Planetmint address private key: { pl_sk }")
+    print( f"Planetmint chaincode: { binascii.hexlify(node.chain_code()) }")
+    print( f"planetmint address key: { node.get_address( PLANET_VERSION_PUBLIC )}")
+    print( f"planetmint raw public key: { binascii.hexlify(node.fill_public_key())}")
+    fingerprint = 0
+    
+    print(f"Planetmint private key : { node.xprv( fingerprint, PLANET_VERSION_PRIVATE)}")
+    print(f"Planetmint public key : { node.xpub( fingerprint, PLANET_VERSION_PUBLIC) }")
+    return pl_sk, node.get_address( PLANET_VERSION_PUBLIC )
 
 
 def get_planetmint_keys( mnemonic_phrase ):
