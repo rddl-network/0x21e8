@@ -27,9 +27,8 @@ commit zenroom fixes on planetmint
 ## Prepare the environment
 ```bash
 sudo apt install pipenv
-pipenv shell
-pipenv sync
-uvicorn main:app 
+pipenv install -r requirments.txt
+pipenv install git+ssh://git@github.com/riddleandcode/wallet2.git@trezor_crypto_cython#subdirectory=crypto&egg=trezorcrypto_1.0.0 
 ```
 
 
