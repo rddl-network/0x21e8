@@ -25,10 +25,6 @@ import wallycore as wally
 
 def get_liquid_keys( mnemonic ) :
 
-    address_prefix = wally.WALLY_CA_PREFIX_LIQUID
-    network = wally.WALLY_NETWORK_LIQUID
-    wif_prefix = wally.WALLY_ADDRESS_VERSION_WIF_MAINNET
-
     # start-create_p2pkh_address
     _, seed = wally.bip39_mnemonic_to_seed512(mnemonic, '')
     wallet_master_key = wally.bip32_key_from_seed(

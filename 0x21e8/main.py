@@ -1,9 +1,5 @@
-from typing import Optional
-
-from cryptoconditions import Ed25519Sha256
-from cryptoconditions.crypto import Ed25519SigningKey
 from fastapi import FastAPI
-from nacl.encoding import HexEncoder
+
 
 from model import IssuingRequest, TokenRelatedAccounts, accounts_to_json
 from notarize import get_asset_description
@@ -11,7 +7,7 @@ from notarize import get_asset_description
 import binascii
 from planetmint_driver import Planetmint
 from planetmint_driver.offchain import fulfill_with_signing_delegation
-# from ipld import marshal, multihash
+from ipld import marshal, multihash
 from wallet.liquid import get_liquid_keys, register_asset_id, register_asset_id_on_liquid
 from wallet.issue2liquid import issue_tokens
 from wallet.planetmint import get_planetmint_keys, get_planetmint_keys_tc, get_seed
@@ -63,7 +59,7 @@ async def run():
 
 
 @app.post("/issuetokens")
-async def issuetokens(issueTokens: IssuingRequest):
+async def issue_planetmint_and_liquid_tokens(issuing_request_input: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
     pl_sk, pl_vk = get_planetmint_keys_tc(MNEMONIC_PHRASE)
     lq_sk, lq_vk = get_liquid_keys(MNEMONIC_PHRASE)
@@ -85,7 +81,7 @@ async def issuetokens(issueTokens: IssuingRequest):
     hashed_marshalled = "test ipld"
 
     # create the token NFT - e.g. the token notarization on planetmint
-    nft_asset = get_asset_description(issueTokens, lq_vk, pl_vk.decode(), hashed_marshalled)
+    nft_asset = get_asset_description(issuing_request_input, lq_vk, pl_vk.decode(), hashed_marshalled)
     print(nft_asset)
     tx = plntmnt.transactions.prepare(
         operation='CREATE',
@@ -97,12 +93,14 @@ async def issuetokens(issueTokens: IssuingRequest):
     token_nft = plntmnt.transactions.send_commit(signed_tx)
 
     # issue tokens
-    asset_id = issue_tokens(issueTokens, lq_vk, token_nft['id'], hashed_marshalled)
+    asset_id = issue_tokens(issuing_request_input, lq_vk, token_nft['id'], hashed_marshalled)
 
     # register assets on local node
     register_asset_id(asset_id)
 
     # register assests on liquid
+    #
+    #
     # register_asset_id_on_liquid( asset_id )
 
     return {"token NFT": token_nft['id'], "signed tx": signed_tx, "ipdl": hashed_marshalled, "asset_id": asset_id}
