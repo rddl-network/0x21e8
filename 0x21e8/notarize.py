@@ -1,5 +1,4 @@
 from model import IssuingRequest
-import json
 
 def get_asset_description( issueReq: IssuingRequest, liquid_address, planetmint_address, ipld ):
     nft_asset = {

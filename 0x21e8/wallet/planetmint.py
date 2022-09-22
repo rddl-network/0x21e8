@@ -1,33 +1,18 @@
-from mnemonic import Mnemonic
-import TrezorCrypto
-
-HARDENED = 0x80000000
-PLANET_VERSION_PUBLIC = 0x02d41400
-PLANET_VERSION_PRIVATE = 0x02d40fc0
+from . import base_wallet
+import base58
+from planetmint_driver import Planetmint
+from planetmint_driver.offchain import fulfill_with_signing_delegation
 
 
-def get_seed() -> bytes:
-    mnemonic_obj = Mnemonic("english")
-    phrase = mnemonic_obj.generate(256)
-    print("New mnemonic phrase: ", phrase)
-    seed_bytes = mnemonic_obj.to_seed(phrase, '0x21e8')
-    print(f'Seed {seed_bytes.hex()}')
-    return seed_bytes
+def attest_planet_mint_nft(nft_description: dict, wallet: base_wallet.BaseWallet):
+    plntmnt = Planetmint('https://test.ipdb.io')
+    pubkey = wallet.get_planetmint_pubkey()
+    print(pubkey)
+    tx = plntmnt.transactions.prepare(
+        operation='CREATE',
+        signers=[base58.b58encode(pubkey).decode()],
+        asset={'data': {'Issued Token': nft_description}})
 
-
-def get_planetmint_keys_tc(seed: bytes):
-
-    node = TrezorCrypto.from_seed(seed, TrezorCrypto.ED25519_NAME)
-    # [Chain m/0'] check tests/bip32_tests.py for more derivation path examples
-    node.derive(HARDENED | 0)
-    print(f"raw private key : {(node.private_key().hex())}")
-    print(f"Planetmint chaincode: {node.chain_code().hex()}")
-    print(f"planetmint address public: {node.address(PLANET_VERSION_PUBLIC)}")
-    print(f"planetmint raw public key: {node.public_key().hex()}")
-
-    print(f"Planetmint private key : {node.serialize_private(PLANET_VERSION_PRIVATE)}")
-    print(f"Planetmint public key : {node.serialize_public(PLANET_VERSION_PUBLIC)}")
-    signing_key = node.private_key()
-    public_key = node.public_key()
-    # don't forget stripping the first byte of the public key (01 depicts edwards)
-    return signing_key, public_key[1:]
+    signed_tx = fulfill_with_signing_delegation(tx, wallet.planetmint_sign_digest)
+    token_nft = plntmnt.transactions.send_commit(signed_tx)
+    return token_nft

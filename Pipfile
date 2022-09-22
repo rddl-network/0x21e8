@@ -52,6 +52,9 @@ urllib3 = "==1.26.9"
 uvicorn = "==0.17.6"
 wallycore = "==0.8.4"
 zenroom = "==2.0.0"
+planetmint-ipld = "*"
+pip = "*"
+install = "*"
 
 [dev-packages]
 

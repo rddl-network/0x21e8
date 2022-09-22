@@ -6,6 +6,9 @@ class IssuingRequest(BaseModel):
     ticker: str
     amount: int
     precision: int
+    public_url: str
+    reissue: bool
+    ipld_hash_hex: str
 
 
 class TokenRelatedAccounts(BaseModel):
