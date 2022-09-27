@@ -1,39 +1,11 @@
 # 0x21e8
 
-
-## Roadmap
-
-1.  wallet with mnemonic phrase (initially host based)
-    1.  inlcude hw wallet 
-    2.  lua code                - done (using cython now)
-    3.  c-lib to do so          - done
-2.  deriving issuer wallet from mnemonic phrase for
-    1.  liquid                  - done
-    2.  planetmint              - done
-3.  derive benefiery wallets for
-    1.  liquid
-    2.  planetmint
-4.  create simple UI with QT 
-    1.  present link to assets on
-        1.  planetmint
-        2.  liquid
-5.  connect wallet
-6.  web ui for external usage
-
-
-Ile UI
-commit zenroom fixes on planetmint
-
 ## Prepare the environment
 ```bash
 sudo apt install pipenv
+pipenv install
 pipenv shell
-pipenv sync
-pip install planetmint-driver==0.11.1
-pip install TrezorCrypto-0.0.1-cp39-cp39-linux_x86_64.whl
-pip install planetmint-ipld
 ```
-
 
 ## running the development service
 ```bash
