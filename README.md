@@ -27,8 +27,11 @@ commit zenroom fixes on planetmint
 ## Prepare the environment
 ```bash
 sudo apt install pipenv
-pipenv install -r requirments.txt
-pipenv install git+ssh://git@github.com/riddleandcode/wallet2.git@trezor_crypto_cython#subdirectory=crypto&egg=trezorcrypto_1.0.0 
+pipenv shell
+pipenv sync
+pip install planetmint-driver==0.11.1
+pip install TrezorCrypto-0.0.1-cp39-cp39-linux_x86_64.whl
+pip install planetmint-ipld
 ```
 
 
