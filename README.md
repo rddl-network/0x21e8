@@ -2,7 +2,16 @@
 
 ## Prepare the environment
 ```bash
-sudo apt install pipenv
+### For a RPI, ignore the errors with zenroom
+bash install.sh
+pipenv shell
+
+### For a x86 machine with poetry
+curl -sSL https://install.python-poetry.org | python3 -   # instals poetry
+poetry install
+poetry shell
+
+### For a x86 machine with pipenv
 pipenv install
 pipenv shell
 ```
