@@ -4,18 +4,16 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+TrezorCryptoTestRc = "*"
 planetmint-driver = "==0.11.1"
 planetmint-ipld = "*"
 wallycore = "*"
 mnemonic = "*"
+fastapi = "*"
+uvicorn = "*"
+
 
 [dev-packages]
 
 [requires]
 python_version = "3.9"
-
-[packages.c9f9e0b]
-path = "./TrezorCrypto-0.0.1-cp39-cp39-linux_x86_64.whl"
-
-[packages.fastapi]
-extras = [ "all",]
