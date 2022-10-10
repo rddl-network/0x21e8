@@ -1,25 +1,18 @@
-from cryptoconditions.crypto import Ed25519SigningKey
-from mnemonic import Mnemonic
-from wallet.keymanagement import seed_to_extended_key
-import binascii
+from . import base_wallet
+import base58
+from planetmint_driver import Planetmint
+from planetmint_driver.offchain import fulfill_with_signing_delegation
 
 
+def attest_planet_mint_nft(nft_description: dict, wallet: base_wallet.BaseWallet):
+    plntmnt = Planetmint('https://test.ipdb.io')
+    pubkey = wallet.get_planetmint_pubkey()
+    print(pubkey)
+    tx = plntmnt.transactions.prepare(
+        operation='CREATE',
+        signers=[base58.b58encode(pubkey).decode()],
+        asset={'data': {'Issued Token': nft_description}})
 
-def get_planetmint_keys( mnemonic_phrase ):
-    seed = Mnemonic.to_seed( mnemonic_phrase, '0x21e8' )
-    ext_seed = seed_to_extended_key(seed)
-    sk_raw = Ed25519SigningKey.generate_with_seed(ext_seed.privkey)
-    vk = sk_raw.get_verifying_key().encode(encoding='base58')
-    sk = sk_raw.encode(encoding='base58')
-    return sk, vk
-    
-    
-#Planetmint raw private key: 8249232f45b8231e6765a9c2c180aac69c54a261fd618c97f84e464af871f -> done!
-#Planetmint address private key: k4DYEbRbYBbehV2Qnq9vRD75PCWTkUTR
-#Planetmint chaincode: 7fb5fb5fd8d7da70f62e33a3d592a4885bff857e3b23379a22c98bb8b9e2a0
-#Planetmint address key: 2gs2o1dKRSFnPztDGPHHkWqwqixUCqjdT1vrZt
-#Planetmint raw public key: 114715fbcea4e14ed6d24296ea6e11333372b8f12cb5bffdd21f3a327b2b24e
-#Planetmint private key: bprv35Rc2dqCQhrCE9zjscZvJFeBfD93jbJLwDqgyPPwUHWC83neHVh4wfxceHyFu2WLHTdGhDpsKF9JXbRoS2TFYjcsZsN9pwRo9a3Bsk6A5CK
-#Planetmint public key: bpubq8d4saQC76AjUXo9hNtSu1sCKD4CgGpXYvpNgZbgCEdekyfXLA3MHe5QSgeUU5WzYa5pTHWv2GMZzDpWF9FAM7ZBBUGuSpD4R9dFZMcFXvH
-#MNEMONIC_PHRASE = 'supreme layer police brand month october rather rack proud strike receive joy limit random hill inside brand depend giant success quarter brain butter mechanic'
-#get_planetmint_keys( MNEMONIC_PHRASE)
+    signed_tx = fulfill_with_signing_delegation(tx, wallet.planetmint_sign_digest)
+    token_nft = plntmnt.transactions.send_commit(signed_tx)
+    return token_nft

@@ -5,13 +5,18 @@ class IssuingRequest(BaseModel):
     ticker: str
     amount: int
     precision: int
+    public_url: str
+    reissue: bool
+    ipld_hash_hex: str
+
 
 class TokenRelatedAccounts(BaseModel):
     lqpriv: str
     lqpub: str
     plpriv: str
     plpub: str
-    
+
+
 def accounts_to_json(accounts: TokenRelatedAccounts):
-    return {"Liquid" : { "private" : accounts.lqpriv, "public" : accounts.lqpub}, 
-                "Planetmint" : { "private": accounts.plpriv, "public": accounts.plpub}}
+    return {"Liquid": {"private": accounts.lqpriv, "public": accounts.lqpub},
+            "Planetmint": {"private": accounts.plpriv, "public": accounts.plpub}}

@@ -4,16 +4,14 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pydantic = "*"
-bitcoin-utils = "*"
+TrezorCryptoTestRc = "*"
+planetmint-driver = "==0.11.1"
+planetmint-ipld = "*"
 wallycore = "*"
-paramiko = "*"
-bitcoinrpc = "*"
-pipfile = "*"
-uvicorn = "*"
-fastapi = "*"
 mnemonic = "*"
-planetmint-driver = "*"
+fastapi = "*"
+uvicorn = "*"
+bitcoin-utils = "*"
 
 [dev-packages]
 

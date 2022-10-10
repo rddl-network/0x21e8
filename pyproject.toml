@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "0x21e8"
+version = "0.1.0"
+description = "x"
+authors = ["Firat Berk Cakar <firat@riddleandcode.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+TrezorCryptoTestRc = "*" 
+planetmint-driver = "^0.11.1"
+planetmint-ipld = "^0.0.3"
+wallycore = "0.8.2"
+mnemonic = "^0.20"
+fastapi = "^0.85.0"
+uvicorn = "^0.18.3"
+bitcoin-utils = "^0.5.6"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

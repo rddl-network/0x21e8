@@ -8,38 +8,30 @@ import six
 import sys
 import os
 
-#from model import IssuingRequest
-
-#rpc_port = 18886
+# rpc_port = 18886
 rpc_port = 8000
 rpc_user = 'user1'
 rpc_password = 'password1'
 DOMAIN = "lab.r3c.network"
 
-#NAME = "Liquid SPR"
-#TICKER = "L-SPR2"
-#ASSET_AMOUNT = 21000000
-#PRECISION = 0
-#FEERATE = 0.00000300
-
 TOKEN_AMOUNT = 1
 VERSION = 0
 FEERATE = 0.03000000
 
-def issue_tokens( issueTokens: IssuingRequest, issuer_address, nft_token, ipdl ):
 
-    NAME= issueTokens.name
-    TICKER=issueTokens.ticker
-    ASSET_AMOUNT=issueTokens.amount
-    PRECISION=issueTokens.precision
-    
+def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
+    NAME = issueTokens.name
+    TICKER = issueTokens.ticker
+    ASSET_AMOUNT = issueTokens.amount
+    PRECISION = issueTokens.precision
+
     VALIDATEADDR = None
     PUBKEY = None
     ASSET_ADDR = None
     TOKEN_ADDR = None
-    rpc_connection= None
+    rpc_connection = None
     try:
-        rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s"%(rpc_user, rpc_password, DOMAIN,  rpc_port))
+        rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s" % (rpc_user, rpc_password, DOMAIN, rpc_port))
         NEWADDR = rpc_connection.getnewaddress("riddlemint", "legacy")
         VALIDATEADDR = rpc_connection.getaddressinfo(NEWADDR)
         PUBKEY = VALIDATEADDR["pubkey"]
@@ -57,35 +49,32 @@ def issue_tokens( issueTokens: IssuingRequest, issuer_address, nft_token, ipdl )
     print(ASSET_ADDR)
     print(TOKEN_ADDR)
 
-
-    #f"\"nft\":{{\"token\":\"{nft_token}\", \"ipld\":\"{ipdl}\"}}"
     CONTRACT = f"{{\"entity\":{{\"domain\":\"{DOMAIN}\"}}, \"issuer_pubkey\":\"{PUBKEY}\", \"nft\":{{\"token\":\"{nft_token}\", \"ipld\":\"{ipdl}\"}}, \"name\":\"{NAME}\", \"precision\":{PRECISION}, \"ticker\":\"{TICKER}\", \"version\":{VERSION}}}"
-    rpc_connection.settxfee( FEERATE )
+    rpc_connection.settxfee(FEERATE)
     print(CONTRACT)
-    CONTRACT_SORTED=json.dumps(json.loads(CONTRACT), sort_keys=True, separators=(",",":"))
-    CONTRACT_HASH=hashlib.sha256(six.ensure_binary(CONTRACT_SORTED)).hexdigest()
+    CONTRACT_SORTED = json.dumps(json.loads(CONTRACT), sort_keys=True, separators=(",", ":"))
+    CONTRACT_HASH = hashlib.sha256(six.ensure_binary(CONTRACT_SORTED)).hexdigest()
     print(CONTRACT_HASH)
-    CONTRACT_HASH_REV="".join(reversed([CONTRACT_HASH[i:i+2] for i in range(0, len(CONTRACT_HASH), 2)]))
+    CONTRACT_HASH_REV = "".join(reversed([CONTRACT_HASH[i:i + 2] for i in range(0, len(CONTRACT_HASH), 2)]))
     print(CONTRACT_HASH_REV)
 
-
-    RAWTX = rpc_connection.createrawtransaction([], [{"data":"00"}])
+    RAWTX = rpc_connection.createrawtransaction([], [{"data": "00"}])
 
     print(RAWTX)
 
     # get funded raw transaction
-    FRT = rpc_connection.fundrawtransaction(RAWTX, {"feeRate":FEERATE})
+    FRT = rpc_connection.fundrawtransaction(RAWTX, {"feeRate": FEERATE})
     print(FRT)
 
     HEXFRT = FRT["hex"]
     print(HEXFRT)
 
-    RIA = rpc_connection.rawissueasset(HEXFRT, [{"asset_amount":ASSET_AMOUNT,
-                                                "asset_address":ASSET_ADDR,
-                                                "token_amount":TOKEN_AMOUNT,
-                                                "token_address":TOKEN_ADDR,
-                                                "blind":False,
-                                                "contract_hash":CONTRACT_HASH_REV,}])
+    RIA = rpc_connection.rawissueasset(HEXFRT, [{"asset_amount": ASSET_AMOUNT,
+                                                 "asset_address": ASSET_ADDR,
+                                                 "token_amount": TOKEN_AMOUNT,
+                                                 "token_address": TOKEN_ADDR,
+                                                 "blind": False,
+                                                 "contract_hash": CONTRACT_HASH_REV, }])
     print(RIA)
 
     HEXRIA = RIA[0]["hex"]
