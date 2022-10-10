@@ -11,7 +11,7 @@ wallycore = "*"
 mnemonic = "*"
 fastapi = "*"
 uvicorn = "*"
-
+bitcoin-utils = "*"
 
 [dev-packages]
 

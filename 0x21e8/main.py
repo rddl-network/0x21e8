@@ -1,11 +1,11 @@
-from model import IssuingRequest, TokenRelatedAccounts, accounts_to_json
+from model import IssuingRequest
 from notarize import get_asset_description
 from ipld import marshal, multihash
 from wallet.planetmint import attest_planet_mint_nft
 from wallet.sw_wallet import SoftwareWallet
 from fastapi import FastAPI, HTTPException
 from wallet.utils import create_and_save_seed, save_seed_from_mnemonic
-
+from liquid import issue_tokens
 app = FastAPI()
 
 
@@ -24,7 +24,8 @@ async def issue_planetmint_and_liquid_tokens(issuing_request_input: IssuingReque
     token_nft = attest_planet_mint_nft(nft_asset, wallet)
 
     # issue tokens
-    # asset_id = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft['id'], hashed_marshalled)
+    asset_id = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft['id'], issuing_request_input.ipld_hash_hex)
+    print(asset_id)
     # register assets on local node
     # register_asset_id(asset_id)
     # register_asset_id_on_liquid( asset_id )
