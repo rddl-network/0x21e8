@@ -7,7 +7,7 @@ class IssuingRequest(BaseModel):
     precision: int
     public_url: str
     reissue: bool
-    ipld_hash_hex: str
+    cid: str
 
 
 class TokenRelatedAccounts(BaseModel):
