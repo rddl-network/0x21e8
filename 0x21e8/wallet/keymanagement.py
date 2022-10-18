@@ -17,25 +17,24 @@ from nacl.signing import SigningKey
 
 HARDENED_INDEX = 0x80000000
 
-ExtendedKey = namedtuple('ExtendedKey', ('privkey', 'chaincode'))
+ExtendedKey = namedtuple("ExtendedKey", ("privkey", "chaincode"))
 
 
 SUPPORTED_LANGUAGES = [
-    'cinese-simplified',
-    'chinese-traditional',
-    'english',
-    'french',
-    'italian',
-    'japanese',
-    'korean',
-    'spanish',
+    "cinese-simplified",
+    "chinese-traditional",
+    "english",
+    "french",
+    "italian",
+    "japanese",
+    "korean",
+    "spanish",
 ]
 
 
-def make_mnemonic_phrase(strength=256, language='english', with_entropy=None):
+def make_mnemonic_phrase(strength=256, language="english", with_entropy=None):
     if language not in SUPPORTED_LANGUAGES:
-        raise ValueError('{} not found in supported languages: {}'
-                         .format(language, SUPPORTED_LANGUAGES))
+        raise ValueError("{} not found in supported languages: {}".format(language, SUPPORTED_LANGUAGES))
     mnemonic_obj = Mnemonic(language)
     if with_entropy:
         # TODO check that strength corresponds to entropy length
@@ -58,7 +57,7 @@ def seed_to_extended_key(seed):
 def derive_key(key: ExtendedKey, tree_index=()):
     privkey, chaincode = key
     for idx in tree_index:
-        data = struct.pack('x') + privkey + struct.pack('>I', idx)
+        data = struct.pack("x") + privkey + struct.pack(">I", idx)
         i = hmac.new(chaincode, digestmod=hashlib.sha512)
         i.update(data)
         digest = i.digest()
@@ -68,12 +67,14 @@ def derive_key(key: ExtendedKey, tree_index=()):
 
 
 def path_to_indexes(path):
-    assert path.startswith('m')
+    assert path.startswith("m")
+
     def index_to_int(i):
-        if i[-1] in '\'Hh':
+        if i[-1] in "'Hh":
             return int(i[:-1]) + HARDENED_INDEX
         return int(i)
-    return tuple(index_to_int(i) for i in path.split('/')[1:])
+
+    return tuple(index_to_int(i) for i in path.split("/")[1:])
 
 
 def derive_from_path(key, path):
@@ -82,19 +83,14 @@ def derive_from_path(key, path):
 
 def privkey_to_pubkey(privkey):
     # PyNaCl uses Ed25519 for digital signatures
-    return (struct.pack('x')
-            + SigningKey(privkey).verify_key.encode())
+    return struct.pack("x") + SigningKey(privkey).verify_key.encode()
 
 
 def symkey_encrypt(msg, password):
     salt = utils.random(SALTBYTES)
-    encrypted = secret.SecretBox(
-        kdf(secret.SecretBox.KEY_SIZE, password, salt)
-    ).encrypt(msg)
+    encrypted = secret.SecretBox(kdf(secret.SecretBox.KEY_SIZE, password, salt)).encrypt(msg)
     return encrypted, salt
 
 
 def symkey_decrypt(key, password, salt):
-    return secret.SecretBox(
-        kdf(secret.SecretBox.KEY_SIZE, password, salt)
-    ).decrypt(key)
+    return secret.SecretBox(kdf(secret.SecretBox.KEY_SIZE, password, salt)).decrypt(key)

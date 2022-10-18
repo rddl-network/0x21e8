@@ -6,16 +6,17 @@ from bigchaindb_driver.crypto import generate_keypair
 from mnemonic import Mnemonic
 from mnemonic.mnemonic import PBKDF2_ROUNDS
 
-from bigchaindb_wallet.keymanagement import (ExtendedKey, derive_from_path,
-                                             privkey_to_pubkey, symkey_decrypt,
-                                             symkey_encrypt)
+from bigchaindb_wallet.keymanagement import (
+    ExtendedKey,
+    derive_from_path,
+    privkey_to_pubkey,
+    symkey_decrypt,
+    symkey_encrypt,
+)
 
 BIGCHAINDB_COINTYPE = 822
 BDBW_TREE_INDEX_ROOT = (44, BIGCHAINDB_COINTYPE)
-BDBW_PATH_TEMPLATE = (
-    'm/44/{cointype}\'/{{account}}\'/0/{{address_index}}\''
-    .format(cointype=BIGCHAINDB_COINTYPE)
-)
+BDBW_PATH_TEMPLATE = "m/44/{cointype}'/{{account}}'/0/{{address_index}}'".format(cointype=BIGCHAINDB_COINTYPE)
 DEFAULT_KEYSTORE_FILENAME = ".bigchaindb_wallet"
 
 
@@ -24,10 +25,7 @@ class WalletError(Exception):
 
 
 def bdbw_derive_account(key: ExtendedKey, account, index=0):
-    return derive_from_path(
-        key,
-        BDBW_PATH_TEMPLATE.format(account=account, address_index=index)
-    )
+    return derive_from_path(key, BDBW_PATH_TEMPLATE.format(account=account, address_index=index))
 
 
 def wallet_dumps(wallet_dict):
@@ -36,7 +34,7 @@ def wallet_dumps(wallet_dict):
 
 def wallet_dump(wallet_dict, file_location):
     # XXX check whether wallet already exist XXX
-    with open(file_location, 'w') as f:
+    with open(file_location, "w") as f:
         f.write(wallet_dumps(wallet_dict))
 
 
@@ -44,27 +42,26 @@ def _get_wallet_account(wallet_dict, wallet_name):
     try:
         return wallet_dict[wallet_name]
     except KeyError:
-        raise WalletError('Account {} is not found'.format(wallet_name))
+        raise WalletError("Account {} is not found".format(wallet_name))
 
 
 def get_master_xprivkey(wallet_dict, wallet_name: str, password: str) -> str:
     wallet = _get_wallet_account(wallet_dict, wallet_name)
     try:
         chaincode = bytes.fromhex(wallet["chain_code"])
-        master_privkey = wallet['master_privkey']
+        master_privkey = wallet["master_privkey"]
         privkey = symkey_decrypt(
-            bytes.fromhex(master_privkey['key']),
-            password.encode(),
-            bytes.fromhex(master_privkey['salt'])
+            bytes.fromhex(master_privkey["key"]), password.encode(), bytes.fromhex(master_privkey["salt"])
         )
         return ExtendedKey(privkey, chaincode)
     except KeyError:
-        raise WalletError('Account {} contains errors'.format(wallet_name))
+        raise WalletError("Account {} contains errors".format(wallet_name))
 
 
-def make_wallet_dict(master_xkey: ExtendedKey, password, name='default'):
+def make_wallet_dict(master_xkey: ExtendedKey, password, name="default"):
     def _value_encode(val):
         return val.hex()
+
     master_privkey_crypt, salt = symkey_encrypt(
         master_xkey.privkey,
         password.encode(),
@@ -72,34 +69,31 @@ def make_wallet_dict(master_xkey: ExtendedKey, password, name='default'):
     return {
         name: {
             "chain_code": _value_encode(master_xkey.chaincode),
-            "master_pubkey": _value_encode(
-                privkey_to_pubkey(master_xkey.privkey)
-            ),
+            "master_pubkey": _value_encode(privkey_to_pubkey(master_xkey.privkey)),
             "master_privkey": {
-                'format': 'cryptsalsa208sha256base58',
-                'salt': _value_encode(salt),
-                'key': _value_encode(master_privkey_crypt)
-            }
+                "format": "cryptsalsa208sha256base58",
+                "salt": _value_encode(salt),
+                "key": _value_encode(master_privkey_crypt),
+            },
         }
     }
 
-
+
 def get_home_path_and_warn():
-    home_path = os.environ.get('HOME')
+    home_path = os.environ.get("HOME")
     if home_path is None:
-        home_path = '.'  # TODO warn
+        home_path = "."  # TODO warn
     return home_path
 
 
 def get_wallet_content():
     try:
         # TODO convert to Path object
-        location = ('{}/{}'.format(get_home_path_and_warn(),
-                                   DEFAULT_KEYSTORE_FILENAME))
+        location = "{}/{}".format(get_home_path_and_warn(), DEFAULT_KEYSTORE_FILENAME)
         with open(location) as f:
             return json.loads(f.read())
     except OSError:
-        raise WalletError('Wallet not found')
+        raise WalletError("Wallet not found")
 
 
 def get_private_key_drv(name, address, index, password):
