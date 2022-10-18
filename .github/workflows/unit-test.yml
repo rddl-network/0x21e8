@@ -29,7 +29,7 @@ jobs:
         run: poetry add codecov
 
       - name: Run tests
-        run: poetry run pytest -v --cov=cryptoconditions --cov-report xml:htmlcov/coverage.xml
+        run: poetry run pytest -vvv 
 
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v3
