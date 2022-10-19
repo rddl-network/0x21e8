@@ -5,6 +5,7 @@ from planetmint_driver.offchain import fulfill_with_signing_delegation
 
 from config import PLNTMNT_ENDPOINT
 
+
 def attest_cid(cid: str, wallet: base_wallet.BaseWallet):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
     pubkey = wallet.get_planetmint_pubkey()

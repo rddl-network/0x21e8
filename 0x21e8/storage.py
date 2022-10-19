@@ -1,10 +1,10 @@
 import w3storage
 from urllib.request import urlopen
 from ipld import marshal, unmarshal
+from config import WEB3STORAGE_TOKEN
 
-w3s = w3storage.API(
-    token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJkaWQ6ZXRocjoweDdiN0VFMTVlRjk2OTIyZDI1MjA3MkRDQmYzYjFmRDNEOGQzRWI4NTEiLCJpc3MiOiJ3ZWIzLXN0b3JhZ2UiLCJpYXQiOjE2NjM4Mzc2OTM0ODQsIm5hbWUiOiJ0ZXN0bmV0LnJkZGwuaW8td2ViLXN0b3JhZ2UifQ.ZunGDj7USRLMU-u43T1qOkRprt_0nbsSJ4fIqmC6AYY"
-)
+
+w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
 
 
 def _get_ipfs_link(cid: str):

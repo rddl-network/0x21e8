@@ -27,7 +27,9 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     TOKEN_ADDR = None
     rpc_connection = None
     try:
-        rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s" % (LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT, LQD_RPC_PORT))
+        rpc_connection = AuthServiceProxy(
+            "http://%s:%s@%s:%s" % (LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT, LQD_RPC_PORT)
+        )
         NEWADDR = rpc_connection.getnewaddress("riddlemint", "legacy")
         VALIDATEADDR = rpc_connection.getaddressinfo(NEWADDR)
         PUBKEY = VALIDATEADDR["pubkey"]
