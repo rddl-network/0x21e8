@@ -18,3 +18,14 @@ def attest_cid(cid: str, wallet: base_wallet.BaseWallet):
     signed_tx = fulfill_with_signing_delegation(tx, wallet.planetmint_sign_digest)
     token_nft = plntmnt.transactions.send_commit(signed_tx)
     return token_nft
+
+
+def get_nft(nft: str):
+    plntmnt = Planetmint(PLNTMNT_ENDPOINT)
+    nft_tx = plntmnt.transactions.retrieve(nft)
+    nft_tx["asset"]["data"]["cid"]
+    try:
+        cid = nft_tx["asset"]["data"]["cid"]
+    except KeyError:
+        raise KeyError  # TODO to be handled in a better way stating: this is not an rddl-asset
+    return nft_tx, cid

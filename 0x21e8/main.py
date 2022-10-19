@@ -1,13 +1,16 @@
 from dataclasses import dataclass
 from model import IssuingRequest
-from notarize import get_asset_description
-from wallet.planetmint import attest_cid, PLNTMNT_ENDPOINT
-from wallet.sw_wallet import SoftwareWallet
 from fastapi import FastAPI, HTTPException
-from wallet.utils import create_and_save_seed, save_seed_from_mnemonic
+
 from liquid import issue_tokens, LQD_ENDPOINT
 from storage import _get_ipfs_link, _get_ipfs_file, store_asset, multihashed
-from urllib.request import urlopen
+from notarize import get_asset_description
+from rddl import resolve_nft_cid
+
+from wallet.planetmint import attest_cid, get_nft, PLNTMNT_ENDPOINT
+from wallet.sw_wallet import SoftwareWallet
+from wallet.utils import create_and_save_seed, save_seed_from_mnemonic
+
 
 app = FastAPI()
 
@@ -49,12 +52,7 @@ async def resolve_nft(cid: str):
 
 @app.get("/nft")
 async def resolve_nft(nft_cid: str):
-    nft_data = _get_ipfs_file(nft_cid)
-    try:
-        if nft_data["cid"]:
-            nft_data["cid_data"] = _get_ipfs_file(nft_data["cid"])
-    except KeyError:
-        pass
+    nft_data = resolve_nft_cid(nft_cid)
     return nft_data
 
 
@@ -99,6 +97,20 @@ async def issue_planetmint_and_liquid_tokens(issuing_request_input: IssuingReque
     # register_asset_id_on_liquid( asset_id )
 
     return {"w3storage.cid": nft_cid, "NFT token": token_nft["id"], "NFT transaction": token_nft}
+
+
+@app.get("/machine")
+async def get_machine_nft_data(nft_token: str):
+    # get wallet addresses (issuer, private & pub for )
+
+    # create the token NFT - e.g. the token notarization on planetmint
+    try:
+        nft_tx, nft_cid = get_nft(nft_token)
+        nft_data = resolve_nft_cid(nft_cid)
+    except KeyError:
+        raise KeyError  # to be handled in a better way: stating: this is not an rddl asset
+
+    return {"NFT transaction": nft_tx, "NFT data": nft_data}
 
 
 @app.get("/seed")
