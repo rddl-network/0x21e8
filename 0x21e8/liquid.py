@@ -12,7 +12,7 @@ import os
 rpc_port = 8000
 rpc_user = "user1"
 rpc_password = "password1"
-DOMAIN = "lab.r3c.network"
+LQD_ENDPOINT = "lab.r3c.network"
 
 TOKEN_AMOUNT = 1
 VERSION = 0
@@ -31,7 +31,7 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     TOKEN_ADDR = None
     rpc_connection = None
     try:
-        rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s" % (rpc_user, rpc_password, DOMAIN, rpc_port))
+        rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s" % (rpc_user, rpc_password, LQD_ENDPOINT, rpc_port))
         NEWADDR = rpc_connection.getnewaddress("riddlemint", "legacy")
         VALIDATEADDR = rpc_connection.getaddressinfo(NEWADDR)
         PUBKEY = VALIDATEADDR["pubkey"]
@@ -49,7 +49,7 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     print(ASSET_ADDR)
     print(TOKEN_ADDR)
 
-    CONTRACT = f'{{"entity":{{"domain":"{DOMAIN}"}}, "issuer_pubkey":"{PUBKEY}", "nft":{{"token":"{nft_token}", "ipld":"{ipdl}"}}, "name":"{NAME}", "precision":{PRECISION}, "ticker":"{TICKER}", "version":{VERSION}}}'
+    CONTRACT = f'{{"entity":{{"domain":"{LQD_ENDPOINT}"}}, "issuer_pubkey":"{PUBKEY}", "nft":{{"token":"{nft_token}", "ipld":"{ipdl}"}}, "name":"{NAME}", "precision":{PRECISION}, "ticker":"{TICKER}", "version":{VERSION}}}'
     rpc_connection.settxfee(FEERATE)
     print(CONTRACT)
     CONTRACT_SORTED = json.dumps(json.loads(CONTRACT), sort_keys=True, separators=(",", ":"))
