@@ -35,17 +35,17 @@ tags_metadata = [
 ]
 
 
-
-
 @app.post("/data")
 async def store_data(in_data_dict: dict):
-    cid = store_asset( in_data_dict ) 
+    cid = store_asset(in_data_dict)
     return cid
+
 
 @app.get("/data")
 async def resolve_nft(cid: str):
     data = _get_ipfs_file(cid)
     return data
+
 
 @app.get("/nft")
 async def resolve_nft(nft_cid: str):
@@ -64,7 +64,7 @@ async def get_cid_link(cid):
 
 
 @app.post("/cid")
-async def attest_cid_on_planetmint( cid: str):
+async def attest_cid_on_planetmint(cid: str):
     # get wallet addresses (issuer, private & pub for )
     try:
         wallet = SoftwareWallet()
@@ -88,7 +88,7 @@ async def issue_planetmint_and_liquid_tokens(issuing_request_input: IssuingReque
         issuing_request_input, wallet.get_liquid_address(), wallet.get_planetmint_pubkey().hex()
     )
 
-    nft_cid = store_asset( nft_asset ) 
+    nft_cid = store_asset(nft_asset)
     token_nft = attest_cid(nft_cid, wallet)
 
     # issue tokens
@@ -119,8 +119,9 @@ async def recover_seed_from_mnemonic(mnemonic: str):
 
 @app.post("/get_ipld_multihash")
 async def get_ipld_multihash(json_data: dict):
-    hashed_marshalled = multihashed( json_data )
+    hashed_marshalled = multihashed(json_data)
     return hashed_marshalled
+
 
 @app.get("/config")
 async def get_configuration():
