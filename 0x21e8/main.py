@@ -45,7 +45,7 @@ async def store_data(in_data_dict: dict):
 
 
 @app.get("/data")
-async def resolve_nft(cid: str):
+async def get_data(cid: str):
     data = _get_ipfs_file(cid)
     return data
 
