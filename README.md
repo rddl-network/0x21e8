@@ -6,6 +6,8 @@ The current version runs with a software-based keystore. Production based versio
 **WARNING** use this code only for demonstrational purposes. Production code must not rely on this service.
 
 
+
+
 ## Prepare the Environment
 ```bash
 ### For a RPI, ignore the errors with zenroom
@@ -32,6 +34,15 @@ The service needs the folloing configurations:
     * RPC password
 * web3storage token to store data
 
+The configuratoin is set via environment variables such as
+* LQD_RPC_PORT
+* LQD_RPC_USER
+* LQD_RPC_PASSWORD
+* LQD_RPC_ENDPOINT
+* PLNTMNT_ENDPOINT
+* WEB3STORAGE_TOKEN
+
+Alternatively, the varialbes can be defined within the ```.env``` file of the project. A sample ```env.example``` file can be adjusted and copied to ```.env```.
 
 ## Service Execution
 ```bash
