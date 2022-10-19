@@ -10,9 +10,9 @@ import os
 
 # rpc_port = 18886
 rpc_port = 8000
-rpc_user = 'user1'
-rpc_password = 'password1'
-DOMAIN = "lab.r3c.network"
+rpc_user = "user1"
+rpc_password = "password1"
+LQD_ENDPOINT = "lab.r3c.network"
 
 TOKEN_AMOUNT = 1
 VERSION = 0
@@ -31,7 +31,7 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     TOKEN_ADDR = None
     rpc_connection = None
     try:
-        rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s" % (rpc_user, rpc_password, DOMAIN, rpc_port))
+        rpc_connection = AuthServiceProxy("http://%s:%s@%s:%s" % (rpc_user, rpc_password, LQD_ENDPOINT, rpc_port))
         NEWADDR = rpc_connection.getnewaddress("riddlemint", "legacy")
         VALIDATEADDR = rpc_connection.getaddressinfo(NEWADDR)
         PUBKEY = VALIDATEADDR["pubkey"]
@@ -49,13 +49,13 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     print(ASSET_ADDR)
     print(TOKEN_ADDR)
 
-    CONTRACT = f"{{\"entity\":{{\"domain\":\"{DOMAIN}\"}}, \"issuer_pubkey\":\"{PUBKEY}\", \"nft\":{{\"token\":\"{nft_token}\", \"ipld\":\"{ipdl}\"}}, \"name\":\"{NAME}\", \"precision\":{PRECISION}, \"ticker\":\"{TICKER}\", \"version\":{VERSION}}}"
+    CONTRACT = f'{{"entity":{{"domain":"{LQD_ENDPOINT}"}}, "issuer_pubkey":"{PUBKEY}", "nft":{{"token":"{nft_token}", "ipld":"{ipdl}"}}, "name":"{NAME}", "precision":{PRECISION}, "ticker":"{TICKER}", "version":{VERSION}}}'
     rpc_connection.settxfee(FEERATE)
     print(CONTRACT)
     CONTRACT_SORTED = json.dumps(json.loads(CONTRACT), sort_keys=True, separators=(",", ":"))
     CONTRACT_HASH = hashlib.sha256(six.ensure_binary(CONTRACT_SORTED)).hexdigest()
     print(CONTRACT_HASH)
-    CONTRACT_HASH_REV = "".join(reversed([CONTRACT_HASH[i:i + 2] for i in range(0, len(CONTRACT_HASH), 2)]))
+    CONTRACT_HASH_REV = "".join(reversed([CONTRACT_HASH[i : i + 2] for i in range(0, len(CONTRACT_HASH), 2)]))
     print(CONTRACT_HASH_REV)
 
     RAWTX = rpc_connection.createrawtransaction([], [{"data": "00"}])
@@ -69,12 +69,19 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     HEXFRT = FRT["hex"]
     print(HEXFRT)
 
-    RIA = rpc_connection.rawissueasset(HEXFRT, [{"asset_amount": ASSET_AMOUNT,
-                                                 "asset_address": ASSET_ADDR,
-                                                 "token_amount": TOKEN_AMOUNT,
-                                                 "token_address": TOKEN_ADDR,
-                                                 "blind": False,
-                                                 "contract_hash": CONTRACT_HASH_REV, }])
+    RIA = rpc_connection.rawissueasset(
+        HEXFRT,
+        [
+            {
+                "asset_amount": ASSET_AMOUNT,
+                "asset_address": ASSET_ADDR,
+                "token_amount": TOKEN_AMOUNT,
+                "token_address": TOKEN_ADDR,
+                "blind": False,
+                "contract_hash": CONTRACT_HASH_REV,
+            }
+        ],
+    )
     print(RIA)
 
     HEXRIA = RIA[0]["hex"]
@@ -94,6 +101,6 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     ISSUETX = rpc_connection.sendrawtransaction(HEXSRT)
 
     print("\n\n")
-    print(F"ASSET_ID: {ISSUETX}")
-    print(F"CONTRACT: {CONTRACT}")
+    print(f"ASSET_ID: {ISSUETX}")
+    print(f"CONTRACT: {CONTRACT}")
     return ISSUETX

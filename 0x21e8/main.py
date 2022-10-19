@@ -1,15 +1,79 @@
+from dataclasses import dataclass
 from model import IssuingRequest
-from notarize import get_asset_description
-from ipld import marshal, multihash
-from wallet.planetmint import attest_planet_mint_nft
-from wallet.sw_wallet import SoftwareWallet
 from fastapi import FastAPI, HTTPException
+
+from liquid import issue_tokens, LQD_ENDPOINT
+from storage import _get_ipfs_link, _get_ipfs_file, store_asset, multihashed
+from notarize import get_asset_description
+from rddl import resolve_nft_cid
+
+from wallet.planetmint import attest_cid, get_nft, PLNTMNT_ENDPOINT
+from wallet.sw_wallet import SoftwareWallet
 from wallet.utils import create_and_save_seed, save_seed_from_mnemonic
-from liquid import issue_tokens
+
+
 app = FastAPI()
 
+tags_metadata = [
+    {
+        "name": "store_data",
+        "description": "Stores dictionary data to IPFS and returns the CID.",
+    },
+    {
+        "name": "get_cid_link",
+        "description": "Gets the URI for a given CID on IPFS.",
+    },
+    {
+        "name": "resolve_nft",
+        "description": "Resolves the NFT CID and the CID content and returns the content",
+    },
+    {
+        "name": "get_data_linke",
+        "description": "Manage items. So _fancy_ they have their own docs.",
+    },
+    {
+        "name": "get_data_linke",
+        "description": "Manage items. So _fancy_ they have their own docs.",
+    },
+]
 
-@app.post("/attest_machine")
+
+@app.post("/data")
+async def store_data(in_data_dict: dict):
+    cid = store_asset(in_data_dict)
+    return cid
+
+
+@app.get("/data")
+async def resolve_nft(cid: str):
+    data = _get_ipfs_file(cid)
+    return data
+
+
+@app.get("/nft")
+async def resolve_nft(nft_cid: str):
+    nft_data = resolve_nft_cid(nft_cid)
+    return nft_data
+
+
+@app.get("/cid")
+async def get_cid_link(cid):
+    return _get_ipfs_link(cid)
+
+
+@app.post("/cid")
+async def attest_cid_on_planetmint(cid: str):
+    # get wallet addresses (issuer, private & pub for )
+    try:
+        wallet = SoftwareWallet()
+    except FileNotFoundError:
+        raise HTTPException(status_code=400, detail="Cryptographic Identity Not Found! Generate one!")
+
+    cid_nft = attest_cid(cid, wallet)
+    return {"cid": cid, "NFT token": cid_nft["id"], "NFT transaction": cid_nft}
+
+
+@app.post("/machine")
 async def issue_planetmint_and_liquid_tokens(issuing_request_input: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
     try:
@@ -18,22 +82,38 @@ async def issue_planetmint_and_liquid_tokens(issuing_request_input: IssuingReque
         raise HTTPException(status_code=400, detail="Cryptographic Identity Not Found! Generate one!")
 
     # create the token NFT - e.g. the token notarization on planetmint
-    nft_asset = get_asset_description(issuing_request_input, wallet.get_liquid_address(),
-                                      wallet.get_planetmint_pubkey().hex(), issuing_request_input.ipld_hash_hex)
+    nft_asset = get_asset_description(
+        issuing_request_input, wallet.get_liquid_address(), wallet.get_planetmint_pubkey().hex()
+    )
 
-    token_nft = attest_planet_mint_nft(nft_asset, wallet)
+    nft_cid = store_asset(nft_asset)
+    token_nft = attest_cid(nft_cid, wallet)
 
     # issue tokens
-    asset_id = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft['id'], issuing_request_input.ipld_hash_hex)
-    print(asset_id)
+    # asset_id = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft['id'], nft_cid)
+
     # register assets on local node
     # register_asset_id(asset_id)
     # register_asset_id_on_liquid( asset_id )
 
-    return {"token NFT": token_nft['id'], "token_nft": token_nft, "ipdl": issuing_request_input.ipld_hash_hex}
+    return {"w3storage.cid": nft_cid, "NFT token": token_nft["id"], "NFT transaction": token_nft}
 
 
-@app.post("/create_seed")
+@app.get("/machine")
+async def get_machine_nft_data(nft_token: str):
+    # get wallet addresses (issuer, private & pub for )
+
+    # create the token NFT - e.g. the token notarization on planetmint
+    try:
+        nft_tx, nft_cid = get_nft(nft_token)
+        nft_data = resolve_nft_cid(nft_cid)
+    except KeyError:
+        raise KeyError  # to be handled in a better way: stating: this is not an rddl asset
+
+    return {"NFT transaction": nft_tx, "NFT data": nft_data}
+
+
+@app.get("/seed")
 async def create_seed_and_provision(number_of_words: int):
     if number_of_words == 24:
         strength = 256
@@ -44,13 +124,21 @@ async def create_seed_and_provision(number_of_words: int):
     return create_and_save_seed(strength)
 
 
-@app.post("/recover_seed_from_mnemonic")
+@app.post("/seed")
 async def recover_seed_from_mnemonic(mnemonic: str):
     save_seed_from_mnemonic(mnemonic)
 
 
 @app.post("/get_ipld_multihash")
 async def get_ipld_multihash(json_data: dict):
-    marshalled = marshal(json_data)
-    hashed_marshalled = multihash(marshalled)
+    hashed_marshalled = multihashed(json_data)
     return hashed_marshalled
+
+
+@app.get("/config")
+async def get_configuration():
+    config = {
+        "planetmint": PLNTMNT_ENDPOINT,
+        "liquid": LQD_ENDPOINT,
+    }
+    return config

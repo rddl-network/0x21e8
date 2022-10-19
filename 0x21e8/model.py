@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class IssuingRequest(BaseModel):
     name: str
     ticker: str
@@ -7,7 +8,7 @@ class IssuingRequest(BaseModel):
     precision: int
     public_url: str
     reissue: bool
-    ipld_hash_hex: str
+    cid: str
 
 
 class TokenRelatedAccounts(BaseModel):
@@ -18,5 +19,7 @@ class TokenRelatedAccounts(BaseModel):
 
 
 def accounts_to_json(accounts: TokenRelatedAccounts):
-    return {"Liquid": {"private": accounts.lqpriv, "public": accounts.lqpub},
-            "Planetmint": {"private": accounts.plpriv, "public": accounts.plpub}}
+    return {
+        "Liquid": {"private": accounts.lqpriv, "public": accounts.lqpub},
+        "Planetmint": {"private": accounts.plpriv, "public": accounts.plpub},
+    }
