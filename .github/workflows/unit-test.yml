@@ -36,4 +36,12 @@ jobs:
 
       - name: Test build
         run: poetry build && poetry run twine check dist/*
+        env: 
+          LQD_RPC_PORT: 18886
+          LQD_RPC_USER: user
+          LQD_RPC_PASSWORD: password
+          LQD_RPC_ENDPOINT: localhost
+          PLNTMNT_ENDPOINT: http://localhost:9984
+          WEB3STORAGE_TOKEN: testtoken
+
       
