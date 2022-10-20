@@ -698,6 +698,14 @@ optional = false
 python-versions = "*"
 
 [[package]]
+name = "python-decouple"
+version = "3.6"
+description = "Strict separation of settings from code."
+category = "main"
+optional = false
+python-versions = "*"
+
+[[package]]
 name = "python-rapidjson"
 version = "1.9"
 description = "Python wrapper around rapidjson"
@@ -978,7 +986,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "fe2bd0ff738ae3b295b9a0949f08ea7575717624e4e78df024966dafb8105fbe"
+content-hash = "7d2287e506d936e61afcb58aae5078b8a4a6101348614d3e6a1d48aad7f4d02c"
 
 [metadata.files]
 anyio = [
@@ -1383,6 +1391,10 @@ python-baseconv = [
 ]
 python-bitcoinrpc = [
     {file = "python-bitcoinrpc-1.0.tar.gz", hash = "sha256:a6a6f35672635163bc491c25fe29520bdd063dedbeda3b37bf5be97aa038c6e7"},
+]
+python-decouple = [
+    {file = "python-decouple-3.6.tar.gz", hash = "sha256:2838cdf77a5cf127d7e8b339ce14c25bceb3af3e674e039d4901ba16359968c7"},
+    {file = "python_decouple-3.6-py3-none-any.whl", hash = "sha256:6cf502dc963a5c642ea5ead069847df3d916a6420cad5599185de6bab11d8c2e"},
 ]
 python-rapidjson = [
     {file = "python-rapidjson-1.9.tar.gz", hash = "sha256:be7d351c7112dac608133a23f60e95395668d0981a07f4037f63e0e88afcf01a"},
