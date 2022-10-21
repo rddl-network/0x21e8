@@ -19,7 +19,9 @@ w3storage = "^0.0.1"
 requests = "^2.28.1"
 mypy = "^0.982"
 python-decouple = "^3.6"
-
+pysha3 = "~1.0.2"
+cryptography = "3.4.7"
+planetmint-cryptoconditions = "^0.10.0"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
