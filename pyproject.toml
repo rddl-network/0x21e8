@@ -25,9 +25,8 @@ pynacl = "1.4.0"
 pyasn1 = "^0.4.8"
 planetmint-cryptoconditions = "^0.10.0"
 planetmint-ipld = "^0.0.3"
-zenroom = {path = "external_packages_armv7/zenroom-2.1.0.dev1655293214-cp39-cp39-linux_armv7l.whl"}
-planetmint-driver = "0.11.1"
 uvicorn = "^0.19.0"
+planetmint-driver = "^0.11.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
