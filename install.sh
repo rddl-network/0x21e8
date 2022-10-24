@@ -1,13 +1,15 @@
 #!/bin/bash
 
-sudo apt install python3-pip
-sudo apt install autoconf
-sudo apt install autogen
-sudo apt install libtool
-sudo apt install swig
-sudo apt install libffi-dev
-sudo apt install libssl-dev
-sudo apt install make swig meson cmake zsh gcc
+sudo apt -y update
+sudo apt -y upgrade
+sudo apt -y install python3-pip
+sudo apt -y install autoconf
+sudo apt -y install autogen
+sudo apt -y install libtool
+sudo apt -y install swig
+sudo apt -y install libffi-dev
+sudo apt -y install libssl-dev
+sudo apt -y install make swig meson cmake zsh gcc
 curl https://sh.rustup.rs -sSf | sh
 python -m pip install --upgrade pip
 pip install --upgrade poetry
