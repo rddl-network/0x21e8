@@ -1,4 +1,7 @@
 from dataclasses import dataclass
+
+import requests
+
 from model import IssuingRequest
 from fastapi import FastAPI, HTTPException
 
@@ -8,11 +11,9 @@ from notarize import get_asset_description
 from rddl import resolve_nft_cid
 from config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT
 
-
 from wallet.planetmint import attest_cid, get_nft
 from wallet.sw_wallet import SoftwareWallet
 from wallet.utils import create_and_save_seed, save_seed_from_mnemonic
-
 
 app = FastAPI()
 
@@ -92,12 +93,13 @@ async def issue_planetmint_and_liquid_tokens(issuing_request_input: IssuingReque
     token_nft = attest_cid(nft_cid, wallet)
 
     # issue tokens
-    # asset_id = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft['id'], nft_cid)
+    asset_id, contract = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft['id'], nft_cid)
 
-    # register assets on local node
-    # register_asset_id(asset_id)
-    # register_asset_id_on_liquid( asset_id )
-
+    response = requests.post(
+        "lab.r3c.network:8090/register_asset",
+        headers={"accept": "application/json", "Content-Type": "application/json"},
+        json={"asset_id": asset_id, "contract": contract}
+    )
     return {"w3storage.cid": nft_cid, "NFT token": token_nft["id"], "NFT transaction": token_nft}
 
 
