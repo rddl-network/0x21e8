@@ -6,7 +6,7 @@ from planetmint_driver.offchain import fulfill_with_signing_delegation
 from config import PLNTMNT_ENDPOINT
 
 
-def attest_cid(cid: str, wallet: base_wallet.BaseWallet):
+def create_cid_asset(cid: str, wallet: base_wallet.BaseWallet):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
     pubkey = wallet.get_planetmint_pubkey()
     print(pubkey)
@@ -19,11 +19,11 @@ def attest_cid(cid: str, wallet: base_wallet.BaseWallet):
     return token_nft
 
 
-def get_nft(nft: str):
+def resolve_asset_token(asset: str):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
-    nft_tx = plntmnt.transactions.retrieve(nft)
+    asset_tx = plntmnt.transactions.retrieve(asset)
     try:
-        cid = nft_tx["asset"]["data"]
+        cid = asset_tx["asset"]["data"]
     except KeyError:
         raise KeyError  # TODO to be handled in a better way stating: this is not an rddl-asset
-    return nft_tx, cid
+    return asset_tx, cid
