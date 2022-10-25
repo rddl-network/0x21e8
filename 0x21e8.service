@@ -5,10 +5,10 @@ Documentation=https://rddl.io
 
 [Service]
 Restart=always
-ExecStart=/home/rddl/.local/bin/pipenv run uvicorn --log-level debug --reload main:app --host 0.0.0.0
+ExecStart=/home/rddl/.local/bin/poetry run uvicorn --log-level debug --reload main:app --host 0.0.0.0
 WorkingDirectory=/home/rddl/0x21e8/0x21e8
 User=rddl
 Group=rddl
 
 [Install]
-WantedBy=multi-user.target% 
+WantedBy=multi-user.target

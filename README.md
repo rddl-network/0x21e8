@@ -55,8 +55,9 @@ uvicorn --log-level debug --reload main:app
 In order to deploy the service within an production environment adjust the user and groupnames if needed and execute the follwoing commands:
 
 ```bash
-sudo cp 0x21e8.service /etc/systemd/sytem # that's the folder where main.py is located within
+sudo cp 0x21e8.service /etc/systemd/system # that's the folder where main.py is located within
 sudo systemctl daemon-reload
+sudo systemctl enable 0x21e8.service
 sudo systemctl start 0x21e8.service
 ```
 
