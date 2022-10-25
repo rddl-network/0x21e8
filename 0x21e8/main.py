@@ -158,7 +158,7 @@ async def recover_seed_from_mnemonic(mnemonic_phrase: str):
 
     save_seed_from_mnemonic(mnemonic_phrase)
 
-    
+
 @app.post("/multihash")
 async def get_multihash(json_data: dict):
     hashed_marshalled = multihashed(json_data)
