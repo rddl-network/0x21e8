@@ -1,7 +1,8 @@
 import w3storage
 from urllib.request import urlopen
-from ipld import marshal, unmarshal
+from ipld import marshal, unmarshal, multihash
 from config import WEB3STORAGE_TOKEN
+
 
 
 w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
