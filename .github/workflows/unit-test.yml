@@ -4,15 +4,15 @@
 # Code is Apache-2.0 and docs are CC-BY-4.0
 
 name: Unit tests
-#on: [push, pull_request]
+on: [push, pull_request]
 
 env: 
   LQD_RPC_PORT: 18886
   LQD_RPC_USER: user
   LQD_RPC_PASSWORD: password
   LQD_RPC_ENDPOINT: localhost
-  PLNTMNT_ENDPOINT: http://localhost:9984
-  WEB3STORAGE_TOKEN: testtoken
+  PLNTMNT_ENDPOINT: http://node2-rddl-testnet.twilightparadox.com:9984
+  WEB3STORAGE_TOKEN: ${{ secrets.WEB3STORAGE_TOKEN }}
 
 jobs:
   test:
