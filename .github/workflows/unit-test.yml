@@ -4,7 +4,7 @@
 # Code is Apache-2.0 and docs are CC-BY-4.0
 
 name: Unit tests
-on: [push, pull_request]
+#on: [push, pull_request]
 
 env: 
   LQD_RPC_PORT: 18886
@@ -33,17 +33,11 @@ jobs:
       - name: Install dependencies
         run: poetry install --with dev
 
-      - name: Install codecov
-        run: poetry add codecov
-
       - name: Run tests
         run: poetry run pytest -vvv 
 
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v3
-
       - name: Test build
-        run: poetry build && poetry run twine check dist/*
+        run: poetry build 
 
 
       
