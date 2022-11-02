@@ -42,7 +42,7 @@ The configuratoin is set via environment variables such as
 * PLNTMNT_ENDPOINT
 * WEB3STORAGE_TOKEN
 
-Alternatively, the varialbes can be defined within the ```.env``` file of the project. A sample ```env.example``` file can be adjusted and copied to ```.env```.
+Alternatively, the varialbes can be defined within the ```.env``` file of the project. A example ```env.example``` file can be adjusted and copied to ```.env```.
 
 ## Service Execution
 ```bash
