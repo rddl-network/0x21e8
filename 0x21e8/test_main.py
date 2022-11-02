@@ -29,9 +29,13 @@ def test_store_data_invalid():
 
 
 def test_get_data_valid():
-    response = client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
+    response = client.get(
+        "/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false"
+    )
     try:
-        response = client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
+        response = client.get(
+            "/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false"
+        )
         assert False
     except:
         assert True
@@ -58,7 +62,9 @@ def test_machine_before_wallet_init():
         },
     )
     assert response1.status_code == 421
-    assert response1.json() == {"detail": "The hardware wallet needs to be provisioned by defining a master seed."}
+    assert response1.json() == {
+        "detail": "The hardware wallet needs to be provisioned by defining a master seed."
+    }
 
 
 def test_seed_creation():
@@ -133,7 +139,9 @@ def test_machine_testation():
     assert response3.status_code == 200
 
     try:
-        response4 = client.get("/machine?nft_token=61c557961bdf67e421aeaf26eb9aa406335e259ed7cc8a94c0073dd78b8dsdfac1")
+        response4 = client.get(
+            "/machine?nft_token=61c557961bdf67e421aeaf26eb9aa406335e259ed7cc8a94c0073dd78b8dsdfac1"
+        )
         assert False
     except:
         assert True
