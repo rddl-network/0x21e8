@@ -34,11 +34,7 @@ SUPPORTED_LANGUAGES = [
 
 def make_mnemonic_phrase(strength=256, language="english", with_entropy=None):
     if language not in SUPPORTED_LANGUAGES:
-        raise ValueError(
-            "{} not found in supported languages: {}".format(
-                language, SUPPORTED_LANGUAGES
-            )
-        )
+        raise ValueError("{} not found in supported languages: {}".format(language, SUPPORTED_LANGUAGES))
     mnemonic_obj = Mnemonic(language)
     if with_entropy:
         # TODO check that strength corresponds to entropy length
@@ -92,9 +88,7 @@ def privkey_to_pubkey(privkey):
 
 def symkey_encrypt(msg, password):
     salt = utils.random(SALTBYTES)
-    encrypted = secret.SecretBox(
-        kdf(secret.SecretBox.KEY_SIZE, password, salt)
-    ).encrypt(msg)
+    encrypted = secret.SecretBox(kdf(secret.SecretBox.KEY_SIZE, password, salt)).encrypt(msg)
     return encrypted, salt
 
 

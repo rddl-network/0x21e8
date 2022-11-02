@@ -120,9 +120,7 @@ async def attest_machine(issuing_request_input: IssuingRequest):
     # issue tokens
     asset_id, contract = None, None
     try:
-        asset_id, contract = issue_tokens(
-            issuing_request_input, wallet.get_liquid_address(), token_nft["id"], nft_cid
-        )
+        asset_id, contract = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft["id"], nft_cid)
     except Exception as e:
         print(e)
     # register assets on r3c node
@@ -171,9 +169,7 @@ async def create_seed_and_provision(number_of_words: int):
     elif number_of_words == 12:
         strength = 128
     else:
-        raise HTTPException(
-            status_code=420, detail="A mnemonic has to contain 12 or 24 words"
-        )
+        raise HTTPException(status_code=420, detail="A mnemonic has to contain 12 or 24 words")
     return create_and_save_seed(strength)
 
 
@@ -182,9 +178,7 @@ async def recover_seed_from_mnemonic(mnemonic_phrase: str):
     word_array = mnemonic_phrase.split()
     size = len(word_array)
     if size not in [12, 24]:
-        raise HTTPException(
-            status_code=420, detail="A mnemonic has to contain 12 or 24 words"
-        )
+        raise HTTPException(status_code=420, detail="A mnemonic has to contain 12 or 24 words")
 
     save_seed_from_mnemonic(mnemonic_phrase)
 

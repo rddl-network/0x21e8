@@ -16,9 +16,7 @@ from bigchaindb_wallet.keymanagement import (
 
 PLANETMINT_COINTYPE = 8680
 PLNTMNTW_TREE_INDEX_ROOT = (44, PLANETMINT_COINTYPE)
-PLNTMNTW_PATH_TEMPLATE = "m/44/{cointype}'/{{account}}'/0/{{address_index}}'".format(
-    cointype=PLANETMINT_COINTYPE
-)
+PLNTMNTW_PATH_TEMPLATE = "m/44/{cointype}'/{{account}}'/0/{{address_index}}'".format(cointype=PLANETMINT_COINTYPE)
 DEFAULT_KEYSTORE_FILENAME = ".plntmnt_wallet"
 
 
@@ -27,9 +25,7 @@ class WalletError(Exception):
 
 
 def bdbw_derive_account(key: ExtendedKey, account, index=0):
-    return derive_from_path(
-        key, PLNTMNTW_PATH_TEMPLATE.format(account=account, address_index=index)
-    )
+    return derive_from_path(key, PLNTMNTW_PATH_TEMPLATE.format(account=account, address_index=index))
 
 
 def wallet_dumps(wallet_dict):

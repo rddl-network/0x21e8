@@ -28,8 +28,7 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     rpc_connection = None
     try:
         rpc_connection = AuthServiceProxy(
-            "http://%s:%s@%s:%s"
-            % (LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT, LQD_RPC_PORT)
+            "http://%s:%s@%s:%s" % (LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT, LQD_RPC_PORT)
         )
         NEWADDR = rpc_connection.getnewaddress("riddlemint", "legacy")
         VALIDATEADDR = rpc_connection.getaddressinfo(NEWADDR)
@@ -51,14 +50,10 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     CONTRACT = f'{{"entity":{{"domain":"{LQD_RPC_ENDPOINT}"}}, "issuer_pubkey":"{PUBKEY}", "nft":{{"token":"{nft_token}", "ipld":"{ipdl}"}}, "name":"{NAME}", "precision":{PRECISION}, "ticker":"{TICKER}", "version":{VERSION}}}'
     rpc_connection.settxfee(FEERATE)
     print(CONTRACT)
-    CONTRACT_SORTED = json.dumps(
-        json.loads(CONTRACT), sort_keys=True, separators=(",", ":")
-    )
+    CONTRACT_SORTED = json.dumps(json.loads(CONTRACT), sort_keys=True, separators=(",", ":"))
     CONTRACT_HASH = hashlib.sha256(six.ensure_binary(CONTRACT_SORTED)).hexdigest()
     print(CONTRACT_HASH)
-    CONTRACT_HASH_REV = "".join(
-        reversed([CONTRACT_HASH[i : i + 2] for i in range(0, len(CONTRACT_HASH), 2)])
-    )
+    CONTRACT_HASH_REV = "".join(reversed([CONTRACT_HASH[i : i + 2] for i in range(0, len(CONTRACT_HASH), 2)]))
     print(CONTRACT_HASH_REV)
 
     RAWTX = rpc_connection.createrawtransaction([], [{"data": "00"}])

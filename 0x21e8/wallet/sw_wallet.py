@@ -32,12 +32,8 @@ class SoftwareWallet(base_wallet.BaseWallet):
 
     def get_confidential_liquid_address(self) -> bytes:
         master_blinding_key = wally.asset_blinding_key_from_seed(self.seed)
-        script_pubkey = wally.address_to_scriptpubkey(
-            self.liquid_address, wally.WALLY_NETWORK_LIQUID
-        )
-        private_blinding_key = wally.asset_blinding_key_to_ec_private_key(
-            master_blinding_key, script_pubkey
-        )
+        script_pubkey = wally.address_to_scriptpubkey(self.liquid_address, wally.WALLY_NETWORK_LIQUID)
+        private_blinding_key = wally.asset_blinding_key_to_ec_private_key(master_blinding_key, script_pubkey)
         public_blinding_key = wally.ec_public_key_from_private_key(private_blinding_key)
         # end-derive_blinding_key
 
@@ -63,12 +59,8 @@ class SoftwareWallet(base_wallet.BaseWallet):
         with open("secret.txt", "r") as secret:
             self.seed = bytes.fromhex(secret.readline())
 
-        wallet_master_key = wally.bip32_key_from_seed(
-            self.seed, wally.BIP32_VER_MAIN_PRIVATE, 0
-        )
-        wallet_derived_key = wally.bip32_key_from_parent(
-            wallet_master_key, 1, wally.BIP32_FLAG_KEY_PRIVATE
-        )
+        wallet_master_key = wally.bip32_key_from_seed(self.seed, wally.BIP32_VER_MAIN_PRIVATE, 0)
+        wallet_derived_key = wally.bip32_key_from_parent(wallet_master_key, 1, wally.BIP32_FLAG_KEY_PRIVATE)
         self.liquid_address = wally.bip32_key_to_address(
             wallet_derived_key,
             wally.WALLY_ADDRESS_TYPE_P2PKH,
