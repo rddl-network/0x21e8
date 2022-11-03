@@ -101,4 +101,4 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     print("\n\n")
     print(f"ASSET_ID: {ISSUETX}")
     print(f"CONTRACT: {CONTRACT}")
-    return ISSUETX
+    return ISSUETX, CONTRACT

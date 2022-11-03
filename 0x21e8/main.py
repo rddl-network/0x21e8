@@ -13,6 +13,7 @@ from wallet.planetmint import create_cid_asset, resolve_asset_token
 from wallet.sw_wallet import SoftwareWallet
 from wallet.utils import create_and_save_seed, save_seed_from_mnemonic
 from urllib.error import URLError
+import requests
 
 app = FastAPI()
 
@@ -55,7 +56,8 @@ async def get_data(cid: str, link2data: bool = False):
             data = get_ipfs_file(cid)
         except URLError as e:
             raise HTTPException(
-                status_code=421, detail=f"The requested URL could not be resolved: { e.code } : { e.reason }."
+                status_code=421,
+                detail=f"The requested URL could not be resolved: { e.code } : { e.reason }.",
             )
 
     return data
@@ -69,11 +71,13 @@ async def resolve_cid_token(cid_token):
         return {"NFT transaction": nft_tx, "NFT data": nft_data}
     except KeyError as e:
         raise HTTPException(
-            status_code=422, detail=f"The nft token does not represent a proper NFT: { e.code } : { e.reason }."
+            status_code=422,
+            detail=f"The nft token does not represent a proper NFT: { e.code } : { e.reason }.",
         )
     except URLError as e:
         raise HTTPException(
-            status_code=421, detail=f"The requested URL could not be resolved: { e.code } : { e.reason }."
+            status_code=421,
+            detail=f"The requested URL could not be resolved: { e.code } : { e.reason }.",
         )
 
 
@@ -84,7 +88,8 @@ async def attest_cid(cid: str):
         wallet = SoftwareWallet()
     except FileNotFoundError:
         raise HTTPException(
-            status_code=421, detail="The hardware wallet needs to be provisioned by defining a master seed."
+            status_code=421,
+            detail="The hardware wallet needs to be provisioned by defining a master seed.",
         )
 
     cid_nft = create_cid_asset(cid, wallet)
@@ -98,25 +103,42 @@ async def attest_machine(issuing_request_input: IssuingRequest):
         wallet = SoftwareWallet()
     except FileNotFoundError:
         raise HTTPException(
-            status_code=421, detail="The hardware wallet needs to be provisioned by defining a master seed."
+            status_code=421,
+            detail="The hardware wallet needs to be provisioned by defining a master seed.",
         )
 
     # create the token NFT - e.g. the token notarization on planetmint
     nft_asset = get_asset_description(
-        issuing_request_input, wallet.get_liquid_address(), wallet.get_planetmint_pubkey().hex()
+        issuing_request_input,
+        wallet.get_liquid_address(),
+        wallet.get_planetmint_pubkey().hex(),
     )
 
     nft_cid = store_asset(nft_asset)
     token_nft = create_cid_asset(nft_cid, wallet)
 
     # issue tokens
-    # asset_id = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft['id'], nft_cid)
+    asset_id, contract = None, None
+    try:
+        asset_id, contract = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft["id"], nft_cid)
+    except Exception as e:
+        print(e)
+    # register assets on r3c node
 
-    # register assets on local node
-    # register_asset_id(asset_id)
-    # register_asset_id_on_liquid( asset_id )
+    try:
+        response = requests.post(
+            "http://lab.r3c.network:8090/register_asset",
+            headers={"accept": "application/json", "Content-Type": "application/json"},
+            json={"asset_id": asset_id, "contract": contract},
+        )
+    except Exception as e:
+        print(e)
 
-    return {"w3storage.cid": nft_cid, "NFT token": token_nft["id"], "NFT transaction": token_nft}
+    return {
+        "w3storage.cid": nft_cid,
+        "NFT token": token_nft["id"],
+        "NFT transaction": token_nft,
+    }
 
 
 @app.get("/machine")
@@ -130,11 +152,13 @@ async def resolve_machine_token_and_data(nft_token: str):
         return {"NFT transaction": nft_tx, "NFT data": nft_data}
     except KeyError as e:
         raise HTTPException(
-            status_code=422, detail=f"The nft token does not represent a proper NFT: { e.code } : { e.reason }."
+            status_code=422,
+            detail=f"The nft token does not represent a proper NFT: { e.code } : { e.reason }.",
         )
     except URLError as e:
         raise HTTPException(
-            status_code=421, detail=f"The requested URL could not be resolved: { e.code } : { e.reason }."
+            status_code=421,
+            detail=f"The requested URL could not be resolved: { e.code } : { e.reason }.",
         )
 
 

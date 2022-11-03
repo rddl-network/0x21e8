@@ -62,7 +62,9 @@ class SoftwareWallet(base_wallet.BaseWallet):
         wallet_master_key = wally.bip32_key_from_seed(self.seed, wally.BIP32_VER_MAIN_PRIVATE, 0)
         wallet_derived_key = wally.bip32_key_from_parent(wallet_master_key, 1, wally.BIP32_FLAG_KEY_PRIVATE)
         self.liquid_address = wally.bip32_key_to_address(
-            wallet_derived_key, wally.WALLY_ADDRESS_TYPE_P2PKH, wally.WALLY_ADDRESS_VERSION_P2PKH_LIQUID
+            wallet_derived_key,
+            wally.WALLY_ADDRESS_TYPE_P2PKH,
+            wally.WALLY_ADDRESS_VERSION_P2PKH_LIQUID,
         )
         # end-create_p2pkh_address
         self._get_planetmint_keys_tc()

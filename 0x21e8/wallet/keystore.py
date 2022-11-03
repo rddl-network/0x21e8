@@ -51,7 +51,9 @@ def get_master_xprivkey(wallet_dict, wallet_name: str, password: str) -> str:
         chaincode = bytes.fromhex(wallet["chain_code"])
         master_privkey = wallet["master_privkey"]
         privkey = symkey_decrypt(
-            bytes.fromhex(master_privkey["key"]), password.encode(), bytes.fromhex(master_privkey["salt"])
+            bytes.fromhex(master_privkey["key"]),
+            password.encode(),
+            bytes.fromhex(master_privkey["salt"]),
         )
         return ExtendedKey(privkey, chaincode)
     except KeyError:
