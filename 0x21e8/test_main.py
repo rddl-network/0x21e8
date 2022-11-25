@@ -27,6 +27,15 @@ def test_store_data_invalid():
     except:
         assert True
 
+def test_storing_and_retrieving_encrypted_data():
+    response = client.post(
+        "/data?encrypt=True",
+        headers={"accept": "application/json", "Content-Type": "application/json"},
+        json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
+    )
+    cid=response.json()
+    response = client.get("/data?cid=" + cid + "&link2data=false&decrypt=true")
+
 
 def test_get_data_valid():
     response = client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
@@ -35,7 +44,6 @@ def test_get_data_valid():
         assert False
     except:
         assert True
-
 
 @pytest.mark.skip(
     reason="the secret is not automatically removed. that's why this test fails sometimes and is skipped."

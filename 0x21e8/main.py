@@ -1,6 +1,6 @@
-from dataclasses import dataclass
 from model import IssuingRequest
 from fastapi import FastAPI, HTTPException
+import requests
 
 from liquid import issue_tokens
 from storage import get_ipfs_link, get_ipfs_file, store_asset, multihashed
@@ -8,52 +8,53 @@ from notarize import get_asset_description
 from rddl import resolve_nft_cid
 from config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT
 
-
-from wallet.planetmint import create_cid_asset, resolve_asset_token
+from wallet.planetmint import create_cid_based_asset, resolve_asset_token
 from wallet.sw_wallet import SoftwareWallet
 from wallet.utils import create_and_save_seed, save_seed_from_mnemonic
 from urllib.error import URLError
-import requests
 
-app = FastAPI()
+from planetmint_driver.exceptions import PlanetmintException
 
 tags_metadata = [
     {
-        "name": "store_data",
+        "name": "Data",
         "description": "Stores dictionary data to IPFS and returns the CID.",
     },
     {
-        "name": "get_cid_link",
-        "description": "Gets the URI for a given CID on IPFS.",
+        "name": "Assets",
+        "description": "Notarizes a given asset defined by its CID on Planetmint and resolves a given Token representing an assets CID.",
     },
     {
-        "name": "resolve_nft",
-        "description": "Resolves the NFT CID and the CID content and returns the content",
+        "name": "Machines",
+        "description": "Resolves the NFT and attests new machines via CID content and returns the content",
     },
     {
-        "name": "get_data_linke",
-        "description": "Manage items. So _fancy_ they have their own docs.",
-    },
-    {
-        "name": "get_data_linke",
-        "description": "Manage items. So _fancy_ they have their own docs.",
+        "name": "Seed",
+        "description": "Creates random seeds and returns mnemonic phrases for backups and let recover from backups.",
     },
 ]
 
+app = FastAPI(openapi_tags=tags_metadata)
 
-@app.post("/data")
-async def store_data(in_data_dict: dict):
-    cid = store_asset(in_data_dict)
-    return cid
+@app.post("/data", tags=["Data"])
+async def set_data(in_data_dict: dict, encrypt: bool = False):
+    try:
+        cid = store_asset(in_data_dict, encrypt_data=encrypt)
+        return cid
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=421,
+            detail="The hardware wallet needs to be provisioned by defining a master seed.",
+        )
 
 
-@app.get("/data")
-async def get_data(cid: str, link2data: bool = False):
+@app.get("/data", tags=["Data"])
+async def get_data(cid: str, link2data: bool = False, decrypt: bool = False):
     if link2data:
         data = get_ipfs_link(cid)
     else:
         try:
-            data = get_ipfs_file(cid)
+            data = get_ipfs_file(cid, decrypt)
         except URLError as e:
             raise HTTPException(
                 status_code=421,
@@ -63,8 +64,8 @@ async def get_data(cid: str, link2data: bool = False):
     return data
 
 
-@app.get("/cid")
-async def resolve_cid_token(cid_token):
+@app.get("/cid", tags=["Assets"])
+async def get_cid_token(cid_token):
     try:
         nft_tx, nft_cid = resolve_asset_token(cid_token)
         nft_data = resolve_nft_cid(nft_cid)
@@ -81,8 +82,8 @@ async def resolve_cid_token(cid_token):
         )
 
 
-@app.post("/cid")
-async def attest_cid(cid: str):
+@app.post("/cid", tags=["Assets"])
+async def set_cid_token(cid: str):
     # get wallet addresses (issuer, private & pub for )
     try:
         wallet = SoftwareWallet()
@@ -91,13 +92,18 @@ async def attest_cid(cid: str):
             status_code=421,
             detail="The hardware wallet needs to be provisioned by defining a master seed.",
         )
+    try:
+        cid_nft = create_cid_based_asset(cid, wallet)
+        return {"cid": cid, "NFT token": cid_nft["id"], "NFT transaction": cid_nft}
+    except PlanetmintException as e :
+        raise HTTPException(
+            status_code=423,
+            detail="The Planetmint server configured does not support the given transaction schema."
+        )
 
-    cid_nft = create_cid_asset(cid, wallet)
-    return {"cid": cid, "NFT token": cid_nft["id"], "NFT transaction": cid_nft}
 
-
-@app.post("/machine")
-async def attest_machine(issuing_request_input: IssuingRequest):
+@app.post("/machine", tags=["Machines"])
+async def set_machine(issuing_request_input: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
     try:
         wallet = SoftwareWallet()
@@ -113,9 +119,20 @@ async def attest_machine(issuing_request_input: IssuingRequest):
         wallet.get_liquid_address(),
         wallet.get_planetmint_pubkey().hex(),
     )
-
-    nft_cid = store_asset(nft_asset)
-    token_nft = create_cid_asset(nft_cid, wallet)
+    try:
+        nft_cid = store_asset(nft_asset)
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=421,
+            detail="The hardware wallet needs to be provisioned by defining a master seed.",
+        )
+    try:
+        token_nft = create_cid_based_asset(nft_cid, wallet)
+    except PlanetmintException as e :
+        raise HTTPException(
+            status_code=423,
+            detail="The Planetmint server configured does not support the given transaction schema."
+        )
 
     # issue tokens
     asset_id, contract = None, None
@@ -141,8 +158,8 @@ async def attest_machine(issuing_request_input: IssuingRequest):
     }
 
 
-@app.get("/machine")
-async def resolve_machine_token_and_data(nft_token: str):
+@app.get("/machine", tags=["Machines"])
+async def get_machine(nft_token: str):
     # get wallet addresses (issuer, private & pub for )
 
     # create the token NFT - e.g. the token notarization on planetmint
@@ -162,7 +179,7 @@ async def resolve_machine_token_and_data(nft_token: str):
         )
 
 
-@app.get("/seed")
+@app.get("/seed", tags=["Seed"])
 async def create_seed_and_provision(number_of_words: int):
     if number_of_words == 24:
         strength = 256
@@ -173,7 +190,7 @@ async def create_seed_and_provision(number_of_words: int):
     return create_and_save_seed(strength)
 
 
-@app.post("/seed")
+@app.post("/seed", tags=["Seed"])
 async def recover_seed_from_mnemonic(mnemonic_phrase: str):
     word_array = mnemonic_phrase.split()
     size = len(word_array)
@@ -184,9 +201,15 @@ async def recover_seed_from_mnemonic(mnemonic_phrase: str):
 
 
 @app.post("/multihash")
-async def get_multihash(json_data: dict):
-    hashed_marshalled = multihashed(json_data)
-    return hashed_marshalled
+async def get_multihash(json_data: dict, encrypt: bool = False):
+    try:
+        hashed_marshalled = multihashed(json_data, encrypt)
+        return hashed_marshalled
+    except FileNotFoundError:
+        raise HTTPException(
+            status_code=421,
+            detail="The hardware wallet needs to be provisioned by defining a master seed.",
+        )
 
 
 @app.get("/config")
