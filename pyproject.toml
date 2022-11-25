@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "0x21e8"
+name = "x21e8"
 version = "0.1.0"
 description = "x"
 authors = ["Firat Berk Cakar <firat@riddleandcode.com>"]

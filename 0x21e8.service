@@ -1,4 +1,4 @@
-##0x21e8.service
+## 0x21e8.service
 [Unit]
 Description=RDDL Attestation Service
 Documentation=https://rddl.io
@@ -6,7 +6,7 @@ Documentation=https://rddl.io
 [Service]
 Restart=always
 ExecStart=/home/rddl/.local/bin/poetry run uvicorn --log-level debug --reload main:app --host 0.0.0.0
-WorkingDirectory=/home/rddl/0x21e8/0x21e8
+WorkingDirectory=/home/rddl/0x21e8/x21e8
 User=rddl
 Group=rddl
 

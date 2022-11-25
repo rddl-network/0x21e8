@@ -1,8 +1,8 @@
 import pytest
 import sha3
 import nacl.secret
-from wallet.utils import create_and_save_seed
-from encryption import encrypt_str, encrypt_dict, encrypt_bytes, decrypt_2_str, decrypt_2_dict, decrypt_2_bytes
+from x21e8.wallet.utils import create_and_save_seed
+from x21e8.encryption import encrypt_str, encrypt_dict, encrypt_bytes, decrypt_2_str, decrypt_2_dict, decrypt_2_bytes
 
 try:
     secret = open("secret.txt", "r")

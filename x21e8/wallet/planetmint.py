@@ -3,7 +3,7 @@ import base58
 from planetmint_driver import Planetmint
 from planetmint_driver.offchain import fulfill_with_signing_delegation
 
-from config import PLNTMNT_ENDPOINT
+from x21e8.config import PLNTMNT_ENDPOINT
 
 
 def create_cid_based_asset(cid: str, wallet: base_wallet.BaseWallet):

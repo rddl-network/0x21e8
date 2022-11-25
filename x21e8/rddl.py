@@ -1,4 +1,4 @@
-from storage import get_ipfs_file
+from .storage import get_ipfs_file
 
 
 def resolve_nft_cid(cid: str, machine_nft_cid: bool = False):
