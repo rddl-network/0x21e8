@@ -14,10 +14,10 @@ def get_ipfs_link(cid: str):
 def get_ipfs_file(cid: str, decrypt_data: bool = False):
     nft_url = get_ipfs_link(cid)
     marshalled_nft_data = urlopen(nft_url).read()
-    print( f"marshalled/encrypted : {marshalled_nft_data}")
+    print(f"marshalled/encrypted : {marshalled_nft_data}")
     if decrypt_data:
         decrypted_blob = decrypt_2_bytes(marshalled_nft_data)
-        print( f"decrypted : {decrypted_blob}")
+        print(f"decrypted : {decrypted_blob}")
         nft_data = unmarshal(decrypted_blob)
     else:
         nft_data = unmarshal(marshalled_nft_data)
@@ -25,12 +25,13 @@ def get_ipfs_file(cid: str, decrypt_data: bool = False):
     return nft_data
 
 
-def local_marshal( asset: dict, encrypt_data: bool = False):
+def local_marshal(asset: dict, encrypt_data: bool = False):
     marshalled_asset = marshal(asset)
     if not encrypt_data:
         return marshalled_asset
     else:
         return encrypt_bytes(marshalled_asset)
+
 
 def store_asset(asset: dict, encrypt_data: bool = False):
     marshalled_asset = local_marshal(asset, encrypt_data)

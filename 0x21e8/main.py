@@ -36,6 +36,7 @@ tags_metadata = [
 
 app = FastAPI(openapi_tags=tags_metadata)
 
+
 @app.post("/data", tags=["Data"])
 async def set_data(in_data_dict: dict, encrypt: bool = False):
     try:
@@ -95,10 +96,9 @@ async def set_cid_token(cid: str):
     try:
         cid_nft = create_cid_based_asset(cid, wallet)
         return {"cid": cid, "NFT token": cid_nft["id"], "NFT transaction": cid_nft}
-    except PlanetmintException as e :
+    except PlanetmintException as e:
         raise HTTPException(
-            status_code=423,
-            detail="The Planetmint server configured does not support the given transaction schema."
+            status_code=423, detail="The Planetmint server configured does not support the given transaction schema."
         )
 
 
@@ -128,10 +128,9 @@ async def set_machine(issuing_request_input: IssuingRequest):
         )
     try:
         token_nft = create_cid_based_asset(nft_cid, wallet)
-    except PlanetmintException as e :
+    except PlanetmintException as e:
         raise HTTPException(
-            status_code=423,
-            detail="The Planetmint server configured does not support the given transaction schema."
+            status_code=423, detail="The Planetmint server configured does not support the given transaction schema."
         )
 
     # issue tokens
