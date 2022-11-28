@@ -43,7 +43,7 @@ def test_storing_and_retrieving_encrypted_data():
         json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
     )
     cid = response.json()
-    response = client.get("/data?cid=" + cid + "&link2data=false&decrypt=true")
+    response = client.get("/data?cid=" + cid["cid"] + "&link2data=false&decrypt=true")
 
 
 def test_get_data_valid():
@@ -84,17 +84,17 @@ def test_seed_creation():
     response1 = client.get("/seed?number_of_words=12")
     assert response1.status_code == 200
     mnemonic = response1.json()
-    assert len(mnemonic.split()) == 12
+    assert len(mnemonic["mnemonic"].split()) == 12
 
     response1 = client.get("/seed?number_of_words=24")
     assert response1.status_code == 200
     mnemonic = response1.json()
-    assert len(mnemonic.split()) == 24
+    assert len(mnemonic["mnemonic"].split()) == 24
 
     response1 = client.get("/seed?number_of_words=11")
     assert response1.status_code == 420
     assert response1.json() == {"detail": "A mnemonic has to contain 12 or 24 words"}
-    assert len(mnemonic.split()) == 24
+    assert len(mnemonic["mnemonic"].split()) == 24
 
     response1 = client.post(
         "/seed?mnemonic_phrase=%22potato%20drop%20kidney%20coral%20toilet%20elite%20uncover%20keep%20vintage%20beach%20eyebrow%20ethics%22"
