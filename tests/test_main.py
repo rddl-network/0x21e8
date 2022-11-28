@@ -7,10 +7,12 @@ from x21e8.main import app
 
 client = TestClient(app)
 
+
 def delete_secret():
-    filePath = '/home/somedir/Documents/python/logs'
+    filePath = "/home/somedir/Documents/python/logs"
     if os.path.exists(filePath):
         os.remove(filePath)
+
 
 def test_store_data_valid():
     response = client.post(
@@ -18,6 +20,7 @@ def test_store_data_valid():
         headers={"accept": "application/json", "Content-Type": "application/json"},
         json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
     )
+
 
 def test_store_data_invalid():
     try:
@@ -57,6 +60,7 @@ def test_get_data_valid():
 )
 def test_machine_before_wallet_init():
     from datetime import datetime
+
     delete_secret()
     x = datetime.now()
     response1 = client.post(

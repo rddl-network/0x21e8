@@ -41,7 +41,7 @@ app = FastAPI(openapi_tags=tags_metadata)
 async def set_data(in_data_dict: dict, encrypt: bool = False):
     try:
         cid = store_asset(in_data_dict, encrypt_data=encrypt)
-        return { "cid": cid }
+        return {"cid": cid}
     except FileNotFoundError:
         raise HTTPException(
             status_code=421,
@@ -62,7 +62,7 @@ async def get_data(cid: str, link2data: bool = False, decrypt: bool = False):
                 detail=f"The requested URL could not be resolved: { e.code } : { e.reason }.",
             )
 
-    return { "cid": data }
+    return {"cid": data}
 
 
 @app.get("/cid", tags=["Assets"], deprecated=True)
@@ -188,7 +188,7 @@ async def create_seed_and_provision(number_of_words: int):
         strength = 128
     else:
         raise HTTPException(status_code=420, detail="A mnemonic has to contain 12 or 24 words")
-    return { 'mnemonic': create_and_save_seed(strength) }
+    return {"mnemonic": create_and_save_seed(strength)}
 
 
 @app.post("/seed", tags=["Seed"])
@@ -205,7 +205,7 @@ async def recover_seed_from_mnemonic(mnemonic_phrase: str):
 async def get_multihash(json_data: dict, encrypt: bool = False):
     try:
         hashed_marshalled = multihashed(json_data, encrypt)
-        return {'cid' : hashed_marshalled }
+        return {"cid": hashed_marshalled}
     except FileNotFoundError:
         raise HTTPException(
             status_code=421,
