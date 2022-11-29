@@ -1,26 +1,36 @@
-# 0x21e8
+# 0x21e8 RDDL Interaction Service
 
-The 0x21e8 service is usually installed and executed on RDDL compatible hardware wallets.
-The current version runs with a software-based keystore. Production based versions will use keystores based on secure elements.
+The 0x21e8 service is usually installed and executed on RDDL compatible hardware wallets (HW-03). The service utilizes the hardware wallet and enables the HW-03 devices to interact with the RDDL network (Planetmint and liquid). 
+
+Besides the pure wallet functionality it works as the core service to launch any RDDL specific use cases:
+* storage of (un/encrypted) data (w3storage (IPFS))
+* attestation of data
+* attestation of machines
+* issuing of tokens
+* lookup of data
+* lookup of tokens
+* combination of data & tokens
+
+The current version runs with a software-based keystore. Production based versions will use keystores based on secure elements. Initialization and configuration of the keystores is currently enabled via API. 
+
+The service exposes all features via a RESTFul API. The documentation of the API is exposed via <ip/hostname>/docs.
 
 **WARNING** use this code only for demonstrational purposes. Production code must not rely on this service.
 
 
-
-
 ## Prepare the Environment
 ```bash
-### For a RPI, ignore the errors with zenroom
+### For a RPI, ignore the errors with poetry add  ./external_packages_armv7/zenroom-2.1.0.dev1655293214-cp39-cp39-linux_armv7l.whl
 bash install.sh
 
 ### For a x86 machine with poetry
-curl -sSL https://install.python-poetry.org | python3 -   # instals poetry
+curl -sSL https://install.python-poetry.org | python3 -   # installs poetry
 poetry install
 poetry shell
 ```
 
 ## Service Configuration
-The service needs the folloing configurations:
+The service needs the following configurations:
 * RDDL network planetmint services (RESTFul)
 * RDDL network liquid services (RPC)
     * RPC URL
@@ -29,7 +39,7 @@ The service needs the folloing configurations:
     * RPC password
 * web3storage token to store data
 
-The configuratoin is set via environment variables such as
+The configuration is set via environment variables such as
 * LQD_RPC_PORT
 * LQD_RPC_USER
 * LQD_RPC_PASSWORD
@@ -37,7 +47,7 @@ The configuratoin is set via environment variables such as
 * PLNTMNT_ENDPOINT
 * WEB3STORAGE_TOKEN
 
-Alternatively, the varialbes can be defined within the ```.env``` file of the project. A example ```env.example``` file can be adjusted and copied to ```.env```.
+Alternatively, the variables can be defined within the ```.env``` file of the project. A example ```env.example``` file can be adjusted and copied to ```.env```.
 
 ## Service Execution
 ```bash
@@ -46,7 +56,7 @@ uvicorn --log-level debug --reload x21e8.main:app
 
 ## Service deployment
 
-In order to deploy the service within an production environment adjust the user and groupnames if needed and execute the follwoing commands:
+In order to deploy the service within an production environment adjust the user and group names if needed and execute the following commands:
 
 ```bash
 sudo cp 0x21e8.service /etc/systemd/system # that's the folder where main.py is located within
@@ -82,4 +92,4 @@ The liquid transactions are created the following way:
 
 It seems like there is a confusion around creating/issuing an asset and actually distributing it to users. The steps here resemble a one-time asset issuance rather than asset distribution (which is called asset re-issuance. 
 Here is the official documentation : https://docs.blockstream.com/liquid/developer-guide/developer-guide-index.html#proof-of-issuance-blockstream-s-liquid-asset-registry.
-The trusted gateway should ask for a re-issuance of token and this service should do it. The hw should focus on generating an address (from a mnemonic), post the planetmint tx first get the id from this tx and send it along the issuance request to the service so the service can determine how much token will be issued. Maybe its not like this and the issued asset reprents a NFT on Liquid Network so for every create tx from planet mint there will be another asset issued on Liquid. 
+The trusted gateway should ask for a re-issuance of token and this service should do it. The hw should focus on generating an address (from a mnemonic), post the planetmint tx first get the id from this tx and send it along the issuance request to the service so the service can determine how much token will be issued. Maybe its not like this and the issued asset represents a NFT on Liquid Network so for every create tx from planet mint there will be another asset issued on Liquid. 
