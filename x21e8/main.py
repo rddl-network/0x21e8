@@ -3,16 +3,16 @@ from urllib.error import URLError
 from fastapi import FastAPI, HTTPException
 from planetmint_driver.exceptions import PlanetmintException
 
-from .model import IssuingRequest
-from .liquid import issue_tokens
-from .storage import get_ipfs_link, get_ipfs_file, store_asset, multihashed
-from .notarize import get_asset_description
-from .rddl import resolve_nft_cid
-from .config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT
+from x21e8.model import IssuingRequest
+from x21e8.liquid import issue_tokens
+from x21e8.storage import get_ipfs_link, get_ipfs_file, store_asset, multihashed
+from x21e8.notarize import get_asset_description
+from x21e8.rddl import resolve_nft_cid
+from x21e8.config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT
 
-from .wallet.planetmint import create_cid_based_asset, resolve_asset_token
-from .wallet.sw_wallet import SoftwareWallet
-from .wallet.utils import create_and_save_seed, save_seed_from_mnemonic
+from x21e8.wallet.planetmint import create_cid_based_asset, resolve_asset_token
+from x21e8.wallet.sw_wallet import SoftwareWallet
+from x21e8.wallet.utils import create_and_save_seed, save_seed_from_mnemonic
 
 
 tags_metadata = [

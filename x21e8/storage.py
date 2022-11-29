@@ -2,8 +2,8 @@ import w3storage
 from urllib.request import urlopen
 from ipld import marshal, unmarshal, multihash
 
-from .config import WEB3STORAGE_TOKEN
-from .encryption import encrypt_bytes, decrypt_2_bytes
+from x21e8.config import WEB3STORAGE_TOKEN
+from x21e8.encryption import encrypt_bytes, decrypt_2_bytes
 
 w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
 

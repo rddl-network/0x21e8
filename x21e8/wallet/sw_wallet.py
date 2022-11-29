@@ -1,14 +1,15 @@
 import TrezorCrypto
 import wallycore as wally
 from nacl.signing import SigningKey
-from . import base_wallet
+
+from x21e8.wallet.base_wallet import BaseWallet
 
 HARDENED = 0x80000000
 PLANET_VERSION_PUBLIC = 0x02D41400
 PLANET_VERSION_PRIVATE = 0x02D40FC0
 
 
-class SoftwareWallet(base_wallet.BaseWallet):
+class SoftwareWallet(BaseWallet):
     def __init__(self):
         self.seed = None
         self.private_key = None

@@ -7,8 +7,8 @@ import sys
 import os
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
-from .model import IssuingRequest
-from .config import LQD_RPC_PORT, LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT
+from x21e8.model import IssuingRequest
+from x21e8.config import LQD_RPC_PORT, LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT
 
 TOKEN_AMOUNT = 1
 VERSION = 0

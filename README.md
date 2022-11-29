@@ -12,16 +12,11 @@ The current version runs with a software-based keystore. Production based versio
 ```bash
 ### For a RPI, ignore the errors with zenroom
 bash install.sh
-pipenv shell
 
 ### For a x86 machine with poetry
 curl -sSL https://install.python-poetry.org | python3 -   # instals poetry
 poetry install
 poetry shell
-
-### For a x86 machine with pipenv
-pipenv install
-pipenv shell
 ```
 
 ## Service Configuration
@@ -46,8 +41,7 @@ Alternatively, the varialbes can be defined within the ```.env``` file of the pr
 
 ## Service Execution
 ```bash
-cd 0x21e8 # that's the folder where main.py is located within
-uvicorn --log-level debug --reload main:app
+uvicorn --log-level debug --reload x21e8.main:app
 ```
 
 ## Service deployment
