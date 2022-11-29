@@ -1,8 +1,9 @@
+import urllib3
 import w3storage
 from urllib.request import urlopen
 from ipld import marshal, unmarshal, multihash
 
-from x21e8.config import WEB3STORAGE_TOKEN
+from x21e8.config import WEB3STORAGE_TOKEN, CID_RESOLVER
 from x21e8.encryption import encrypt_bytes, decrypt_2_bytes
 
 w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
@@ -10,6 +11,13 @@ w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
 
 def get_ipfs_link(cid: str):
     return "https://" + cid + ".ipfs.w3s.link"
+
+
+def register_cid_url(cid: str, url: str):
+    http = urllib3.PoolManager()
+    cid_resp = http.request(
+        "POST", CID_RESOLVER + "/entry?cid=" + cid + "&url=" + url, headers={"Content-Type": "application/json"}
+    )
 
 
 def get_ipfs_file(cid: str, decrypt_data: bool = False):
@@ -37,6 +45,7 @@ def local_marshal(asset: dict, encrypt_data: bool = False):
 def store_asset(asset: dict, encrypt_data: bool = False):
     marshalled_asset = local_marshal(asset, encrypt_data)
     asset_cid = w3s.post_upload(marshalled_asset)
+    register_cid_url(asset_cid, get_ipfs_link(asset_cid))
     return asset_cid
 
 
