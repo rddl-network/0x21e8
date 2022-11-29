@@ -6,7 +6,6 @@ from x21e8.config import PLNTMNT_ENDPOINT
 from x21e8.wallet.base_wallet import BaseWallet
 
 
-
 def create_cid_based_asset(cid: str, wallet: BaseWallet):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
     pubkey = wallet.get_planetmint_pubkey()
