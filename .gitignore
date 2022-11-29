@@ -128,4 +128,5 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-0x21e8/secret.txt
+x21e8/secret.txt
+secret.txt
