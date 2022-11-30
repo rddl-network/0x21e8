@@ -19,11 +19,16 @@ The service exposes all features via a RESTFul API. The documentation of the API
 
 
 ## Prepare the Environment
+Please run the following scripts to install 0x21e8 service ()
 ```bash
-### For a RPI, ignore the errors with poetry add  ./external_packages_armv7/zenroom-2.1.0.dev1655293214-cp39-cp39-linux_armv7l.whl
+### For a RPI: some architectures need to get a zenroom and dependencies build from source (glibc compatibility)
 bash install.sh
+```
+The script basically prepares your system to build the service and installs some requirements for this.
 
-### For a x86 machine with poetry
+Very often, poetry can be used directly without any indication to build some packages from source. Then, the following instruction will be sufficient:
+
+```bash
 curl -sSL https://install.python-poetry.org | python3 -   # installs poetry
 poetry install
 poetry shell
