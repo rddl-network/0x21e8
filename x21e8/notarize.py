@@ -1,4 +1,4 @@
-from model import IssuingRequest
+from x21e8.model import IssuingRequest
 
 
 def get_asset_description(issueReq: IssuingRequest, liquid_address, planetmint_address):

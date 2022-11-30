@@ -1,8 +1,17 @@
-from fastapi.testclient import TestClient
-from main import app
+import os
 import pytest
 
+from fastapi.testclient import TestClient
+from x21e8.main import app
+
+
 client = TestClient(app)
+
+
+def delete_secret():
+    filePath = "/home/somedir/Documents/python/logs"
+    if os.path.exists(filePath):
+        os.remove(filePath)
 
 
 def test_store_data_valid():
@@ -11,7 +20,6 @@ def test_store_data_valid():
         headers={"accept": "application/json", "Content-Type": "application/json"},
         json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
     )
-    print(response)
 
 
 def test_store_data_invalid():
@@ -26,6 +34,16 @@ def test_store_data_invalid():
         pass
     except:
         assert True
+
+
+def test_storing_and_retrieving_encrypted_data():
+    response = client.post(
+        "/data?encrypt=True",
+        headers={"accept": "application/json", "Content-Type": "application/json"},
+        json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
+    )
+    cid = response.json()
+    response = client.get("/data?cid=" + cid["cid"] + "&link2data=false&decrypt=true")
 
 
 def test_get_data_valid():
@@ -43,6 +61,7 @@ def test_get_data_valid():
 def test_machine_before_wallet_init():
     from datetime import datetime
 
+    delete_secret()
     x = datetime.now()
     response1 = client.post(
         "/machine",
@@ -65,17 +84,17 @@ def test_seed_creation():
     response1 = client.get("/seed?number_of_words=12")
     assert response1.status_code == 200
     mnemonic = response1.json()
-    assert len(mnemonic.split()) == 12
+    assert len(mnemonic["mnemonic"].split()) == 12
 
     response1 = client.get("/seed?number_of_words=24")
     assert response1.status_code == 200
     mnemonic = response1.json()
-    assert len(mnemonic.split()) == 24
+    assert len(mnemonic["mnemonic"].split()) == 24
 
     response1 = client.get("/seed?number_of_words=11")
     assert response1.status_code == 420
     assert response1.json() == {"detail": "A mnemonic has to contain 12 or 24 words"}
-    assert len(mnemonic.split()) == 24
+    assert len(mnemonic["mnemonic"].split()) == 24
 
     response1 = client.post(
         "/seed?mnemonic_phrase=%22potato%20drop%20kidney%20coral%20toilet%20elite%20uncover%20keep%20vintage%20beach%20eyebrow%20ethics%22"

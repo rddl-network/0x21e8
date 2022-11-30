@@ -1,5 +1,3 @@
-from model import IssuingRequest
-from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 import base64
 import hashlib
 import json
@@ -7,8 +5,10 @@ import time
 import six
 import sys
 import os
+from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
-from config import LQD_RPC_PORT, LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT
+from x21e8.model import IssuingRequest
+from x21e8.config import LQD_RPC_PORT, LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT
 
 TOKEN_AMOUNT = 1
 VERSION = 0
