@@ -27,7 +27,7 @@ python-versions = ">=3.5"
 dev = ["cloudpickle", "coverage[toml] (>=5.0.2)", "furo", "hypothesis", "mypy (>=0.900,!=0.940)", "pre-commit", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "sphinx", "sphinx-notfound-page", "zope.interface"]
 docs = ["furo", "sphinx", "sphinx-notfound-page", "zope.interface"]
 tests = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "zope.interface"]
-tests_no_zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
+tests-no-zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
 
 [[package]]
 name = "base58"
@@ -136,7 +136,7 @@ optional = false
 python-versions = ">=3.6.0"
 
 [package.extras]
-unicode_backport = ["unicodedata2"]
+unicode-backport = ["unicodedata2"]
 
 [[package]]
 name = "click"
@@ -280,7 +280,7 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "jaraco.classes"
+name = "jaraco-classes"
 version = "3.2.3"
 description = "Utility functions for Python class constructs"
 category = "dev"
@@ -308,7 +308,7 @@ trio = ["async_generator", "trio"]
 
 [[package]]
 name = "jsonschema"
-version = "4.17.1"
+version = "4.17.3"
 description = "An implementation of JSON Schema validation for Python"
 category = "main"
 optional = false
@@ -432,14 +432,14 @@ python-versions = ">=3.7"
 
 [[package]]
 name = "pkginfo"
-version = "1.8.3"
+version = "1.9.2"
 description = "Query metadatdata from sdists / bdists / installed packages."
 category = "dev"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+python-versions = ">=3.6"
 
 [package.extras]
-testing = ["coverage", "nose"]
+testing = ["pytest", "pytest-cov"]
 
 [[package]]
 name = "planetmint-cryptoconditions"
@@ -649,7 +649,7 @@ dotenv = ["python-dotenv (>=0.10.4)"]
 email = ["email-validator (>=1.0.3)"]
 
 [[package]]
-name = "Pygments"
+name = "pygments"
 version = "2.13.0"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "dev"
@@ -660,7 +660,7 @@ python-versions = ">=3.6"
 plugins = ["importlib-metadata"]
 
 [[package]]
-name = "PyNaCl"
+name = "pynacl"
 version = "1.4.0"
 description = "Python binding to the Networking and Cryptography (NaCl) library"
 category = "main"
@@ -771,7 +771,7 @@ optional = false
 python-versions = "*"
 
 [[package]]
-name = "PyYAML"
+name = "pyyaml"
 version = "6.0"
 description = "YAML parser and emitter for Python"
 category = "main"
@@ -810,7 +810,7 @@ urllib3 = ">=1.21.1,<1.27"
 
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
-use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
+use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "requests-toolbelt"
@@ -850,7 +850,7 @@ pygments = ">=2.6.0,<3.0.0"
 jupyter = ["ipywidgets (>=7.5.1,<8.0.0)"]
 
 [[package]]
-name = "SecretStorage"
+name = "secretstorage"
 version = "3.3.3"
 description = "Python bindings to FreeDesktop.org Secret Service API"
 category = "dev"
@@ -912,7 +912,7 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
-name = "TrezorCryptoTestRc"
+name = "trezorcryptotestrc"
 version = "0.0.16"
 description = "Cython wrapper around trezor-crypto library"
 category = "main"
@@ -1011,7 +1011,7 @@ python-versions = "*"
 
 [[package]]
 name = "zenroom"
-version = "2.4.2"
+version = "2.3.4"
 description = "Zenroom for Python: Bindings of Zenroom library for Python."
 category = "main"
 optional = false
@@ -1019,6 +1019,10 @@ python-versions = ">=3.8, <4"
 
 [package.extras]
 test = ["pytest", "schema"]
+
+[package.source]
+type = "file"
+url = "../zenroom-2.3.4-cp39-cp39-linux_armv7l.whl"
 
 [[package]]
 name = "zipp"
@@ -1035,7 +1039,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "e3d67d46710e0fdcbba5b442c9ae106a39fff0b63f098708938740ef2d86641c"
+content-hash = "59338577dc1a402512cc2035c84afffec84a5e18d24f1218f75eb9c8f66f4922"
 
 [metadata.files]
 anyio = [
@@ -1222,7 +1226,7 @@ iniconfig = [
     {file = "iniconfig-1.1.1-py2.py3-none-any.whl", hash = "sha256:011e24c64b7f47f6ebd835bb12a743f2fbe9a26d4cecaa7f53bc4f35ee9da8b3"},
     {file = "iniconfig-1.1.1.tar.gz", hash = "sha256:bc3af051d7d14b2ee5ef9969666def0cd1a000e121eaea580d4a313df4b37f32"},
 ]
-"jaraco.classes" = [
+jaraco-classes = [
     {file = "jaraco.classes-3.2.3-py3-none-any.whl", hash = "sha256:2353de3288bc6b82120752201c6b1c1a14b058267fa424ed5ce5984e3b922158"},
     {file = "jaraco.classes-3.2.3.tar.gz", hash = "sha256:89559fa5c1d3c34eff6f631ad80bb21f378dbcbb35dd161fd2c6b93f5be2f98a"},
 ]
@@ -1231,8 +1235,8 @@ jeepney = [
     {file = "jeepney-0.8.0.tar.gz", hash = "sha256:5efe48d255973902f6badc3ce55e2aa6c5c3b3bc642059ef3a91247bcfcc5806"},
 ]
 jsonschema = [
-    {file = "jsonschema-4.17.1-py3-none-any.whl", hash = "sha256:410ef23dcdbca4eaedc08b850079179883c2ed09378bd1f760d4af4aacfa28d7"},
-    {file = "jsonschema-4.17.1.tar.gz", hash = "sha256:05b2d22c83640cde0b7e0aa329ca7754fbd98ea66ad8ae24aa61328dfe057fa3"},
+    {file = "jsonschema-4.17.3-py3-none-any.whl", hash = "sha256:a870ad254da1a8ca84b6a2905cac29d265f805acc57af304784962a2aa6508f6"},
+    {file = "jsonschema-4.17.3.tar.gz", hash = "sha256:0f864437ab8b6076ba6707453ef8f98a6a0d512a80e93f8abdb676f737ecb60d"},
 ]
 keyring = [
     {file = "keyring-23.11.0-py3-none-any.whl", hash = "sha256:3dd30011d555f1345dec2c262f0153f2f0ca6bca041fb1dc4588349bb4c0ac1e"},
@@ -1296,8 +1300,8 @@ pathspec = [
     {file = "pathspec-0.10.2.tar.gz", hash = "sha256:8f6bf73e5758fd365ef5d58ce09ac7c27d2833a8d7da51712eac6e27e35141b0"},
 ]
 pkginfo = [
-    {file = "pkginfo-1.8.3-py2.py3-none-any.whl", hash = "sha256:848865108ec99d4901b2f7e84058b6e7660aae8ae10164e015a6dcf5b242a594"},
-    {file = "pkginfo-1.8.3.tar.gz", hash = "sha256:a84da4318dd86f870a9447a8c98340aa06216bfc6f2b7bdc4b8766984ae1867c"},
+    {file = "pkginfo-1.9.2-py3-none-any.whl", hash = "sha256:d580059503f2f4549ad6e4c106d7437356dbd430e2c7df99ee1efe03d75f691e"},
+    {file = "pkginfo-1.9.2.tar.gz", hash = "sha256:ac03e37e4d601aaee40f8087f63fc4a2a6c9814dda2c8fa6aab1b1829653bdfa"},
 ]
 planetmint-cryptoconditions = [
     {file = "planetmint_cryptoconditions-1.0.0-py3-none-any.whl", hash = "sha256:d2e2b411635bb7a1934908072bd726d0fd14a9367cddb6f9f9e2720999752aeb"},
@@ -1388,11 +1392,11 @@ pydantic = [
     {file = "pydantic-1.10.2-py3-none-any.whl", hash = "sha256:1b6ee725bd6e83ec78b1aa32c5b1fa67a3a65badddde3976bca5fe4568f27709"},
     {file = "pydantic-1.10.2.tar.gz", hash = "sha256:91b8e218852ef6007c2b98cd861601c6a09f1aa32bbbb74fab5b1c33d4a1e410"},
 ]
-Pygments = [
+pygments = [
     {file = "Pygments-2.13.0-py3-none-any.whl", hash = "sha256:f643f331ab57ba3c9d89212ee4a2dabc6e94f117cf4eefde99a0574720d14c42"},
     {file = "Pygments-2.13.0.tar.gz", hash = "sha256:56a8508ae95f98e2b9bdf93a6be5ae3f7d8af858b43e02c5a2ff083726be40c1"},
 ]
-PyNaCl = [
+pynacl = [
     {file = "PyNaCl-1.4.0-cp27-cp27m-macosx_10_10_x86_64.whl", hash = "sha256:ea6841bc3a76fa4942ce00f3bda7d436fda21e2d91602b9e21b7ca9ecab8f3ff"},
     {file = "PyNaCl-1.4.0-cp27-cp27m-manylinux1_x86_64.whl", hash = "sha256:d452a6746f0a7e11121e64625109bc4468fc3100452817001dbe018bb8b08514"},
     {file = "PyNaCl-1.4.0-cp27-cp27m-win32.whl", hash = "sha256:2fe0fc5a2480361dcaf4e6e7cea00e078fcda07ba45f811b167e3f99e8cff574"},
@@ -1532,7 +1536,7 @@ pywin32-ctypes = [
     {file = "pywin32-ctypes-0.2.0.tar.gz", hash = "sha256:24ffc3b341d457d48e8922352130cf2644024a4ff09762a2261fd34c36ee5942"},
     {file = "pywin32_ctypes-0.2.0-py2.py3-none-any.whl", hash = "sha256:9dc2d991b3479cc2df15930958b674a48a227d5361d413827a4cfd0b5876fc98"},
 ]
-PyYAML = [
+pyyaml = [
     {file = "PyYAML-6.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d4db7c7aef085872ef65a8fd7d6d09a14ae91f691dec3e87ee5ee0539d516f53"},
     {file = "PyYAML-6.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:9df7ed3b3d2e0ecfe09e14741b857df43adb5a3ddadc919a2d94fbdf78fea53c"},
     {file = "PyYAML-6.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:77f396e6ef4c73fdc33a9157446466f1cff553d979bd00ecb64385760c6babdc"},
@@ -1594,7 +1598,7 @@ rich = [
     {file = "rich-12.6.0-py3-none-any.whl", hash = "sha256:a4eb26484f2c82589bd9a17c73d32a010b1e29d89f1604cd9bf3a2097b81bb5e"},
     {file = "rich-12.6.0.tar.gz", hash = "sha256:ba3a3775974105c221d31141f2c116f4fd65c5ceb0698657a11e9f295ec93fd0"},
 ]
-SecretStorage = [
+secretstorage = [
     {file = "SecretStorage-3.3.3-py3-none-any.whl", hash = "sha256:f356e6628222568e3af06f2eba8df495efa13b3b63081dafd4f7d9a7b7bc9f99"},
     {file = "SecretStorage-3.3.3.tar.gz", hash = "sha256:2403533ef369eca6d2ba81718576c5e0f564d5cca1b58f73a8b23e7d4eeebd77"},
 ]
@@ -1618,7 +1622,7 @@ tomli = [
     {file = "tomli-2.0.1-py3-none-any.whl", hash = "sha256:939de3e7a6161af0c887ef91b7d41a53e7c5a1ca976325f429cb46ea9bc30ecc"},
     {file = "tomli-2.0.1.tar.gz", hash = "sha256:de526c12914f0c550d15924c62d72abc48d6fe7364aa87328337a31007fe8a4f"},
 ]
-TrezorCryptoTestRc = [
+trezorcryptotestrc = [
     {file = "TrezorCryptoTestRc-0.0.16.tar.gz", hash = "sha256:914813c56f08fe37e912a8cd4dbfbed0ac52bf5ae04ee8f41cef7a47f4c9799d"},
 ]
 twine = [
@@ -1671,27 +1675,7 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 zenroom = [
-    {file = "zenroom-2.4.2-cp310-cp310-linux_armv7l.whl", hash = "sha256:7f4496a9caa70dc38c15162d62d0deff7d23a4e7b2d13c511c25e2c15f472c65"},
-    {file = "zenroom-2.4.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:5c41f41e48360ac86de9a28a751804a1b2bbb8f2013c459ad8c52cf26c654518"},
-    {file = "zenroom-2.4.2-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:be7c0f3fac065c27e4678a31347afde4a9623643dfe8bb4855af5c41f58e1d44"},
-    {file = "zenroom-2.4.2-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:da6aa94bf3bb216f5560f91ad38e2317d480b63ab89150109a80584ae51c1084"},
-    {file = "zenroom-2.4.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:2b558e7a714272412a7ae18c112d70356d36b33e898f63f02c5ad5138e2f0ed6"},
-    {file = "zenroom-2.4.2-cp311-cp311-linux_armv7l.whl", hash = "sha256:875b03b96b7a621fbc9393ef2eeb8cf822bc7f7b1ddc3d8f298123cac49ed9da"},
-    {file = "zenroom-2.4.2-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:d0ff069c011c0d2cb6a42299b8c1650a5cde48ca9e86a2fcc998477e78351f2b"},
-    {file = "zenroom-2.4.2-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:5c86e8719329eccebb418ac679fe81b3a19601e3e2b5b93e58d56dbc96732fea"},
-    {file = "zenroom-2.4.2-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:1fa9ba3c81ce653860a1b1756b14356acb442d9ff9c181832d9ef43c361c036f"},
-    {file = "zenroom-2.4.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:9b5f435247c4ac1df9d3aae0b68a4f4ef87ca76ba7ab352586071536b5f605d3"},
-    {file = "zenroom-2.4.2-cp38-cp38-linux_armv7l.whl", hash = "sha256:1162afb103112b41fbbde0b71e1b3fa9c74c58492749942e36c51e00f50cdd64"},
-    {file = "zenroom-2.4.2-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:100d107e4fc64eb42bf1d9689c883d9ddc9da4de5a13b0e4fe0c44f259803998"},
-    {file = "zenroom-2.4.2-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:249fe88bee6b688b29ad6c4ff18add36f547a8684a84ff4a921c2fc3e13a75fb"},
-    {file = "zenroom-2.4.2-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:ada88fe2e55e5005d554af971ecdefd385b18c7f923b689b0efbd29bb77bdab1"},
-    {file = "zenroom-2.4.2-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:7aa582184222efab6bff7715c9a8cb50cebd90cdeb1bc9bff7da07bc3a081031"},
-    {file = "zenroom-2.4.2-cp39-cp39-linux_armv7l.whl", hash = "sha256:a2c0588f2011fae329077e0414c0c60481e1f2f8b3f2ebc65ad1b77242e74b18"},
-    {file = "zenroom-2.4.2-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:7984a0b81d06e9d1a128c5bb1f996d4cd0f4078853e9a7b249fdac3fb40d92b7"},
-    {file = "zenroom-2.4.2-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:4bd57b626288c1c28b5e4e99d8e558c159e7d7bfcd26c7525b9278add668f02a"},
-    {file = "zenroom-2.4.2-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:36682d4b04185bfda7848feef7f11302ae90a12c07529202ae3dc905d5abc84a"},
-    {file = "zenroom-2.4.2-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:fb41a4e89a1b8d0e012200df641323fad88b8e74efe0c448903900fe56971734"},
-    {file = "zenroom-2.4.2.tar.gz", hash = "sha256:0290f0644976e17bcffd696520997e506c47fb6ef1e425cdd3e06c54aa165815"},
+    {file = "zenroom-2.3.4-cp39-cp39-linux_armv7l.whl", hash = "sha256:8fe37fbf4bb1aae4b0bc996f5fb5becef2eb64420f7b6e33b75cfffb15f81579"},
 ]
 zipp = [
     {file = "zipp-3.11.0-py3-none-any.whl", hash = "sha256:83a28fcb75844b5c0cdaf5aa4003c2d728c77e05f5aeabe8e95e56727005fbaa"},
