@@ -22,7 +22,7 @@ python-rapidjson-schema = "0.1.1"
 planetmint-ipld = "^0.0.3"
 uvicorn = "^0.19.0"
 planetmint-driver = "0.14.0"
-zenroom = {path = "external_packages_armv7/zenroom-2.3.4-cp39-cp39-linux_armv7l.whl"}
+zenroom = "2.3.1"
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"

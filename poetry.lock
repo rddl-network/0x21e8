@@ -27,7 +27,7 @@ python-versions = ">=3.5"
 dev = ["cloudpickle", "coverage[toml] (>=5.0.2)", "furo", "hypothesis", "mypy (>=0.900,!=0.940)", "pre-commit", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "sphinx", "sphinx-notfound-page", "zope.interface"]
 docs = ["furo", "sphinx", "sphinx-notfound-page", "zope.interface"]
 tests = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins", "zope.interface"]
-tests-no-zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
+tests_no_zope = ["cloudpickle", "coverage[toml] (>=5.0.2)", "hypothesis", "mypy (>=0.900,!=0.940)", "pympler", "pytest (>=4.3.0)", "pytest-mypy-plugins"]
 
 [[package]]
 name = "base58"
@@ -136,7 +136,7 @@ optional = false
 python-versions = ">=3.6.0"
 
 [package.extras]
-unicode-backport = ["unicodedata2"]
+unicode_backport = ["unicodedata2"]
 
 [[package]]
 name = "click"
@@ -810,7 +810,7 @@ urllib3 = ">=1.21.1,<1.27"
 
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
-use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
+use_chardet_on_py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "requests-toolbelt"
@@ -1011,7 +1011,7 @@ python-versions = "*"
 
 [[package]]
 name = "zenroom"
-version = "2.3.4"
+version = "2.3.1"
 description = "Zenroom for Python: Bindings of Zenroom library for Python."
 category = "main"
 optional = false
@@ -1019,10 +1019,6 @@ python-versions = ">=3.8, <4"
 
 [package.extras]
 test = ["pytest", "schema"]
-
-[package.source]
-type = "file"
-url = "external_packages_armv7/zenroom-2.3.4-cp39-cp39-linux_armv7l.whl"
 
 [[package]]
 name = "zipp"
@@ -1039,7 +1035,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "7705935678da08d000784e835b37753f37c42d1574b2e9ce35062109c9c87160"
+content-hash = "7ee73ee37d46404b5863ab16fb6b9d0ade8710456f1a0332947ffc7b25d30642"
 
 [metadata.files]
 anyio = [
@@ -1675,7 +1671,27 @@ webencodings = [
     {file = "webencodings-0.5.1.tar.gz", hash = "sha256:b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"},
 ]
 zenroom = [
-    {file = "zenroom-2.3.4-cp39-cp39-linux_armv7l.whl", hash = "sha256:8fe37fbf4bb1aae4b0bc996f5fb5becef2eb64420f7b6e33b75cfffb15f81579"},
+    {file = "zenroom-2.3.1-cp310-cp310-linux_armv7l.whl", hash = "sha256:29fb9baddb6addc11f0b8a99c0caa9b36a4549332dae38244c1655b473ea8dc1"},
+    {file = "zenroom-2.3.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:190e25a90c2d43b1d6482f984b43beb98a1baf1268f54a7ccc2540616fd7c30a"},
+    {file = "zenroom-2.3.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:21d4095624e6f20f5c65b9c427d6d15aea3610adea4e8eb2ba702572012dd3cb"},
+    {file = "zenroom-2.3.1-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:e06c114b029b7362d12ee53fd5f4784a3def491bde84d1f0856691a5c9a0b914"},
+    {file = "zenroom-2.3.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:b20209c10fbd9a4721643cc06893acb15a082cfd9c659b08f0e20c1168fbbe35"},
+    {file = "zenroom-2.3.1-cp311-cp311-linux_armv7l.whl", hash = "sha256:f2b6426ad6a3400d367238c9717529bd60332a43b6f10a34f2f86aeecefc6f4c"},
+    {file = "zenroom-2.3.1-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:23adbb343cc8c10e0fcec4b25b604102d0305d7bfc0c5bccbdf9608e74545f79"},
+    {file = "zenroom-2.3.1-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:759f2f8806fb8124339ae5dfaf21cc553eb1076f990b819b98fa436a0a903435"},
+    {file = "zenroom-2.3.1-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:3c0c9681f26d9059293f3bf6764dc5d3f3932e4e0c6bef45a261a15104988f83"},
+    {file = "zenroom-2.3.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:fb5791689999ec025241d90fd1fad76f5027eaaf5c4d880e8d3506fde35a355a"},
+    {file = "zenroom-2.3.1-cp38-cp38-linux_armv7l.whl", hash = "sha256:246286e24e3955e3c750430cb43831385e33de764dd6587ab0b0cfcd8a606ee2"},
+    {file = "zenroom-2.3.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:d3a079b74d9afa27e19d4b4603bdea71a418c3f1b7339e5e9509660302f4e4d6"},
+    {file = "zenroom-2.3.1-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:d409d2db0b58998f3195b192c9660e9a7a3186ac3839c009454825daede3911e"},
+    {file = "zenroom-2.3.1-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:9b6670c31642928b620396948b409c77d4021646411e15c3cadd419270fac38f"},
+    {file = "zenroom-2.3.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:3c638a7aaf27ab880d6a7c49e5e044ca260dc9341d3b2208dda2550c1ef56d93"},
+    {file = "zenroom-2.3.1-cp39-cp39-linux_armv7l.whl", hash = "sha256:3793e753681c7f8b642b4cbcf136e901a84ce70e49b0fc6c9da2eb39384416bf"},
+    {file = "zenroom-2.3.1-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:b62d8e2c6a624b65cfe3f607ba0716bcd5463d2c27fd7b37f3c6ab534a2fbedf"},
+    {file = "zenroom-2.3.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:a945378508a1d0740145b94211c157158ee0db60196b4bdb552e22420dad3ef2"},
+    {file = "zenroom-2.3.1-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:d535df08b1684d3bd996c38032068f587ff9d552492b449caadbf1e045744ccd"},
+    {file = "zenroom-2.3.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:db2a29a10adf8831b00795a0e1025c4dd7a2b28d60fcb851f59d8f63630d2156"},
+    {file = "zenroom-2.3.1.tar.gz", hash = "sha256:ea7ab2e9a859a1d7650088e5e2850383f05d70d44866f0a10c8c56199fe4f2e6"},
 ]
 zipp = [
     {file = "zipp-3.11.0-py3-none-any.whl", hash = "sha256:83a28fcb75844b5c0cdaf5aa4003c2d728c77e05f5aeabe8e95e56727005fbaa"},
