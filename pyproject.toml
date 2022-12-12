@@ -23,6 +23,7 @@ planetmint-ipld = "^0.0.3"
 uvicorn = "^0.19.0"
 planetmint-driver = "^0.13.0"
 planetmint-transactions = "0.4.2"
+zenroom = {path = "./external_packages_armv7/zenroom-2.3.4-cp39-cp39-linux_armv7l.wh"}
 
 [tool.poetry.dev-dependencies]
 pytest = "^7.1.3"
