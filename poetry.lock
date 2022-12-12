@@ -552,7 +552,7 @@ sha3 = ["pysha3"]
 
 [[package]]
 name = "planetmint-transactions"
-version = "0.2.2"
+version = "0.4.2"
 description = "Python implementation of the planetmint transactions spec"
 category = "main"
 optional = false
@@ -1035,7 +1035,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "e3d67d46710e0fdcbba5b442c9ae106a39fff0b63f098708938740ef2d86641c"
+content-hash = "8bced6de5a1c2f937d1aecd259f2a0e09ba8805ed320a8b21778a88ebe509f9d"
 
 [metadata.files]
 anyio = [
@@ -1323,8 +1323,8 @@ planetmint-pymultihash = [
     {file = "planetmint-pymultihash-0.9.2.tar.gz", hash = "sha256:dc04c19aa651669d5c0eb89bcefe5d52de822b5c10b62c0e3d8f40b63edeabb5"},
 ]
 planetmint-transactions = [
-    {file = "planetmint_transactions-0.2.2-py3-none-any.whl", hash = "sha256:f97c7ed6214ac35bf1987cbfe318ca725f73ce848e2d0b7b52e7adc90816c8d7"},
-    {file = "planetmint_transactions-0.2.2.tar.gz", hash = "sha256:3f3ac714ca871db359108be37a5dff18be3d74e7a79b1194441cd5d4a17eff0e"},
+    {file = "planetmint_transactions-0.4.2-py3-none-any.whl", hash = "sha256:7d97d0459db51d3266b728a0c16357047a3ec22abac74c3ae28b25290560f059"},
+    {file = "planetmint_transactions-0.4.2.tar.gz", hash = "sha256:3c060323d618613060048b93b2b94477e4d8db4a1653d91b2e6a60665a50e713"},
 ]
 platformdirs = [
     {file = "platformdirs-2.5.4-py3-none-any.whl", hash = "sha256:af0276409f9a02373d540bf8480021a048711d572745aef4b7842dad245eba10"},
