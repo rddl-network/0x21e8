@@ -458,14 +458,14 @@ zenroom = ">=2.3.1,<3.0.0"
 
 [[package]]
 name = "planetmint-driver"
-version = "0.13.0"
+version = "0.14.0"
 description = "Python driver for Planetmint"
 category = "main"
 optional = false
 python-versions = ">=3.9"
 
 [package.dependencies]
-planetmint-transactions = ">=0.2.2"
+planetmint-transactions = ">=0.3.0"
 pysha3 = ">=1.0.2,<1.1.0"
 python-rapidjson = ">=1.0.0"
 python-rapidjson-schema = "0.1.1"
@@ -552,7 +552,7 @@ sha3 = ["pysha3"]
 
 [[package]]
 name = "planetmint-transactions"
-version = "0.2.2"
+version = "0.4.2"
 description = "Python implementation of the planetmint transactions spec"
 category = "main"
 optional = false
@@ -921,7 +921,7 @@ python-versions = "*"
 
 [[package]]
 name = "twine"
-version = "4.0.1"
+version = "4.0.2"
 description = "Collection of utilities for publishing packages on PyPI"
 category = "dev"
 optional = false
@@ -1022,7 +1022,7 @@ test = ["pytest", "schema"]
 
 [package.source]
 type = "file"
-url = "../zenroom-2.3.4-cp39-cp39-linux_armv7l.whl"
+url = "external_packages_armv7/zenroom-2.3.4-cp39-cp39-linux_armv7l.whl"
 
 [[package]]
 name = "zipp"
@@ -1039,7 +1039,7 @@ testing = ["flake8 (<5)", "func-timeout", "jaraco.functools", "jaraco.itertools"
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.9"
-content-hash = "59338577dc1a402512cc2035c84afffec84a5e18d24f1218f75eb9c8f66f4922"
+content-hash = "7705935678da08d000784e835b37753f37c42d1574b2e9ce35062109c9c87160"
 
 [metadata.files]
 anyio = [
@@ -1308,8 +1308,8 @@ planetmint-cryptoconditions = [
     {file = "planetmint_cryptoconditions-1.0.0.tar.gz", hash = "sha256:1b43156d7391f9bbb0b124aa3acf16fed4287cd7ecdd792da6fa5415358effde"},
 ]
 planetmint-driver = [
-    {file = "planetmint_driver-0.13.0-py3-none-any.whl", hash = "sha256:99dd3414118fe2a2cd3caa942c0a7e3e602f772177c4de12fd9939713bbfd3ff"},
-    {file = "planetmint_driver-0.13.0.tar.gz", hash = "sha256:3d4677f11d8935b4e7d189a6b4d867e3f65adbde4985e7fc22d2714d580f0497"},
+    {file = "planetmint_driver-0.14.0-py3-none-any.whl", hash = "sha256:84fa8e790fd711485dfe131ad2865a10bd9fdead786ef295647232f0ce97f628"},
+    {file = "planetmint_driver-0.14.0.tar.gz", hash = "sha256:fe8a7ae05a0667a8edaf9e9d5a256092754815b9a527d12cac6380d88884e171"},
 ]
 planetmint-ipld = [
     {file = "planetmint-ipld-0.0.3.tar.gz", hash = "sha256:6effc20e671e01366cb579663809759c6c4ea1ec8e6bcb9278768cd3f7f64243"},
@@ -1327,8 +1327,8 @@ planetmint-pymultihash = [
     {file = "planetmint-pymultihash-0.9.2.tar.gz", hash = "sha256:dc04c19aa651669d5c0eb89bcefe5d52de822b5c10b62c0e3d8f40b63edeabb5"},
 ]
 planetmint-transactions = [
-    {file = "planetmint_transactions-0.2.2-py3-none-any.whl", hash = "sha256:f97c7ed6214ac35bf1987cbfe318ca725f73ce848e2d0b7b52e7adc90816c8d7"},
-    {file = "planetmint_transactions-0.2.2.tar.gz", hash = "sha256:3f3ac714ca871db359108be37a5dff18be3d74e7a79b1194441cd5d4a17eff0e"},
+    {file = "planetmint_transactions-0.4.2-py3-none-any.whl", hash = "sha256:7d97d0459db51d3266b728a0c16357047a3ec22abac74c3ae28b25290560f059"},
+    {file = "planetmint_transactions-0.4.2.tar.gz", hash = "sha256:3c060323d618613060048b93b2b94477e4d8db4a1653d91b2e6a60665a50e713"},
 ]
 platformdirs = [
     {file = "platformdirs-2.5.4-py3-none-any.whl", hash = "sha256:af0276409f9a02373d540bf8480021a048711d572745aef4b7842dad245eba10"},
@@ -1626,8 +1626,8 @@ trezorcryptotestrc = [
     {file = "TrezorCryptoTestRc-0.0.16.tar.gz", hash = "sha256:914813c56f08fe37e912a8cd4dbfbed0ac52bf5ae04ee8f41cef7a47f4c9799d"},
 ]
 twine = [
-    {file = "twine-4.0.1-py3-none-any.whl", hash = "sha256:42026c18e394eac3e06693ee52010baa5313e4811d5a11050e7d48436cf41b9e"},
-    {file = "twine-4.0.1.tar.gz", hash = "sha256:96b1cf12f7ae611a4a40b6ae8e9570215daff0611828f5fe1f37a16255ab24a0"},
+    {file = "twine-4.0.2-py3-none-any.whl", hash = "sha256:929bc3c280033347a00f847236564d1c52a3e61b1ac2516c97c48f3ceab756d8"},
+    {file = "twine-4.0.2.tar.gz", hash = "sha256:9e102ef5fdd5a20661eb88fad46338806c3bd32cf1db729603fe3697b1bc83c8"},
 ]
 typing-extensions = [
     {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
