@@ -5,8 +5,8 @@ Documentation=https://rddl.io
 
 [Service]
 Restart=always
-ExecStart=/home/rddl/.local/bin/poetry run uvicorn --log-level debug --reload main:app --host 0.0.0.0
-WorkingDirectory=/home/rddl/0x21e8/x21e8
+ExecStart=/home/rddl/.local/bin/poetry run uvicorn --log-level debug --reload x21e8.main:app --host 0.0.0.0
+WorkingDirectory=/home/rddl/0x21e8
 User=rddl
 Group=rddl
 
