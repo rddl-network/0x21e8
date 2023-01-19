@@ -1,0 +1,15 @@
+version: '3'
+services:
+  'service_0x12e8':
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    container_name: service_0x12e8
+    env_file: .env
+    ports:
+      - '8000:8000'
+    tty: true
+    volumes:
+      - ./0x21e8:/0x21e8
+      - ./x21e8:/x21e8
+    command: sh -c "uvicorn x21e8.main:app --host 0.0.0.0 --port 8000 --timeout-keep-alive 240 --reload"
