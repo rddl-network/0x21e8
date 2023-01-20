@@ -10,6 +10,7 @@ def get_asset_description(issueReq: IssuingRequest, liquid_address, planetmint_a
         "precision": issueReq.precision,
         "issuer_planetmint": planetmint_address,
         "issuer_liquid": liquid_address,
+        "machine_id": "",
         "cid": issueReq.cid,
         #'asset_proof': "https://lab.r3c.network/.well-knwon/liquid-asset-proof-"+ str(asset_id)
     }
