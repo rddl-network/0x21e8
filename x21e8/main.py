@@ -5,7 +5,7 @@ from planetmint_driver.exceptions import PlanetmintException
 
 from x21e8.model import IssuingRequest
 from x21e8.liquid import issue_tokens
-from x21e8.storage import get_ipfs_link, get_ipfs_file, store_asset, multihashed
+from x21e8.storage import get_ipfs_link, get_ipfs_file, store_asset, multi_hash
 from x21e8.notarize import get_asset_description
 from x21e8.rddl import resolve_nft_cid
 from x21e8.config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT, build_liquid_endpoint_url
@@ -138,8 +138,9 @@ async def set_machine(issuing_request_input: IssuingRequest):
         # issue tokens
         asset_id, contract = None, None
         try:
-            asset_id, contract = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft["id"],
-                                              nft_cid)
+            asset_id, contract = issue_tokens(
+                issuing_request_input, wallet.get_liquid_address(), token_nft["id"], nft_cid
+            )
         except Exception as e:
             print(e)
         # register assets on r3c node
@@ -209,7 +210,7 @@ async def recover_seed_from_mnemonic(mnemonic_phrase: str):
 @app.post("/multihash")
 async def get_multihash(json_data: dict, encrypt: bool = False):
     try:
-        hashed_marshalled = multihashed(json_data, encrypt)
+        hashed_marshalled = multi_hash(json_data, encrypt)
         return {"cid": hashed_marshalled}
     except FileNotFoundError:
         raise HTTPException(
