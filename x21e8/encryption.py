@@ -41,5 +41,5 @@ def decrypt_2_str(encrypted_data):
 
 def decrypt_2_dict(encrypted_data):
     decrypted_str = decrypt_2_str(encrypted_data)
-    decrytped_dict = ast.literal_eval(decrypted_str)
-    return decrytped_dict
+    decrypted_dict = ast.literal_eval(decrypted_str)
+    return decrypted_dict

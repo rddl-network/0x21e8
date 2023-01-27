@@ -1,7 +1,7 @@
 from mnemonic import Mnemonic
 
 
-def create_and_save_seed(strength: int) -> bytes:
+def create_and_save_seed(strength: int) -> str:
     mnemonic_obj = Mnemonic("english")
     phrase = mnemonic_obj.generate(strength)
     seed_bytes = mnemonic_obj.to_seed(phrase, "0x21e8")

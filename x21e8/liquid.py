@@ -1,25 +1,21 @@
-import base64
 import hashlib
 import json
-import time
 import six
-import sys
-import os
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
 from x21e8.model import IssuingRequest
-from x21e8.config import LQD_RPC_PORT, LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT
+from x21e8.config import LQD_RPC_ENDPOINT, build_liquid_auth_proxy_url
 
 TOKEN_AMOUNT = 1
 VERSION = 0
 FEERATE = 0.03000000
 
 
-def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
-    NAME = issueTokens.name
-    TICKER = issueTokens.ticker
-    ASSET_AMOUNT = issueTokens.amount
-    PRECISION = issueTokens.precision
+def issue_tokens(issue_request: IssuingRequest, nft_token, ipdl):
+    NAME = issue_request.name
+    TICKER = issue_request.ticker
+    ASSET_AMOUNT = issue_request.amount
+    PRECISION = issue_request.precision
 
     VALIDATEADDR = None
     PUBKEY = None
@@ -28,7 +24,7 @@ def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
     rpc_connection = None
     try:
         rpc_connection = AuthServiceProxy(
-            "http://%s:%s@%s:%s" % (LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT, LQD_RPC_PORT)
+            build_liquid_auth_proxy_url(),
         )
         NEWADDR = rpc_connection.getnewaddress("riddlemint", "legacy")
         VALIDATEADDR = rpc_connection.getaddressinfo(NEWADDR)

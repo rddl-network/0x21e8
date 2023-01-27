@@ -8,12 +8,11 @@ from x21e8.liquid import issue_tokens
 from x21e8.storage import get_ipfs_link, get_ipfs_file, store_asset, multihashed
 from x21e8.notarize import get_asset_description
 from x21e8.rddl import resolve_nft_cid
-from x21e8.config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT
+from x21e8.config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT, build_liquid_endpoint_url
 
 from x21e8.wallet.planetmint import create_cid_based_asset, resolve_asset_token
 from x21e8.wallet.sw_wallet import SoftwareWallet
 from x21e8.wallet.utils import create_and_save_seed, save_seed_from_mnemonic
-
 
 tags_metadata = [
     {
@@ -59,7 +58,7 @@ async def get_data(cid: str, link2data: bool = False, decrypt: bool = False):
         except URLError as e:
             raise HTTPException(
                 status_code=421,
-                detail=f"The requested URL could not be resolved: { e.code } : { e.reason }.",
+                detail=f"The requested URL could not be resolved: {e.code} : {e.reason}.",
             )
 
     return {"cid": data}
@@ -75,12 +74,12 @@ async def get_cid_token(cid_token):
     except KeyError as e:
         raise HTTPException(
             status_code=422,
-            detail=f"The nft token does not represent a proper NFT: { e.code } : { e.reason }.",
+            detail=f"The nft token does not represent a proper NFT: {e.code} : {e.reason}.",
         )
     except URLError as e:
         raise HTTPException(
             status_code=421,
-            detail=f"The requested URL could not be resolved: { e.code } : { e.reason }.",
+            detail=f"The requested URL could not be resolved: {e.code} : {e.reason}.",
         )
 
 
@@ -135,28 +134,34 @@ async def set_machine(issuing_request_input: IssuingRequest):
             status_code=423, detail="The Planetmint server configured does not support the given transaction schema."
         )
 
-    # issue tokens
-    asset_id, contract = None, None
-    try:
-        asset_id, contract = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft["id"], nft_cid)
-    except Exception as e:
-        print(e)
-    # register assets on r3c node
+    if check_if_tokens_should_be_issued(issuing_request_input):
+        # issue tokens
+        asset_id, contract = None, None
+        try:
+            asset_id, contract = issue_tokens(issuing_request_input, wallet.get_liquid_address(), token_nft["id"],
+                                              nft_cid)
+        except Exception as e:
+            print(e)
+        # register assets on r3c node
 
-    try:
-        response = requests.post(
-            "http://lab.r3c.network:8090/register_asset",
-            headers={"accept": "application/json", "Content-Type": "application/json"},
-            json={"asset_id": asset_id, "contract": contract},
-        )
-    except Exception as e:
-        print(e)
+        try:
+            response = requests.post(
+                f"{build_liquid_endpoint_url}/register_asset",
+                headers={"accept": "application/json", "Content-Type": "application/json"},
+                json={"asset_id": asset_id, "contract": contract},
+            )
+        except Exception as e:
+            print(e)
 
     return {
         "w3storage.cid": nft_cid,
         "NFT token": token_nft["id"],
         "NFT transaction": token_nft,
     }
+
+
+def check_if_tokens_should_be_issued(issuing_request_input):
+    return not issuing_request_input.ticker and not issuing_request_input.amount == 0
 
 
 @app.get("/machine", tags=["Machines"])
@@ -171,12 +176,12 @@ async def get_machine(nft_token: str):
     except KeyError as e:
         raise HTTPException(
             status_code=422,
-            detail=f"The nft token does not represent a proper NFT: { e.code } : { e.reason }.",
+            detail=f"The nft token does not represent a proper NFT: {e.code} : {e.reason}.",
         )
     except URLError as e:
         raise HTTPException(
             status_code=421,
-            detail=f"The requested URL could not be resolved: { e.code } : { e.reason }.",
+            detail=f"The requested URL could not be resolved: {e.code} : {e.reason}.",
         )
 
 
