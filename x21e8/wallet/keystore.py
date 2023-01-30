@@ -1,11 +1,6 @@
 import json
 import os
 
-from base58 import b58decode, b58encode
-from bigchaindb_driver.crypto import generate_keypair
-from mnemonic import Mnemonic
-from mnemonic.mnemonic import PBKDF2_ROUNDS
-
 from bigchaindb_wallet.keymanagement import (
     ExtendedKey,
     derive_from_path,

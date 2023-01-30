@@ -1,4 +1,3 @@
-import pytest
 import sha3
 import nacl.secret
 from x21e8.wallet.utils import create_and_save_seed

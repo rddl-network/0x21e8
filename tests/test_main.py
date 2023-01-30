@@ -1,5 +1,6 @@
 import os
 import pytest
+from datetime import datetime
 
 from fastapi.testclient import TestClient
 from x21e8.main import app
@@ -59,8 +60,6 @@ def test_get_data_valid():
     reason="the secret is not automatically removed. that's why this test fails sometimes and is skipped."
 )
 def test_machine_before_wallet_init():
-    from datetime import datetime
-
     delete_secret()
     x = datetime.now()
     response1 = client.post(
@@ -112,9 +111,7 @@ def test_seed_creation():
 
 
 @pytest.mark.skip(reason="failled on github. to be improved.")
-def test_machine_testation():
-    from datetime import datetime
-
+def test_machine_atestation():
     x = datetime.now()
     response1 = client.post(
         "/machine",
@@ -156,3 +153,26 @@ def test_machine_testation():
         assert False
     except:
         assert True
+
+
+@pytest.mark.skip(reason="failled on github. to be improved.")
+def test_machine_atestation_without_token_creation(mocker):
+    x = datetime.now()
+    response1 = client.post(
+        "/machine",
+        headers={"accept": "application/json", "Content-Type": "application/json"},
+        json={
+            "name": "mytest - " + str(x),
+            "ticker": "",
+            "amount": 0,
+            "precision": 0,
+            "public_url": "https://test.org",
+            "reissue": True,
+            "cid": "bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i",
+        },
+    )
+    assert response1.status_code == 200
+    print(f"{response1.json()}")
+    tx_id = response1.json()["NFT token"]
+    response3 = client.get(f"/machine?nft_token={tx_id}")
+    assert response3.status_code == 404

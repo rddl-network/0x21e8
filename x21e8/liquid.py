@@ -1,104 +1,88 @@
-import base64
 import hashlib
 import json
-import time
 import six
-import sys
-import os
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
 from x21e8.model import IssuingRequest
-from x21e8.config import LQD_RPC_PORT, LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT
+from x21e8.config import LQD_RPC_ENDPOINT, build_liquid_auth_proxy_url
 
 TOKEN_AMOUNT = 1
 VERSION = 0
-FEERATE = 0.03000000
+FEE_RATE = 0.03000000
 
 
-def issue_tokens(issueTokens: IssuingRequest, issuer_address, nft_token, ipdl):
-    NAME = issueTokens.name
-    TICKER = issueTokens.ticker
-    ASSET_AMOUNT = issueTokens.amount
-    PRECISION = issueTokens.precision
+def issue_tokens(issue_request: IssuingRequest, nft_token, ipdl):
+    name = issue_request.name
+    ticker = issue_request.ticker
+    asset_amount = issue_request.amount
+    precision = issue_request.precision
 
-    VALIDATEADDR = None
-    PUBKEY = None
-    ASSET_ADDR = None
-    TOKEN_ADDR = None
+    pubkey = None
+    asset_addr = None
+    token_addr = None
     rpc_connection = None
     try:
         rpc_connection = AuthServiceProxy(
-            "http://%s:%s@%s:%s" % (LQD_RPC_USER, LQD_RPC_PASSWORD, LQD_RPC_ENDPOINT, LQD_RPC_PORT)
+            build_liquid_auth_proxy_url(),
         )
-        NEWADDR = rpc_connection.getnewaddress("riddlemint", "legacy")
-        VALIDATEADDR = rpc_connection.getaddressinfo(NEWADDR)
-        PUBKEY = VALIDATEADDR["pubkey"]
-        ASSET_ADDR = NEWADDR
-        NEWADDR = rpc_connection.getnewaddress("MoteMagic", "legacy")
-        TOKEN_ADDR = NEWADDR
+        new_addr = rpc_connection.getnewaddress("riddlemint", "legacy")
+        validate_addr = rpc_connection.getaddressinfo(new_addr)
+        pubkey = validate_addr["pubkey"]
+        asset_addr = new_addr
+        new_addr = rpc_connection.getnewaddress("MoteMagic", "legacy")
+        token_addr = new_addr
 
     except JSONRPCException as json_exception:
         print("A JSON RPX exception occured: " + str(json_exception))
     except Exception as general_exception:
         print("An exception occured: " + str(general_exception))
 
-    print(VALIDATEADDR)
-    print(PUBKEY)
-    print(ASSET_ADDR)
-    print(TOKEN_ADDR)
+    print(pubkey)
+    print(asset_addr)
+    print(token_addr)
 
-    CONTRACT = f'{{"entity":{{"domain":"{LQD_RPC_ENDPOINT}"}}, "issuer_pubkey":"{PUBKEY}", "nft":{{"token":"{nft_token}", "ipld":"{ipdl}"}}, "name":"{NAME}", "precision":{PRECISION}, "ticker":"{TICKER}", "version":{VERSION}}}'
-    rpc_connection.settxfee(FEERATE)
-    print(CONTRACT)
-    CONTRACT_SORTED = json.dumps(json.loads(CONTRACT), sort_keys=True, separators=(",", ":"))
-    CONTRACT_HASH = hashlib.sha256(six.ensure_binary(CONTRACT_SORTED)).hexdigest()
-    print(CONTRACT_HASH)
-    CONTRACT_HASH_REV = "".join(reversed([CONTRACT_HASH[i : i + 2] for i in range(0, len(CONTRACT_HASH), 2)]))
-    print(CONTRACT_HASH_REV)
+    contract = f'{{"entity":{{"domain":"{LQD_RPC_ENDPOINT}"}}, "issuer_pubkey":"{pubkey}", "nft":{{"token":"{nft_token}", "ipld":"{ipdl}"}}, "name":"{name}", "precision":{precision}, "ticker":"{ticker}", "version":{VERSION}}}'
+    rpc_connection.settxfee(FEE_RATE)
+    print(contract)
+    contract_sorted = json.dumps(json.loads(contract), sort_keys=True, separators=(",", ":"))
+    contract_hash = hashlib.sha256(six.ensure_binary(contract_sorted)).hexdigest()
+    print(contract_hash)
+    contract_hash_rev = "".join(reversed([contract_hash[i : i + 2] for i in range(0, len(contract_hash), 2)]))
+    print(contract_hash_rev)
 
-    RAWTX = rpc_connection.createrawtransaction([], [{"data": "00"}])
+    raw_tx = rpc_connection.createrawtransaction([], [{"data": "00"}])
 
-    print(RAWTX)
+    print(raw_tx)
 
     # get funded raw transaction
-    FRT = rpc_connection.fundrawtransaction(RAWTX, {"feeRate": FEERATE})
-    print(FRT)
+    frt = rpc_connection.fundrawtransaction(raw_tx, {"feeRate": FEE_RATE})
+    print(frt)
 
-    HEXFRT = FRT["hex"]
-    print(HEXFRT)
+    hex_frt = frt["hex"]
+    print(hex_frt)
 
-    RIA = rpc_connection.rawissueasset(
-        HEXFRT,
+    ria = rpc_connection.rawissueasset(
+        hex_frt,
         [
             {
-                "asset_amount": ASSET_AMOUNT,
-                "asset_address": ASSET_ADDR,
+                "asset_amount": asset_amount,
+                "asset_address": asset_addr,
                 "token_amount": TOKEN_AMOUNT,
-                "token_address": TOKEN_ADDR,
+                "token_address": token_addr,
                 "blind": False,
-                "contract_hash": CONTRACT_HASH_REV,
+                "contract_hash": contract_hash_rev,
             }
         ],
     )
-    print(RIA)
+    print(ria)
 
-    HEXRIA = RIA[0]["hex"]
-    ASSET = RIA[0]["asset"]
-    ENTROPY = RIA[0]["entropy"]
-    TOKEN = RIA[0]["token"]
+    brt = rpc_connection.blindrawtransaction(ria[0]["hex"], True, [], False)
+    srt = rpc_connection.signrawtransactionwithwallet(brt)
+    hex_srt = srt["hex"]
 
-    BRT = rpc_connection.blindrawtransaction(HEXRIA, True, [], False)
-    SRT = rpc_connection.signrawtransactionwithwallet(BRT)
-    HEXSRT = SRT["hex"]
-
-    ##  TEST = rpc_connection.testmempoolaccept(['"' + HEXSRT + '"'])
-    TEST = rpc_connection.testmempoolaccept([HEXSRT])
-    ALLOWED = TEST[0]["allowed"]
-    print(ALLOWED)
-
-    ISSUETX = rpc_connection.sendrawtransaction(HEXSRT)
+    issue_tx = rpc_connection.sendrawtransaction(hex_srt)
 
     print("\n\n")
-    print(f"ASSET_ID: {ISSUETX}")
-    print(f"CONTRACT: {CONTRACT}")
-    return ISSUETX, CONTRACT
+    print(f"ASSET_ID: {issue_tx}")
+    print(f"CONTRACT: {contract}")
+    return issue_tx, contract

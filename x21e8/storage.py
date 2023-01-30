@@ -49,7 +49,7 @@ def store_asset(asset: dict, encrypt_data: bool = False):
     return asset_cid
 
 
-def multihashed(asset: dict, encrypt_data: bool = False):
+def multi_hash(asset: dict, encrypt_data: bool = False):
     marshalled_asset = local_marshal(asset, encrypt_data)
     hashed_marshalled = multihash(marshalled_asset)
     return hashed_marshalled
