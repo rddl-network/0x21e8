@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 
-@router.post("/", tags=["Data"])
+@router.post("", tags=["Data"])
 async def set_data(in_data_dict: dict, encrypt: bool = False):
     try:
         cid = store_asset(in_data_dict, encrypt_data=encrypt)
@@ -21,7 +21,7 @@ async def set_data(in_data_dict: dict, encrypt: bool = False):
         )
 
 
-@router.get("/", tags=["Data"])
+@router.get("", tags=["Data"])
 async def get_data(cid: str, link2data: bool = False, decrypt: bool = False):
     if link2data:
         data = get_ipfs_link(cid)

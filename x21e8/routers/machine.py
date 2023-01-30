@@ -19,7 +19,7 @@ router = APIRouter(
 )
 
 
-@router.post("/", tags=["Machines"])
+@router.post("", tags=["Machines"])
 async def set_machine(issuing_request_input: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
     try:
@@ -75,11 +75,11 @@ async def set_machine(issuing_request_input: IssuingRequest):
     }
 
 
-def check_if_tokens_should_be_issued(issuing_request_input):
-    return not issuing_request_input.ticker and not issuing_request_input.amount == 0
+def check_if_tokens_should_be_issued(issuing_request: IssuingRequest) -> bool:
+    return not (issuing_request.amount == 0 and issuing_request.ticker == "")
 
 
-@router.get("/", tags=["Machines"])
+@router.get("", tags=["Machines"])
 async def get_machine(nft_token: str):
     # get wallet addresses (issuer, private & pub for )
 

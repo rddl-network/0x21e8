@@ -14,7 +14,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", tags=["Assets"])
+@router.get("", tags=["Assets"])
 async def get_cid_token(cid_token):
     try:
         nft_tx, nft_cid = resolve_asset_token(cid_token)
@@ -32,7 +32,7 @@ async def get_cid_token(cid_token):
         )
 
 
-@router.post("/", tags=["Assets"])
+@router.post("", tags=["Assets"])
 async def set_cid_token(cid: str):
     # get wallet addresses (issuer, private & pub for )
     try:

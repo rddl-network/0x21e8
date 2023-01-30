@@ -9,7 +9,7 @@ router = APIRouter(
 )
 
 
-@router.get("/", tags=["Seed"])
+@router.get("", tags=["Seed"])
 async def create_seed_and_provision(number_of_words: int):
     if number_of_words == 24:
         strength = 256
@@ -20,7 +20,7 @@ async def create_seed_and_provision(number_of_words: int):
     return {"mnemonic": create_and_save_seed(strength)}
 
 
-@router.post("/", tags=["Seed"])
+@router.post("", tags=["Seed"])
 async def recover_seed_from_mnemonic(mnemonic_phrase: str):
     word_array = mnemonic_phrase.split()
     size = len(word_array)
