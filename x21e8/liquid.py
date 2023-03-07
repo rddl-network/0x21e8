@@ -26,16 +26,16 @@ def get_keys(rpc_connection: AuthServiceProxy):
         print("A JSON RPX exception occured: " + str(json_exception))
     except Exception as general_exception:
         print("An exception occured: " + str(general_exception))
-    
+
     print(pubkey)
     print(asset_addr)
     print(token_addr)
-    
+
     return (pubkey, asset_addr, token_addr)
 
 
-def create_contract(issue_request: IssuingRequest, nft_token:str, cid:str, pubkey:str):
-    
+def create_contract(issue_request: IssuingRequest, nft_token: str, cid: str, pubkey: str):
+
     contract = f'{{"entity":{{"domain":"{issue_request.public_url}"}}, "issuer_pubkey":"{pubkey}", "nft":{{"token":"{nft_token}", "ipld":"{cid}"}}, "name":"{issue_request.name}", "precision":{issue_request.precision}, "ticker":"{issue_request.ticker}", "version":{VERSION}}}'
     contract_sorted = json.dumps(json.loads(contract), sort_keys=True, separators=(",", ":"))
     contract_hash = hashlib.sha256(six.ensure_binary(contract_sorted)).hexdigest()
@@ -46,7 +46,7 @@ def create_contract(issue_request: IssuingRequest, nft_token:str, cid:str, pubke
     return (contract, contract_hash_rev)
 
 
-def issue_tokens(issue_request: IssuingRequest, nft_token:str, cid:str):
+def issue_tokens(issue_request: IssuingRequest, nft_token: str, cid: str):
 
     rpc_connection = AuthServiceProxy(
         build_liquid_auth_proxy_url(),
