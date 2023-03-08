@@ -1,19 +1,9 @@
-import requests
-from urllib.error import URLError
 from fastapi import FastAPI, HTTPException
-from planetmint_driver.exceptions import PlanetmintException
 
-from x21e8.model import IssuingRequest
-from x21e8.liquid import issue_tokens
 from x21e8.routers import assets, data, machine, seed
-from x21e8.storage import store_asset, multi_hash
-from x21e8.notarize import get_asset_description
-from x21e8.rddl import resolve_nft_cid
-from x21e8.config import LQD_RPC_ENDPOINT, PLNTMNT_ENDPOINT, build_liquid_endpoint_url
+from x21e8.storage import multi_hash
+from x21e8.config import LQD_RPC_HOST, PLNTMNT_ENDPOINT
 
-from x21e8.wallet.planetmint import create_cid_based_asset, resolve_asset_token
-from x21e8.wallet.sw_wallet import SoftwareWallet
-from x21e8.wallet.utils import create_and_save_seed, save_seed_from_mnemonic
 
 tags_metadata = [
     {
@@ -58,6 +48,6 @@ async def get_multihash(json_data: dict, encrypt: bool = False):
 async def get_configuration():
     config = {
         "planetmint": PLNTMNT_ENDPOINT,
-        "liquid": LQD_RPC_ENDPOINT,
+        "liquid": LQD_RPC_HOST,
     }
     return config

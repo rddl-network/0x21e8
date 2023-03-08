@@ -4,7 +4,7 @@ import six
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
 from x21e8.model import IssuingRequest
-from x21e8.config import build_liquid_auth_proxy_url
+from x21e8.config import get_liquid_auth_proxy_url
 
 TOKEN_AMOUNT = 1
 VERSION = 0
@@ -49,7 +49,7 @@ def create_contract(issue_request: IssuingRequest, nft_token: str, cid: str, pub
 def issue_tokens(issue_request: IssuingRequest, nft_token: str, cid: str):
 
     rpc_connection = AuthServiceProxy(
-        build_liquid_auth_proxy_url(),
+        get_liquid_auth_proxy_url(),
     )
 
     (pubkey, asset_addr, token_addr) = get_keys(rpc_connection=rpc_connection)

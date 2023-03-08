@@ -3,7 +3,7 @@ from urllib.error import URLError
 from fastapi import APIRouter, HTTPException, requests
 from planetmint_driver.exceptions import PlanetmintException
 
-from x21e8.config import build_liquid_endpoint_url
+from x21e8.config import get_liquid_endpoint_url
 from x21e8.liquid import issue_tokens
 from x21e8.model import IssuingRequest
 from x21e8.notarize import get_asset_description
@@ -61,7 +61,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
 
         try:
             response = requests.post(
-                f"{build_liquid_endpoint_url}/register_asset",
+                f"{get_liquid_endpoint_url}/register_asset",
                 headers={"accept": "application/json", "Content-Type": "application/json"},
                 json={"asset_id": asset_id, "contract": contract},
             )
