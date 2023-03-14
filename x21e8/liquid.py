@@ -105,8 +105,7 @@ def issue_tokens(issue_request: IssuingRequest, nft_token: str, cid: str):
     hex_srt = srt["hex"]
 
     issue_tx = rpc_connection.sendrawtransaction(hex_srt)
-    asset =     ASSET = ria[0]["asset"]
-
+    asset = ria[0]["asset"]
 
     print("\n\n")
     print(f"ASSET: {asset}")
@@ -126,6 +125,7 @@ def register_asset(asset_id: str, contract: dict, registration_endpoint: str):
     )
     return response
 
+
 def register_asset_blockstream(asset_id: str, contract: dict, registration_endpoint: str):
     json_obj = {"asset_id": asset_id, "contract": contract}
     response = requests.post(
@@ -134,4 +134,3 @@ def register_asset_blockstream(asset_id: str, contract: dict, registration_endpo
         json=json_obj,
     )
     return response
-

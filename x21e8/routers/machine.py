@@ -61,7 +61,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
         print(f"Liquid issued token: {asset_id}  - {contract}")
 
         try:
-            
+
             response = register_asset(asset, contract, RDDL_ASSET_REG_ENDPOINT)
             print(f"RDDL asset registration: {response}")
         except Exception as e:
