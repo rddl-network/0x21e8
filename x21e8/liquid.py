@@ -45,7 +45,7 @@ def get_keys(rpc_connection: AuthServiceProxy):
     print(f"Asset_addr(get_keys): {asset_addr}")
     print(f"token_addr(get_keys): {token_addr}")
 
-    return (pubkey, asset_addr, token_addr)
+    return pubkey, asset_addr, token_addr
 
 
 def create_contract(issue_request: IssuingRequest, nft_token: str, cid: str, pubkey: str):
@@ -58,7 +58,7 @@ def create_contract(issue_request: IssuingRequest, nft_token: str, cid: str, pub
     print(contract)
     print(contract_hash)
     print(contract_hash_rev)
-    return (contract, contract_hash_rev)
+    return contract, contract_hash_rev
 
 
 def issue_tokens(issue_request: IssuingRequest, nft_token: str, cid: str):

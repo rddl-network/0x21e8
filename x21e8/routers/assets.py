@@ -47,5 +47,5 @@ async def set_cid_token(cid: str):
         return {"cid": cid, "NFT token": cid_nft["id"], "NFT transaction": cid_nft}
     except PlanetmintException as e:
         raise HTTPException(
-            status_code=423, detail="The Planetmint server configured does not support the given transaction schema."
+            status_code=423, detail="The following exception occurred: {e}."
         )

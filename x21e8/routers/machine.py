@@ -54,14 +54,9 @@ async def set_machine(issuing_request_input: IssuingRequest):
         )
 
     if check_if_tokens_should_be_issued(issuing_request_input):
-        # issue tokens
-        asset_id, contract = None, None
-        # try:
         asset, asset_id, contract = issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
         print(f"Liquid issued token: {asset_id}  - {contract}")
-
         try:
-
             response = register_asset(asset, contract, RDDL_ASSET_REG_ENDPOINT)
             print(f"RDDL asset registration: {response}")
         except Exception as e:
