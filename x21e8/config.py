@@ -8,11 +8,6 @@ LQD_RPC_ENDPOINT_SCHEMA: str = config("LQD_RPC_SCHEMA", default="http")
 PLNTMNT_ENDPOINT = config("PLNTMNT_ENDPOINT", default="http://localhost:9984")
 WEB3STORAGE_TOKEN = config("WEB3STORAGE_TOKEN")
 CID_RESOLVER = config("CID_RESOLVER", default="https://cid-resolver.rddl.io")
-
-
-def get_liquid_auth_proxy_url():
-    return f"{LQD_RPC_ENDPOINT_SCHEMA}://{LQD_RPC_USER}:{LQD_RPC_PASSWORD}@{LQD_RPC_HOST}:{LQD_RPC_PORT}"
-
-
-def get_liquid_endpoint_url():
-    return f"{LQD_RPC_ENDPOINT_SCHEMA}://{LQD_RPC_HOST}:{LQD_RPC_PORT}"
+RDDL_ASSET_REG_ENDPOINT = config("RDDL_ASSET_REG_ENDPOINT", default="http://lab.r3c.network:8090/register_asset")
+LIQUID_REGISTRATION_DOMAIN = config("LIQUID_REGISTRATION_DOMAIN", default="lab.r3c.network")
+LIQUID_ASSET_REG_ENDPOINT = config( "LIQUID_ASSET_REG_ENDPOINT", default="https://assets-testnet.blockstream.info/")

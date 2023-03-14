@@ -48,7 +48,7 @@ The configuration is set via environment variables such as
 * LQD_RPC_PORT
 * LQD_RPC_USER
 * LQD_RPC_PASSWORD
-* LQD_RPC_ENDPOINT
+* LQD_RPC_HOST
 * PLNTMNT_ENDPOINT
 * WEB3STORAGE_TOKEN
 
