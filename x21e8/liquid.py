@@ -25,10 +25,6 @@ def get_liquid_auth_proxy_url():
     return f"{LQD_RPC_ENDPOINT_SCHEMA}://{LQD_RPC_USER}:{LQD_RPC_PASSWORD}@{LQD_RPC_HOST}:{LQD_RPC_PORT}"
 
 
-def get_liquid_endpoint_url():
-    return f"{LQD_RPC_ENDPOINT_SCHEMA}://{LQD_RPC_HOST}:{LQD_RPC_PORT}"
-
-
 def get_keys(rpc_connection: AuthServiceProxy):
     pubkey = None
     asset_addr = None
