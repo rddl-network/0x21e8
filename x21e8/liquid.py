@@ -54,9 +54,6 @@ def create_contract(issue_request: IssuingRequest, nft_token: str, cid: str, pub
     contract_sorted = json.dumps(contract, sort_keys=True, separators=(",", ":"))
     contract_hash = hashlib.sha256(six.ensure_binary(contract_sorted)).hexdigest()
     contract_hash_rev = "".join(reversed([contract_hash[i : i + 2] for i in range(0, len(contract_hash), 2)]))
-    print(contract)
-    print(contract_hash)
-    print(contract_hash_rev)
     return contract, contract_hash_rev
 
 
@@ -64,11 +61,11 @@ def issue_tokens(issue_request: IssuingRequest, nft_token: str, cid: str):
     rpc_connection = AuthServiceProxy(
         get_liquid_auth_proxy_url(),
     )
-    # rpc_connection.loadwallet()
+    # TODO: comes in the next release: rpc_connection.loadwallet()
     (pubkey, asset_addr, token_addr) = get_keys(rpc_connection=rpc_connection)
 
     (contract, contract_hash_rev) = create_contract(issue_request, nft_token, cid, pubkey)
-    # TODO: reintegrate that
+
     rpc_connection.settxfee(FEE_RATE)
     raw_tx = rpc_connection.createrawtransaction([], [{"data": "00"}])
     print(raw_tx)
