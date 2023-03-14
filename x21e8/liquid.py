@@ -49,7 +49,6 @@ def get_keys(rpc_connection: AuthServiceProxy):
 
 
 def create_contract(issue_request: IssuingRequest, nft_token: str, cid: str, pubkey: str):
-
     contract = f'{{"entity":{{"domain":"{LIQUID_REGISTRATION_DOMAIN}"}}, "issuer_pubkey":"{pubkey}", "nft":{{"token":"{nft_token}", "ipld":"{cid}"}}, "name":"{issue_request.name}", "precision":{issue_request.precision}, "ticker":"{issue_request.ticker}", "version":{VERSION}}}'
     contract = json.loads(contract)
     contract_sorted = json.dumps(contract, sort_keys=True, separators=(",", ":"))
@@ -62,7 +61,6 @@ def create_contract(issue_request: IssuingRequest, nft_token: str, cid: str, pub
 
 
 def issue_tokens(issue_request: IssuingRequest, nft_token: str, cid: str):
-
     rpc_connection = AuthServiceProxy(
         get_liquid_auth_proxy_url(),
     )
