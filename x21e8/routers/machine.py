@@ -1,10 +1,11 @@
 from urllib.error import URLError
 
-from fastapi import APIRouter, HTTPException, requests
+from fastapi import APIRouter, HTTPException
 from planetmint_driver.exceptions import PlanetmintException
 
-from x21e8.config import build_liquid_endpoint_url
-from x21e8.liquid import issue_tokens
+
+from x21e8.liquid import issue_tokens, register_asset
+from x21e8.config import RDDL_ASSET_REG_ENDPOINT
 from x21e8.model import IssuingRequest
 from x21e8.notarize import get_asset_description
 from x21e8.rddl import resolve_nft_cid
@@ -37,7 +38,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
         wallet.get_planetmint_pubkey().hex(),
     )
     try:
-        nft_cid = store_asset(nft_asset)
+        nft_cid = store_asset(nft_asset.__dict__)
     except FileNotFoundError:
         raise HTTPException(
             status_code=421,
@@ -46,27 +47,21 @@ async def set_machine(issuing_request_input: IssuingRequest):
     try:
         token_nft = create_cid_based_asset(nft_cid, wallet)
     except PlanetmintException as e:
+        print(f"The Planetmint server configured does not support the given transaction schema. {e}")
         raise HTTPException(
-            status_code=423, detail="The Planetmint server configured does not support the given transaction schema."
+            status_code=423,
+            detail="The Planetmint server configured does not support the given transaction schema. {e}",
         )
 
     if check_if_tokens_should_be_issued(issuing_request_input):
-        # issue tokens
-        asset_id, contract = None, None
+        asset, asset_id, contract = issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
+        print(f"Liquid issued token: {asset_id}  - {contract}")
         try:
-            asset_id, contract = issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
+            response = register_asset(asset, contract, RDDL_ASSET_REG_ENDPOINT)
+            print(f"RDDL asset registration: {response}")
         except Exception as e:
-            print(e)
-        # register assets on r3c node
-
-        try:
-            response = requests.post(
-                f"{build_liquid_endpoint_url}/register_asset",
-                headers={"accept": "application/json", "Content-Type": "application/json"},
-                json={"asset_id": asset_id, "contract": contract},
-            )
-        except Exception as e:
-            print(e)
+            print(f"Exception: RDDL asset registration - {e}")
+            raise HTTPException(status_code=425, detail="Exception: RDDL asset registration - {e}")
 
     return {
         "w3storage.cid": nft_cid,

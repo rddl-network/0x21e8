@@ -13,9 +13,7 @@ def create_cid_based_asset(cid: str, wallet: BaseWallet):
     tx = plntmnt.transactions.prepare(
         operation="CREATE",
         signers=[base58.b58encode(pubkey).decode()],
-        assets=[
-            {"data": cid},
-        ],
+        assets=[{"data": cid}],
     )
 
     signed_tx = fulfill_with_signing_delegation(tx, wallet.planetmint_sign_digest)

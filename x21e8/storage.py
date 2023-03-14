@@ -18,6 +18,7 @@ def register_cid_url(cid: str, url: str):
     cid_resp = http.request(
         "POST", CID_RESOLVER + "/entry?cid=" + cid + "&url=" + url, headers={"Content-Type": "application/json"}
     )
+    return cid_resp
 
 
 def get_ipfs_file(cid: str, decrypt_data: bool = False):
