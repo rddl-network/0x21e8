@@ -1,6 +1,6 @@
 from fastapi import APIRouter, HTTPException
 
-from x21e8.wallet.utils import create_and_save_seed, save_seed_from_mnemonic
+from x21e8.wallet.seed import create_and_save_seed, save_seed_from_mnemonic
 
 router = APIRouter(
     prefix="/seed",

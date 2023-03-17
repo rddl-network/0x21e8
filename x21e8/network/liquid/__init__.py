@@ -1,9 +1,9 @@
+import x21e8.network.liquid.util as liquid_api
+
 VER_MAIN_PUBLIC = 0x0488B21E
 VER_MAIN_PRIVATE = 0x0488ADE4
 VER_TEST_PUBLIC = 0x043587CF
 VER_TEST_PRIVATE = 0x04358394
-
-
 WALLY_WIF_FLAG_COMPRESSED = 0x0  # Corresponding public key compressed */
 WALLY_WIF_FLAG_UNCOMPRESSED = 0x1  # Corresponding public key uncompressed */
 WALLY_CA_PREFIX_LIQUID = 0x0C  # Liquid v1 confidential address prefix */
@@ -29,20 +29,9 @@ WALLY_ADDRESS_VERSION_P2SH_LIQUID_REGTEST = 0x4B  # P2SH address on liquid v1 re
 WALLY_ADDRESS_VERSION_P2SH_LIQUID_TESTNET = 0x13  # P2SH address on liquid v1 testnet */
 WALLY_ADDRESS_VERSION_WIF_MAINNET = 0x80  # Wallet Import Format on mainnet */
 WALLY_ADDRESS_VERSION_WIF_TESTNET = 0xEF  # Wallet Import Format on testnet */
-
-
-# define BIP32_PATH_MAX_LEN 255
-
-# /** Indicate that we want to derive a private key in `bip32_key_from_parent` */
 BIP32_FLAG_KEY_PRIVATE = 0x0
-# /** Indicate that we want to derive a public key in `bip32_key_from_parent` */
 BIP32_FLAG_KEY_PUBLIC = 0x1
-# /** Indicate that we want to skip hash calculation when deriving a key in `bip32_key_from_parent` */
 BIP32_FLAG_SKIP_HASH = 0x2
-# /** Indicate that we want the pub tweak to be added to the calculation when deriving a key in `bip32_key_from_parent` */
-# /** Only used with elements */
 BIP32_FLAG_KEY_TWEAK_SUM = 0x4
-# /** Allow a wildcard ``*`` or ``*'``/``*h`` in path string expressions */
 BIP32_FLAG_STR_WILDCARD = 0x8
-# /** Do not allow a leading ``m``/``M`` or ``/`` in path string expressions */
 BIP32_FLAG_STR_BARE = 0x10

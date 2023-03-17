@@ -1,18 +1,8 @@
 import TrezorCrypto
 
-# import wallycore as wally
 from nacl.signing import SigningKey
-from x21e8.wallet.util import *
+from x21e8.network import liquid
 from x21e8.wallet.base_wallet import BaseWallet
-from x21e8.wallet.liquid_network_definitions import (
-    VER_TEST_PRIVATE,
-    WALLY_ADDRESS_VERSION_WIF_TESTNET,
-    WALLY_WIF_FLAG_COMPRESSED,
-    WALLY_ADDRESS_VERSION_P2PKH_LIQUID_TESTNET,
-    BIP32_FLAG_KEY_PRIVATE,
-    WALLY_ADDRESS_TYPE_P2PKH,
-)
-
 
 HARDENED = 0x80000000
 PLANET_VERSION_PUBLIC = 0x02D41400
@@ -43,14 +33,14 @@ class SoftwareWallet(BaseWallet):
 
     def get_confidential_liquid_address(self) -> bytes:
         master_blinding_key = wally.asset_blinding_key_from_seed(self.seed)
-        script_pubkey = wally.address_to_scriptpubkey(self.liquid_address, wally.WALLY_NETWORK_LIQUID)
+        script_pubkey = wally.address_to_scriptpubkey(self.liquid_address, x21e8.network.liquid.WALLY_NETWORK_LIQUID)
         private_blinding_key = wally.asset_blinding_key_to_ec_private_key(master_blinding_key, script_pubkey)
         public_blinding_key = wally.ec_public_key_from_private_key(private_blinding_key)
         # end-derive_blinding_key
 
         # start-create_conf_address
         confidential_address = wally.confidential_addr_from_addr(
-            self.liquid_address, wally.WALLY_CA_PREFIX_LIQUID, public_blinding_key
+            self.liquid_address, x21e8.network.liquid.WALLY_CA_PREFIX_LIQUID, public_blinding_key
         )
         return confidential_address
         # end-create_conf_address
@@ -74,16 +64,16 @@ class SoftwareWallet(BaseWallet):
 
     def derive_liquid_address(self, id: int) -> str:
         self._read_seed()
-        master = ext_key()
-        derived_key = ext_key()
+        master = liquid.liquid_api.ext_key()
+        derived_key = liquid.liquid_api.ext_key()
         derivation_path = "m/44h/1h/" + str(id) + "h/0/0"
 
-        ret = bip32_key_from_seed(self.seed, len(self.seed), VER_TEST_PRIVATE, 0, byref(master))
-        ret = bip32_key_from_parent_path_str_n(
-            master, derivation_path, len(derivation_path), 0, BIP32_FLAG_KEY_PRIVATE, derived_key
+        ret = liquid.liquid_api.bip32_key_from_seed(self.seed, len(self.seed), liquid.VER_TEST_PRIVATE, 0, liquid.liquid_api.byref(master))
+        ret = liquid.liquid_api.bip32_key_from_parent_path_str_n(
+            master, derivation_path, len(derivation_path), 0, liquid.BIP32_FLAG_KEY_PRIVATE, derived_key
         )
-        _, derived_key_address = wally_bip32_key_to_address(
-            master, WALLY_ADDRESS_TYPE_P2PKH, WALLY_ADDRESS_VERSION_P2PKH_LIQUID_TESTNET
+        _, derived_key_address = liquid.liquid_api.wally_bip32_key_to_address(
+            master, liquid.WALLY_ADDRESS_TYPE_P2PKH, liquid.WALLY_ADDRESS_VERSION_P2PKH_LIQUID_TESTNET
         )
         return derived_key_address
 
@@ -97,30 +87,22 @@ class SoftwareWallet(BaseWallet):
 
     def derive_liquid_private_wif(self, id: int) -> str:
         self._read_seed()
-        master = ext_key()
-        derived_key = ext_key()
+        master = liquid.liquid_api.ext_key()
+        derived_key = liquid.liquid_api.ext_key()
         derivation_path = "m/44h/1h/" + str(id) + "h/0/0"
 
-        ret = bip32_key_from_seed(self.seed, len(self.seed), VER_TEST_PRIVATE, 0, byref(master))
-        _, master_wif = wally_wif_from_bytes(
-            master.priv_key, 32, WALLY_ADDRESS_VERSION_WIF_TESTNET, WALLY_WIF_FLAG_COMPRESSED
+        ret = liquid.liquid_api.bip32_key_from_seed(self.seed, len(self.seed), liquid.VER_TEST_PRIVATE, 0, liquid.liquid_api.byref(master))
+        _, master_wif = liquid.liquid_api.wally_wif_from_bytes(
+            master.priv_key, 32, liquid.WALLY_ADDRESS_VERSION_WIF_TESTNET, liquid.WALLY_WIF_FLAG_COMPRESSED
         )
 
-        ret = bip32_key_from_parent_path_str_n(
-            master, derivation_path, len(derivation_path), 0, BIP32_FLAG_KEY_PRIVATE, derived_key
+        ret = liquid.liquid_api.bip32_key_from_parent_path_str_n(
+            master, derivation_path, len(derivation_path), 0, liquid.BIP32_FLAG_KEY_PRIVATE, derived_key
         )
-        _, derived_key_wif = wally_wif_from_bytes(
-            derived_key.priv_key, 32, WALLY_ADDRESS_VERSION_WIF_TESTNET, WALLY_WIF_FLAG_COMPRESSED
+        _, derived_key_wif = liquid.liquid_api.wally_wif_from_bytes(
+            derived_key.priv_key, 32, liquid.WALLY_ADDRESS_VERSION_WIF_TESTNET, liquid.WALLY_WIF_FLAG_COMPRESSED
         )
         return derived_key_wif
-
-        # wallet_master_key = wally.bip32_key_from_seed(self.seed, wally.BIP32_VER_MAIN_PRIVATE, 0)
-        # wallet_derived_key = wally.bip32_key_from_parent(wallet_master_key, id, wally.BIP32_FLAG_KEY_PRIVATE)
-        # wally.ec_private_key_verify(wallet_derived_key.priv_key, 32)
-        # prv, prv_len = self.make_cbuffer(wallet_derived_key)
-        # ret, wif = wally_wif_from_bytes(prv, prv_len, PREFIX, flag)
-        # privkey_wif = wally.wif_from_bytes( wallet_derived_key.priv_key, wally.WALLY_ADDRESS_VERSION_WIF_TESTNET, wally.WALLY_WIF_FLAG_COMPRESSED)
-        # return derived_key_wif
 
     def _init_wallet(self):
         self.liquid_address = self.derive_liquid_address(1)
