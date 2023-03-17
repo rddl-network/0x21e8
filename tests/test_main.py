@@ -10,7 +10,7 @@ client = TestClient(app)
 
 
 def delete_secret():
-    filePath = "/home/somedir/Documents/python/logs"
+    filePath = "secret.txt"
     if os.path.exists(filePath):
         os.remove(filePath)
 
@@ -56,9 +56,9 @@ def test_get_data_valid():
         assert True
 
 
-@pytest.mark.skip(
-    reason="the secret is not automatically removed. that's why this test fails sometimes and is skipped."
-)
+#@pytest.mark.skip(
+#    reason="the secret is not automatically removed. that's why this test fails sometimes and is skipped."
+#)
 def test_machine_before_wallet_init():
     delete_secret()
     x = datetime.now()

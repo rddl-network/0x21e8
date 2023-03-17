@@ -1,8 +1,18 @@
 import TrezorCrypto
-import wallycore as wally
-from nacl.signing import SigningKey
 
+# import wallycore as wally
+from nacl.signing import SigningKey
+from x21e8.wallet.util import *
 from x21e8.wallet.base_wallet import BaseWallet
+from x21e8.wallet.liquid_network_definitions import (
+    VER_TEST_PRIVATE,
+    WALLY_ADDRESS_VERSION_WIF_TESTNET,
+    WALLY_WIF_FLAG_COMPRESSED,
+    WALLY_ADDRESS_VERSION_P2PKH_LIQUID_TESTNET,
+    BIP32_FLAG_KEY_PRIVATE,
+    WALLY_ADDRESS_TYPE_P2PKH,
+)
+
 
 HARDENED = 0x80000000
 PLANET_VERSION_PUBLIC = 0x02D41400
@@ -48,7 +58,8 @@ class SoftwareWallet(BaseWallet):
     def get_planetmint_pubkey(self) -> bytes:
         return self.public_key
 
-    def _get_planetmint_keys_tc(self):
+    def _get_planetmint_keys_tc(self, id: int):
+        self._read_seed()
         node = TrezorCrypto.from_seed(self.seed, TrezorCrypto.ED25519_NAME)
         # [Chain m/0'] check tests/bip32_tests.py for more derivation path examples
         node.derive(HARDENED | 0)
@@ -56,16 +67,64 @@ class SoftwareWallet(BaseWallet):
         self.public_key = node.public_key()[1:]
         print(self.public_key)
 
-    def _init_wallet(self):
-        with open("secret.txt", "r") as secret:
-            self.seed = bytes.fromhex(secret.readline())
+    def _read_seed(self):
+        if not self.seed:
+            with open("secret.txt", "r") as secret:
+                self.seed = bytes.fromhex(secret.readline())
 
-        wallet_master_key = wally.bip32_key_from_seed(self.seed, wally.BIP32_VER_MAIN_PRIVATE, 0)
-        wallet_derived_key = wally.bip32_key_from_parent(wallet_master_key, 1, wally.BIP32_FLAG_KEY_PRIVATE)
-        self.liquid_address = wally.bip32_key_to_address(
-            wallet_derived_key,
-            wally.WALLY_ADDRESS_TYPE_P2PKH,
-            wally.WALLY_ADDRESS_VERSION_P2PKH_LIQUID,
+    def derive_liquid_address(self, id: int) -> str:
+        self._read_seed()
+        master = ext_key()
+        derived_key = ext_key()
+        derivation_path = "m/44h/1h/" + str(id) + "h/0/0"
+
+        ret = bip32_key_from_seed(self.seed, len(self.seed), VER_TEST_PRIVATE, 0, byref(master))
+        ret = bip32_key_from_parent_path_str_n(
+            master, derivation_path, len(derivation_path), 0, BIP32_FLAG_KEY_PRIVATE, derived_key
         )
-        # end-create_p2pkh_address
-        self._get_planetmint_keys_tc()
+        _, derived_key_address = wally_bip32_key_to_address(
+            master, WALLY_ADDRESS_TYPE_P2PKH, WALLY_ADDRESS_VERSION_P2PKH_LIQUID_TESTNET
+        )
+        return derived_key_address
+
+    def make_cbuffer(hex_in):
+        from binascii import unhexlify
+
+        if hex_in is None:
+            return None, 0
+        hex_len = len(hex_in) // 2
+        return unhexlify(hex_in), hex_len
+
+    def derive_liquid_private_wif(self, id: int) -> str:
+        self._read_seed()
+        master = ext_key()
+        derived_key = ext_key()
+        derivation_path = "m/44h/1h/" + str(id) + "h/0/0"
+
+        ret = bip32_key_from_seed(self.seed, len(self.seed), VER_TEST_PRIVATE, 0, byref(master))
+        _, master_wif = wally_wif_from_bytes(
+            master.priv_key, 32, WALLY_ADDRESS_VERSION_WIF_TESTNET, WALLY_WIF_FLAG_COMPRESSED
+        )
+
+        ret = bip32_key_from_parent_path_str_n(
+            master, derivation_path, len(derivation_path), 0, BIP32_FLAG_KEY_PRIVATE, derived_key
+        )
+        _, derived_key_wif = wally_wif_from_bytes(
+            derived_key.priv_key, 32, WALLY_ADDRESS_VERSION_WIF_TESTNET, WALLY_WIF_FLAG_COMPRESSED
+        )
+        return derived_key_wif
+
+        # wallet_master_key = wally.bip32_key_from_seed(self.seed, wally.BIP32_VER_MAIN_PRIVATE, 0)
+        # wallet_derived_key = wally.bip32_key_from_parent(wallet_master_key, id, wally.BIP32_FLAG_KEY_PRIVATE)
+        # wally.ec_private_key_verify(wallet_derived_key.priv_key, 32)
+        # prv, prv_len = self.make_cbuffer(wallet_derived_key)
+        # ret, wif = wally_wif_from_bytes(prv, prv_len, PREFIX, flag)
+        # privkey_wif = wally.wif_from_bytes( wallet_derived_key.priv_key, wally.WALLY_ADDRESS_VERSION_WIF_TESTNET, wally.WALLY_WIF_FLAG_COMPRESSED)
+        # return derived_key_wif
+
+    def _init_wallet(self):
+        self.liquid_address = self.derive_liquid_address(1)
+        self._get_planetmint_keys_tc(1)
+
+    def inject_priv_key_2_liquid_node(self, key: str):
+        return

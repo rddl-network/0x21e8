@@ -27,10 +27,7 @@ jobs:
       - name: Test build
         run: poetry build && poetry run twine check dist/*
 
-      - name: Upload to TestPyPI
+      - name: Upload to PyPI
         run: |
           poetry build
-          poetry run twine upload dist/*
-        env:
-          TWINE_USERNAME: __token__
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }}
+          ppoetry publish -u __token__ -p ${{ secrets.PYPI_TOKEN }}
