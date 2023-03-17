@@ -4,12 +4,12 @@ from fastapi import APIRouter, HTTPException
 from planetmint_driver.exceptions import PlanetmintException
 
 
-from x21e8.liquid import issue_tokens, register_asset
+from x21e8.application.liquid import issue_tokens, register_asset
 from x21e8.config import RDDL_ASSET_REG_ENDPOINT
-from x21e8.model import IssuingRequest
-from x21e8.notarize import get_asset_description
-from x21e8.rddl import resolve_nft_cid
-from x21e8.storage import store_asset
+from x21e8.models.issuing_request import IssuingRequest
+from x21e8.models.nft_asset import NftAsset
+from x21e8.application.rddl import resolve_nft_cid
+from x21e8.lib.storage import store_asset
 from x21e8.wallet.planetmint import create_cid_based_asset, resolve_asset_token
 from x21e8.wallet.sw_wallet import SoftwareWallet
 
@@ -32,7 +32,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
         )
 
     # create the token NFT - e.g. the token notarization on planetmint
-    nft_asset = get_asset_description(
+    nft_asset = NftAsset(
         issuing_request_input,
         wallet.get_liquid_address(),
         wallet.get_planetmint_pubkey().hex(),

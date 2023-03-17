@@ -1,5 +1,5 @@
 import json
-from x21e8.liquid import register_asset
+from x21e8.application.liquid import register_asset
 from x21e8.config import RDDL_ASSET_REG_ENDPOINT
 
 asset_obj = {

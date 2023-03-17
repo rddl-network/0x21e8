@@ -1,9 +1,6 @@
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 
-from x21e8.routers import assets, data, machine, seed
-from x21e8.storage import multi_hash
-from x21e8.config import LQD_RPC_HOST, PLNTMNT_ENDPOINT
-
+from x21e8.routers import assets, data, machine, seed, utils, config
 
 tags_metadata = [
     {
@@ -30,24 +27,7 @@ app.include_router(assets.router)
 app.include_router(data.router)
 app.include_router(machine.router)
 app.include_router(seed.router)
+app.include_router(config.router)
+app.include_router(utils.router)
 
 
-@app.post("/multihash")
-async def get_multihash(json_data: dict, encrypt: bool = False):
-    try:
-        hashed_marshalled = multi_hash(json_data, encrypt)
-        return {"cid": hashed_marshalled}
-    except FileNotFoundError:
-        raise HTTPException(
-            status_code=421,
-            detail="The hardware wallet needs to be provisioned by defining a master seed.",
-        )
-
-
-@app.get("/config")
-async def get_configuration():
-    config = {
-        "planetmint": PLNTMNT_ENDPOINT,
-        "liquid": LQD_RPC_HOST,
-    }
-    return config

@@ -5,7 +5,7 @@ import requests
 
 from bitcoinrpc.authproxy import AuthServiceProxy, JSONRPCException
 
-from x21e8.model import IssuingRequest
+from x21e8.models.issuing_request import IssuingRequest
 from x21e8.config import (
     LQD_RPC_ENDPOINT_SCHEMA,
     LQD_RPC_USER,
