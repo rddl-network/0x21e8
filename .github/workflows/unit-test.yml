@@ -47,7 +47,6 @@ jobs:
           sudo apt install libtool swig
           sudo apt install python-is-python3
           sudo apt install python3-pip
-          sudo apt install swig-python
           ./tools/autogen.sh 
           ./configure --enable-debug --enable-export-all --enable-swig-python
           ./configure --enable-debug --enable-export-all --enable-swig-python LIB="/usr/lib/python3.9"
