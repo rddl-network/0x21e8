@@ -111,7 +111,7 @@ def test_seed_creation():
 
 
 @pytest.mark.skip(reason="failled on github. to be improved.")
-def test_machine_atestation():
+def test_machine_attestation():
     x = datetime.now()
     response1 = client.post(
         "/machine",
@@ -156,7 +156,7 @@ def test_machine_atestation():
 
 
 @pytest.mark.skip(reason="failled on github. to be improved.")
-def test_machine_atestation_without_token_creation(mocker):
+def test_machine_attestation_without_token_creation(mocker):
     x = datetime.now()
     response1 = client.post(
         "/machine",
