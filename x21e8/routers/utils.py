@@ -7,6 +7,8 @@ router = APIRouter(
     tags=["Multihash"],
     responses={404: {"detail": "Not found"}},
 )
+
+
 @router.post("", tags=["Multihash"])
 async def get_multihash(json_data: dict, encrypt: bool = False):
     try:

@@ -56,9 +56,9 @@ def test_get_data_valid():
         assert True
 
 
-#@pytest.mark.skip(
+# @pytest.mark.skip(
 #    reason="the secret is not automatically removed. that's why this test fails sometimes and is skipped."
-#)
+# )
 def test_machine_before_wallet_init():
     delete_secret()
     x = datetime.now()

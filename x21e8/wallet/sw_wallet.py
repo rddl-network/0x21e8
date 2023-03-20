@@ -68,7 +68,9 @@ class SoftwareWallet(BaseWallet):
         derived_key = liquid.liquid_api.ext_key()
         derivation_path = "m/44h/1h/" + str(id) + "h/0/0"
 
-        ret = liquid.liquid_api.bip32_key_from_seed(self.seed, len(self.seed), liquid.VER_TEST_PRIVATE, 0, liquid.liquid_api.byref(master))
+        ret = liquid.liquid_api.bip32_key_from_seed(
+            self.seed, len(self.seed), liquid.VER_TEST_PRIVATE, 0, liquid.liquid_api.byref(master)
+        )
         ret = liquid.liquid_api.bip32_key_from_parent_path_str_n(
             master, derivation_path, len(derivation_path), 0, liquid.BIP32_FLAG_KEY_PRIVATE, derived_key
         )
@@ -91,7 +93,9 @@ class SoftwareWallet(BaseWallet):
         derived_key = liquid.liquid_api.ext_key()
         derivation_path = "m/44h/1h/" + str(id) + "h/0/0"
 
-        ret = liquid.liquid_api.bip32_key_from_seed(self.seed, len(self.seed), liquid.VER_TEST_PRIVATE, 0, liquid.liquid_api.byref(master))
+        ret = liquid.liquid_api.bip32_key_from_seed(
+            self.seed, len(self.seed), liquid.VER_TEST_PRIVATE, 0, liquid.liquid_api.byref(master)
+        )
         _, master_wif = liquid.liquid_api.wally_wif_from_bytes(
             master.priv_key, 32, liquid.WALLY_ADDRESS_VERSION_WIF_TESTNET, liquid.WALLY_WIF_FLAG_COMPRESSED
         )
@@ -107,6 +111,3 @@ class SoftwareWallet(BaseWallet):
     def _init_wallet(self):
         self.liquid_address = self.derive_liquid_address(1)
         self._get_planetmint_keys_tc(1)
-
-    def inject_priv_key_2_liquid_node(self, key: str):
-        return

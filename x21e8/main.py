@@ -29,5 +29,3 @@ app.include_router(machine.router)
 app.include_router(seed.router)
 app.include_router(config.router)
 app.include_router(utils.router)
-
-

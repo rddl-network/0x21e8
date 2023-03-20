@@ -1,5 +1,6 @@
 from pydantic import BaseModel
 
+
 class IssuingRequest(BaseModel):
     name: str
     ticker: str

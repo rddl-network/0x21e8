@@ -7,6 +7,7 @@ router = APIRouter(
     responses={404: {"detail": "Not found"}},
 )
 
+
 @router.get("", tags=["Assets"])
 async def get_configuration():
     config = {

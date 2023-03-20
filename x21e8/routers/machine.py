@@ -4,7 +4,7 @@ from fastapi import APIRouter, HTTPException
 from planetmint_driver.exceptions import PlanetmintException
 
 
-from x21e8.application.liquid import issue_tokens, register_asset
+from x21e8.application.liquid import LiquidNode
 from x21e8.config import RDDL_ASSET_REG_ENDPOINT
 from x21e8.models.issuing_request import IssuingRequest
 from x21e8.models.nft_asset import NftAsset
@@ -25,6 +25,8 @@ async def set_machine(issuing_request_input: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
     try:
         wallet = SoftwareWallet()
+        wif_key = wallet.derive_liquid_private_wif(1)
+        LiquidNode().inject_key_into_liquid(wif_key)
     except FileNotFoundError:
         raise HTTPException(
             status_code=421,
@@ -33,9 +35,13 @@ async def set_machine(issuing_request_input: IssuingRequest):
 
     # create the token NFT - e.g. the token notarization on planetmint
     nft_asset = NftAsset(
-        issuing_request_input,
-        wallet.get_liquid_address(),
-        wallet.get_planetmint_pubkey().hex(),
+        name=issuing_request_input.name,
+        ticker=issuing_request_input.ticker,
+        issued=issuing_request_input.amount,
+        precision=issuing_request_input.precision,
+        issuer_planetmint=wallet.get_planetmint_pubkey().hex(),
+        issuer_liquid=wallet.get_liquid_address(),
+        cid=issuing_request_input.cid,
     )
     try:
         nft_cid = store_asset(nft_asset.__dict__)
@@ -54,10 +60,10 @@ async def set_machine(issuing_request_input: IssuingRequest):
         )
 
     if check_if_tokens_should_be_issued(issuing_request_input):
-        asset, asset_id, contract = issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
+        asset, asset_id, contract = LiquidNode().issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
         print(f"Liquid issued token: {asset_id}  - {contract}")
         try:
-            response = register_asset(asset, contract, RDDL_ASSET_REG_ENDPOINT)
+            response = LiquidNode.register_asset(asset, contract, RDDL_ASSET_REG_ENDPOINT)
             print(f"RDDL asset registration: {response}")
         except Exception as e:
             print(f"Exception: RDDL asset registration - {e}")
