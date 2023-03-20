@@ -49,9 +49,6 @@ jobs:
           sudo apt install python3-pip
           ./tools/autogen.sh 
           ./configure --enable-debug --enable-export-all --enable-swig-python
-          ./configure --enable-debug --enable-export-all --enable-swig-python LIB="/usr/lib/python3.9"
-          python3 -m pip install swig-python
-          ./configure --enable-debug --enable-export-all --enable-swig-python LIB="/usr/lib/python3.9"
           make
           sudo make install
 
