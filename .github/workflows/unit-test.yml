@@ -35,26 +35,26 @@ jobs:
 
       - name: Install libwallycore
         run: |
-          apt update
-          apt install git
+          sudo apt update
+          sudo apt install git
           git clone https://github.com/ElementsProject/libwally-core.git
           cd libwally-core/
           git checkout release_0.8.6
           git submodule init
           git submodule sync --recursive
           git submodule update --init --recursive
-          apt install autogen gcc g++ automake python3
-          apt instal libtools libtool swig
-          apt install python-is-python3
-          apt install python3-pip
-          apt install swig-python
+          sudo apt install autogen gcc g++ automake python3
+          sudo apt instal libtools libtool swig
+          sudo apt install python-is-python3
+          sudo apt install python3-pip
+          sudo apt install swig-python
           ./tools/autogen.sh 
           ./configure --enable-debug --enable-export-all --enable-swig-python
-          ./configure --enable-debug --enable-export-all --enable-swig-python LIB="/usr/lib/python3.10"
+          ./configure --enable-debug --enable-export-all --enable-swig-python LIB="/usr/lib/python3.9"
           python3 -m pip install swig-python
-          ./configure --enable-debug --enable-export-all --enable-swig-python LIB="/usr/lib/python3.10"
+          ./configure --enable-debug --enable-export-all --enable-swig-python LIB="/usr/lib/python3.9"
           make
-          make install
+          sudo make install
 
       - name: Run tests
         run: poetry run pytest -vvv 
