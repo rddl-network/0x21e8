@@ -1,6 +1,6 @@
 from fastapi import APIRouter
 from fastapi import HTTPException
-from x21e8.lib.storage import multi_hash
+from x21e8.utils.storage import multi_hash
 
 router = APIRouter(
     prefix="/multihash",

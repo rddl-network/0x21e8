@@ -4,7 +4,7 @@ from urllib.request import urlopen
 from ipld import marshal, unmarshal, multihash
 
 from x21e8.config import WEB3STORAGE_TOKEN, CID_RESOLVER
-from x21e8.lib.encryption import encrypt_bytes, decrypt_2_bytes
+from x21e8.utils.encryption import encrypt_bytes, decrypt_2_bytes
 
 w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
 

@@ -9,7 +9,7 @@ from x21e8.config import RDDL_ASSET_REG_ENDPOINT
 from x21e8.models.issuing_request import IssuingRequest
 from x21e8.models.nft_asset import NftAsset
 from x21e8.application.rddl import resolve_nft_cid
-from x21e8.lib.storage import store_asset
+from x21e8.utils.storage import store_asset
 from x21e8.wallet.planetmint import create_cid_based_asset, resolve_asset_token
 from x21e8.wallet.sw_wallet import SoftwareWallet
 
