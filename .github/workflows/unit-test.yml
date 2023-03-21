@@ -51,6 +51,7 @@ jobs:
           ./configure --enable-debug --enable-export-all --enable-swig-python
           make
           sudo make install
+          cd ..
 
       - name: Run tests
         run: poetry run pytest -vvv 
