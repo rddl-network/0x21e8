@@ -3,7 +3,7 @@ from urllib.error import URLError
 from fastapi import APIRouter, HTTPException
 from planetmint_driver.exceptions import PlanetmintException
 
-from x21e8.rddl import resolve_nft_cid
+from x21e8.application.rddl import resolve_nft_cid
 from x21e8.wallet.planetmint import resolve_asset_token, create_cid_based_asset
 from x21e8.wallet.sw_wallet import SoftwareWallet
 

@@ -10,7 +10,7 @@ client = TestClient(app)
 
 
 def delete_secret():
-    filePath = "/home/somedir/Documents/python/logs"
+    filePath = "secret.txt"
     if os.path.exists(filePath):
         os.remove(filePath)
 
@@ -56,9 +56,9 @@ def test_get_data_valid():
         assert True
 
 
-@pytest.mark.skip(
-    reason="the secret is not automatically removed. that's why this test fails sometimes and is skipped."
-)
+# @pytest.mark.skip(
+#    reason="the secret is not automatically removed. that's why this test fails sometimes and is skipped."
+# )
 def test_machine_before_wallet_init():
     delete_secret()
     x = datetime.now()
@@ -111,7 +111,7 @@ def test_seed_creation():
 
 
 @pytest.mark.skip(reason="failled on github. to be improved.")
-def test_machine_atestation():
+def test_machine_attestation():
     x = datetime.now()
     response1 = client.post(
         "/machine",
@@ -156,7 +156,7 @@ def test_machine_atestation():
 
 
 @pytest.mark.skip(reason="failled on github. to be improved.")
-def test_machine_atestation_without_token_creation(mocker):
+def test_machine_attestation_without_token_creation(mocker):
     x = datetime.now()
     response1 = client.post(
         "/machine",

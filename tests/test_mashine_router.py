@@ -1,4 +1,4 @@
-from x21e8.model import IssuingRequest
+from x21e8.models.issuing_request import IssuingRequest
 from x21e8.routers.machine import check_if_tokens_should_be_issued
 
 

@@ -8,7 +8,7 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 TrezorCryptoTestRc = "*" 
-wallycore = "0.8.7"
+wallycore = "0.8.6"
 mnemonic = "^0.20"
 fastapi = "^0.85.0"
 bitcoin-utils = "^0.5.6"
@@ -27,7 +27,6 @@ zenroom = "2.3.1"
 [tool.poetry.group.dev.dependencies]
 black = "^23.1.0"
 pytest = "^7.2.2"
-twine = "^4.0.2"
 
 [build-system]
 requires = ["poetry-core"]

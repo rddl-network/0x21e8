@@ -1,6 +1,6 @@
 from urllib.error import URLError
 from fastapi import APIRouter, HTTPException
-from x21e8.storage import get_ipfs_link, get_ipfs_file, store_asset
+from x21e8.utils.storage import get_ipfs_link, get_ipfs_file, store_asset
 
 router = APIRouter(
     prefix="/data",

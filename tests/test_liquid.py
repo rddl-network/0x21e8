@@ -1,5 +1,5 @@
 import json
-from x21e8.liquid import register_asset
+from x21e8.application.liquid import LiquidNode
 from x21e8.config import RDDL_ASSET_REG_ENDPOINT
 
 asset_obj = {
@@ -9,7 +9,7 @@ asset_obj = {
 
 
 def test_register_asset():
-    resp = register_asset(
+    resp = LiquidNode.register_asset(
         asset_id=asset_obj["asset_id"],
         contract=json.loads(asset_obj["contract"]),
         registration_endpoint=RDDL_ASSET_REG_ENDPOINT,

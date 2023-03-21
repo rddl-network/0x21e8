@@ -26,15 +26,35 @@ jobs:
         uses: actions/setup-python@v4
         with:
           python-version: 3.9
-      
+
       - name: Setup poetry
         uses: Gr1N/setup-poetry@v7
 
       - name: Install dependencies
         run: poetry install --with dev
 
+      - name: Install libwallycore
+        run: |
+          sudo apt update
+          sudo apt install git
+          git clone https://github.com/ElementsProject/libwally-core.git
+          cd libwally-core/
+          git checkout release_0.8.6
+          git submodule init
+          git submodule sync --recursive
+          git submodule update --init --recursive
+          sudo apt install autogen gcc g++ automake python3
+          sudo apt install libtool swig
+          sudo apt install python-is-python3
+          sudo apt install python3-pip
+          ./tools/autogen.sh 
+          ./configure --enable-debug --enable-export-all --enable-swig-python
+          make
+          sudo make install
+          cd ..
+
       - name: Run tests
-        run: poetry run pytest -vvv 
+        run: poetry run pytest -vvv tests
 
       - name: Test build
         run: poetry build 
