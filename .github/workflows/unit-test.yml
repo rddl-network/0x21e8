@@ -54,7 +54,7 @@ jobs:
           cd ..
 
       - name: Run tests
-        run: poetry run pytest -vvv 
+        run: poetry run pytest -vvv tests
 
       - name: Test build
         run: poetry build 
