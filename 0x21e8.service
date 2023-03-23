@@ -5,6 +5,8 @@ Documentation=https://rddl.io
 
 [Service]
 Restart=always
+RestartSec=1
+ExecReload=/bin/kill -s HUP $MAINPID
 ExecStart=/home/rddl/.local/bin/poetry run uvicorn --log-level debug --reload x21e8.main:app --host 0.0.0.0
 WorkingDirectory=/home/rddl/0x21e8
 
