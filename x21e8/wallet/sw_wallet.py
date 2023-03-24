@@ -109,5 +109,5 @@ class SoftwareWallet(BaseWallet):
         return derived_key_wif
 
     def _init_wallet(self):
-        self.liquid_address = self.derive_liquid_address(1)
+        self.liquid_address = self.derive_liquid_address(0)
         self._get_planetmint_keys_tc(1)
