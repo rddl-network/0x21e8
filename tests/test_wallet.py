@@ -15,7 +15,7 @@ def test_libwally_key_creation():
     ("", 10,"5a7037f4899f16c6e41ba20a2473be3e5f1e7df5f922df3e3a37e3c214894e51","6B3NgjZbL2mQTZNzitq1zoCZjgKrRA16KfPAbhWXYAaz", 405, "Network ID or Symbol have to be supported"),
     ("SDF", 0,"5a7037f4899f16c6e41ba20a2473be3e5f1e7df5f922df3e3a37e3c214894e51","6B3NgjZbL2mQTZNzitq1zoCZjgKrRA16KfPAbhWXYAaz", 405, "Network ID or Symbol have to be supported"),
     ("LBTC", 0,"34bf2432dfd308d08ab5acc30e1a4d4c79ffdce822ac22b6a8fcaae082c0ead4","tex1qw26uvnvp3zmw6zk3k0p23xkt4k96zchkl409mh", 426, "Insufficient funds"),
-    ("", 998,"34bf2432dfd308d08ab5acc30e1a4d4c79ffdce822ac22b6a8fcaae082c0ead3","tex1qw26uvnvp3zmw6zk3k0p23xkt4k96zchkl409mh", 200, "Insufficient funds"),
+    ("", 998,"34bf2432dfd308d08ab5acc30e1a4d4c79ffdce822ac22b6a8fcaae082c0ead3","tex1qw26uvnvp3zmw6zk3k0p23xkt4k96zchkl409mh", 200, ""),
     ])
 def test_token_transfer(symbol,id,token_id,recipient,exp_status,exp_message):
     t_object = Transfer(
