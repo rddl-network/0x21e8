@@ -33,7 +33,7 @@ def token_transfer(transfer_request: Transfer):
                 try:
                     status, message = LiquidNode().transfer(transfer_request)
                 except Exception as e:
-                    status = e.status_code
-                    message = e.info["message"]
+                    status = e.code + 100 if e.code >= 0 else e.code*(-1)+420
+                    message = e.args[0]
     
     return status, message
