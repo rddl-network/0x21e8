@@ -140,16 +140,16 @@ class LiquidNode:
         # transfer an asset if token_id is defined or LBTC otherwise
         # doc @ https://elementsproject.org/en/doc/22.0.0/rpc/wallet/sendtoaddress/
         tx = rpc_connection.sendtoaddress(
-            transfer_request.recipient , # recipient address
-            transfer_request.amount, # amount
-            "", # comment
-            "", # comment-to
-            False, # subtractfeefromamount
-            False, # replaceable: True on mainnet, False on Testnet # TODO
-            1, # conf_target: Confirmation target in blocks
-            "UNSET", # estimate_mode
-            False, # avoid_reuse
-            transfer_request.token_id, # assetlabel: Hex asset id or asset label for balance.
+            transfer_request.recipient,  # recipient address
+            transfer_request.amount,  # amount
+            "",  # comment
+            "",  # comment-to
+            False,  # subtractfeefromamount
+            False,  # replaceable: True on mainnet, False on Testnet # TODO
+            1,  # conf_target: Confirmation target in blocks
+            "UNSET",  # estimate_mode
+            False,  # avoid_reuse
+            transfer_request.token_id,  # assetlabel: Hex asset id or asset label for balance.
         )
         print(f"tx info: {tx}")
         return 200, tx
