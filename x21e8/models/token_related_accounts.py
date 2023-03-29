@@ -8,9 +8,9 @@ class TokenRelatedAccounts(BaseModel):
     pl_pub: str
     
     def accounts_to_json(self) -> dict:
-    return {
-        "Liquid": {"private": self.lq_priv, "public": self.lq_pub},
-        "Planetmint": {"private": self.pl_priv, "public": self.pl_pub},
-    }
+        return {
+            "Liquid": {"private": self.lq_priv, "public": self.lq_pub},
+            "Planetmint": {"private": self.pl_priv, "public": self.pl_pub},
+        }
 
 
