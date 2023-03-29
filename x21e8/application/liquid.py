@@ -14,6 +14,7 @@ from x21e8.config import (
     LQD_RPC_PORT,
     LIQUID_REGISTRATION_DOMAIN,
 )
+from x21e8.models.transfer import Transfer
 
 
 TOKEN_AMOUNT = 1
@@ -60,6 +61,8 @@ class LiquidNode:
             LiquidNode._get_liquid_auth_proxy_url(),
         )
         # TODO: comes in the next release: rpc_connection.loadwallet()
+        # TODO: asset_addre could be removed
+        # TODO: token_addr could be removed
         (pubkey, asset_addr, token_addr) = self._get_keys(rpc_connection=rpc_connection)
 
         (contract, contract_hash_rev) = self._create_contract(issue_request, nft_token, cid, pubkey)
@@ -129,3 +132,24 @@ class LiquidNode:
             json=json_obj,
         )
         return response
+
+    def transfer(self, transfer_request: Transfer):
+        rpc_connection = AuthServiceProxy(
+            LiquidNode._get_liquid_auth_proxy_url(),
+        )
+        # transfer an asset if token_id is defined or LBTC otherwise
+        # doc @ https://elementsproject.org/en/doc/22.0.0/rpc/wallet/sendtoaddress/
+        tx = rpc_connection.sendtoaddress(
+            transfer_request.recipient , # recipient address
+            transfer_request.amount, # amount
+            "", # comment
+            "", # comment-to
+            False, # subtractfeefromamount
+            False, # replaceable: True on mainnet, False on Testnet # TODO
+            1, # conf_target: Confirmation target in blocks
+            "UNSET", # estimate_mode
+            False, # avoid_reuse
+            transfer_request.token_id, # assetlabel: Hex asset id or asset label for balance.
+        )
+        print(f"tx info: {tx}")
+        return 200, tx
