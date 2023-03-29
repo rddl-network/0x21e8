@@ -58,4 +58,4 @@ def transfer_planetmint( transfer_request: Transfer, wallet: BaseWallet):
     json_obj_str = json.dumps( ast_ )
     json_obj = json.loads( json_obj_str)
     transfer_transaction = plntmnt.transactions.send_commit(json_obj)
-    return transfer_transaction
+    return 200, transfer_transaction

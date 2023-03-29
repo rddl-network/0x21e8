@@ -72,3 +72,20 @@ def test_token_transfer_invalid_network_symbol():
     response = token_transfer( t_object )
     assert response[0] == 405
     assert response[1] == "Network ID or Symbol have to be supported"
+    
+def test_token_transfer_invalid_network_symbol():
+    t_object = Transfer( 
+            network_slip_symbol="SDF",
+            network_slip_id = 0,
+            account=0,
+            change=0,
+            index=0,
+            token_id = "5a7037f4899f16c6e41ba20a2473be3e5f1e7df5f922df3e3a37e3c214894e51",
+            output_id=0,
+            amount = 1.0,
+            recipient= "6B3NgjZbL2mQTZNzitq1zoCZjgKrRA16KfPAbhWXYAaz",
+            is_confidential=False,            
+            )
+    response = token_transfer( t_object )
+    assert response[0] == 405
+    assert response[1] == "Network ID or Symbol have to be supported"
