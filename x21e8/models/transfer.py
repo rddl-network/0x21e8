@@ -8,7 +8,7 @@ class Transfer(BaseModel):
     change: int  # defaults to 0
     index: int  # defaults to 0
     token_id: str  # tx-id on planetmint, asset-id on liquid
-    output_id: int  # planetmint specific (to identify UTXO)
+    output_id: int  # planetmint specific (to identify UTXO), unused on Liquid
     amount: float  # only integers for planetmint, floats otherwise
     recipient: str
     is_confidential: bool  # only supported on liquid

@@ -35,7 +35,7 @@ def resolve_asset_token(asset: str):
     return asset_tx, cid
 
 
-def transfer_planetmint(transfer_request: Transfer, wallet: BaseWallet):
+def transfer(transfer_request: Transfer, wallet: BaseWallet):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
 
     transferable_token = plntmnt.transactions.retrieve(transfer_request.token_id)
