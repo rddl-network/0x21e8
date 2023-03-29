@@ -79,7 +79,7 @@ def make_wallet_dict(master_xkey: ExtendedKey, password, name="default"):
 def get_home_path_and_warn():
     home_path = os.environ.get("HOME")
     if home_path is None:
-        home_path = ".."  # TODO warn
+        home_path = "."  # TODO warn
     return home_path
 
 
