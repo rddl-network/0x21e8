@@ -9,7 +9,7 @@ def test_libwally_key_creation():
     priv_wif_key = sw.derive_liquid_private_wif(0)
     assert len(priv_wif_key) == 52
 
-
+@pytest.mark.liquid
 @pytest.mark.parametrize(
     "symbol,id,token_id,recipient,exp_status,exp_message",
     [

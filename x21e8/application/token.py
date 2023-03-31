@@ -32,6 +32,9 @@ def token_transfer(transfer_request: Transfer):
         elif cointype == symbol_to_cointype("LBTC"):
             try:
                 status, message = LiquidNode().transfer(transfer_request)
+            except ConnectionRefusedError as e:
+                status = 420
+                message = "Connection Refused"
             except Exception as e:
                 status = e.code + 100 if e.code >= 0 else e.code * (-1) + 420
                 message = e.args[0]
