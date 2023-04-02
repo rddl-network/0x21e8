@@ -7,6 +7,7 @@ name: Unit tests
 on: [push, pull_request]
 
 env: 
+  LQD_RPC_HOST_SCHEMA: http
   LQD_RPC_PORT: 18886
   LQD_RPC_USER: user
   LQD_RPC_PASSWORD: password
