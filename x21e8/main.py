@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from x21e8.routers import assets, data, machine, seed, utils, config
+from x21e8.routers import assets, data, machine, seed, utils, config, wallet
 
 tags_metadata = [
     {
@@ -29,3 +29,4 @@ app.include_router(machine.router)
 app.include_router(seed.router)
 app.include_router(config.router)
 app.include_router(utils.router)
+app.include_router(wallet.router)

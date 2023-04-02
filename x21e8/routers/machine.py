@@ -10,7 +10,7 @@ from x21e8.models.issuing_request import IssuingRequest
 from x21e8.models.nft_asset import NftAsset
 from x21e8.application.rddl import resolve_nft_cid
 from x21e8.utils.storage import store_asset
-from x21e8.wallet.planetmint import create_cid_based_asset, resolve_asset_token
+from x21e8.application.planetmint import create_cid_based_asset, resolve_asset_token
 from x21e8.wallet.sw_wallet import SoftwareWallet
 
 router = APIRouter(
@@ -25,7 +25,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
     # get wallet addresses (issuer, private & pub for )
     try:
         wallet = SoftwareWallet()
-        wif_key = wallet.derive_liquid_private_wif(1)
+        wif_key = wallet.derive_liquid_private_wif(0)
         LiquidNode().inject_key_into_liquid(wif_key)
     except FileNotFoundError:
         raise HTTPException(
