@@ -1,5 +1,4 @@
-FROM --platform=linux/amd64 python:3.9-slim AS base
-FROM base AS builder
+FROM --platform=linux/amd64 python:3.9-slim
 
 RUN apt-get update && apt-get install -y curl bash python3-pip autoconf autogen libtool libffi-dev libssl-dev make swig meson cmake zsh gcc
 
@@ -17,5 +16,8 @@ RUN poetry install --no-root
 RUN poetry shell
 
 EXPOSE 8000:8000
+
+RUN adduser --system --group nonroot
+USER nonroot
 
 CMD ["uvicorn", "x21e8.main:app", "--host", "0.0.0.0", "--port", "8000", "--timeout-keep-alive", "240", "--log-level=debug"]
