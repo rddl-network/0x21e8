@@ -1,7 +1,10 @@
 import pytest
+from x21e8 import wallet
+from x21e8.application.planetmint import create_cid_based_asset
 from x21e8.wallet.sw_wallet import SoftwareWallet
 from x21e8.application.token import token_transfer
 from x21e8.models.transfer import Transfer
+from x21e8.utils.storage import store_asset
 
 
 def test_libwally_key_creation():
@@ -64,7 +67,9 @@ def test_libwally_key_creation():
         ),
     ],
 )
-def test_token_transfer(symbol, id, token_id, recipient, exp_status, exp_message):
+def test_token_transfer_divisible(
+    symbol, id, token_id, recipient, exp_status, exp_message
+):
     t_object = Transfer(
         network_slip_symbol=symbol,
         network_slip_id=id,
@@ -86,3 +91,57 @@ def test_token_transfer(symbol, id, token_id, recipient, exp_status, exp_message
             assert response[1] == exp_message
     else:
         assert response[1] == exp_message
+
+
+def test_fungible_token_transfer_planetmint(
+):
+    from planetmint_driver import Planetmint
+    from planetmint_driver.offchain import fulfill_with_signing_delegation
+    from x21e8.config import PLNTMNT_ENDPOINT
+    import base58
+    import datetime
+    
+    cid = store_asset({"test":"test"+ str(datetime.datetime.now())})
+    wallet = SoftwareWallet()
+    plntmnt = Planetmint(PLNTMNT_ENDPOINT)
+    pubkey_raw = wallet.get_planetmint_pubkey()
+    pubkey = base58.b58encode(pubkey_raw).decode()
+    print(pubkey)
+    tx = plntmnt.transactions.prepare(
+        operation="CREATE",
+        signers=[pubkey],
+        assets=[{"data": cid}],
+        recipients=[ ([pubkey], 100)]
+    )
+
+    signed_tx = fulfill_with_signing_delegation(tx, wallet.planetmint_sign_digest)
+    token_nft = signed_tx
+    try:
+        token_nft = plntmnt.transactions.send_commit(signed_tx)
+    except Exception as e:
+        print(f"EXCEPTION {e}")
+    
+    
+    
+    t_object = Transfer(
+        network_slip_symbol="PLMNT",
+        network_slip_id=8680,
+        account=0,
+        change=0,
+        index=0,
+        token_id=token_nft["id"],
+        output_id=0,
+        amount=30.0,
+        recipient=pubkey,
+        is_confidential=False,
+    )
+    status, message = token_transfer(t_object)
+    assert status == 200
+    assert isinstance(message, dict)
+    assert "assets" in message 
+    assert "id" in message
+    assert "outputs" in message
+    assert len(message["outputs"]) == 2
+    assert message["outputs"][0]["amount"]=="30"
+    assert message["outputs"][1]["amount"]=="70"
+
