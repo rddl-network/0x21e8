@@ -67,9 +67,7 @@ def test_libwally_key_creation():
         ),
     ],
 )
-def test_token_transfer_divisible(
-    symbol, id, token_id, recipient, exp_status, exp_message
-):
+def test_token_transfer_divisible(symbol, id, token_id, recipient, exp_status, exp_message):
     t_object = Transfer(
         network_slip_symbol=symbol,
         network_slip_id=id,
@@ -93,25 +91,21 @@ def test_token_transfer_divisible(
         assert response[1] == exp_message
 
 
-def test_fungible_token_transfer_planetmint(
-):
+def test_fungible_token_transfer_planetmint():
     from planetmint_driver import Planetmint
     from planetmint_driver.offchain import fulfill_with_signing_delegation
     from x21e8.config import PLNTMNT_ENDPOINT
     import base58
     import datetime
-    
-    cid = store_asset({"test":"test"+ str(datetime.datetime.now())})
+
+    cid = store_asset({"test": "test" + str(datetime.datetime.now())})
     wallet = SoftwareWallet()
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
     pubkey_raw = wallet.get_planetmint_pubkey()
     pubkey = base58.b58encode(pubkey_raw).decode()
     print(pubkey)
     tx = plntmnt.transactions.prepare(
-        operation="CREATE",
-        signers=[pubkey],
-        assets=[{"data": cid}],
-        recipients=[ ([pubkey], 100)]
+        operation="CREATE", signers=[pubkey], assets=[{"data": cid}], recipients=[([pubkey], 100)]
     )
 
     signed_tx = fulfill_with_signing_delegation(tx, wallet.planetmint_sign_digest)
@@ -120,9 +114,7 @@ def test_fungible_token_transfer_planetmint(
         token_nft = plntmnt.transactions.send_commit(signed_tx)
     except Exception as e:
         print(f"EXCEPTION {e}")
-    
-    
-    
+
     t_object = Transfer(
         network_slip_symbol="PLMNT",
         network_slip_id=8680,
@@ -138,10 +130,9 @@ def test_fungible_token_transfer_planetmint(
     status, message = token_transfer(t_object)
     assert status == 200
     assert isinstance(message, dict)
-    assert "assets" in message 
+    assert "assets" in message
     assert "id" in message
     assert "outputs" in message
     assert len(message["outputs"]) == 2
-    assert message["outputs"][0]["amount"]=="30"
-    assert message["outputs"][1]["amount"]=="70"
-
+    assert message["outputs"][0]["amount"] == "30"
+    assert message["outputs"][1]["amount"] == "70"

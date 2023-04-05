@@ -39,7 +39,7 @@ def transfer(transfer_request: Transfer, wallet: BaseWallet):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
 
     transferable_token = plntmnt.transactions.retrieve(transfer_request.token_id)
-    transferable_tx = Transaction.from_dict( transferable_token)
+    transferable_tx = Transaction.from_dict(transferable_token)
     inputs = transferable_tx.to_inputs()
 
     amount = int(transfer_request.amount)
@@ -60,9 +60,7 @@ def transfer(transfer_request: Transfer, wallet: BaseWallet):
         inputs=[inputs[transfer_request.output_id].to_dict()],  # transfer_input,
         recipients=recipients,
     )
-    signed_transfer_tx = fulfill_with_signing_delegation(
-        transfer_tx, wallet.planetmint_sign_digest
-    )
+    signed_transfer_tx = fulfill_with_signing_delegation(transfer_tx, wallet.planetmint_sign_digest)
     ast_ = ast.literal_eval(str(signed_transfer_tx))
     json_obj_str = json.dumps(ast_)
     json_obj = json.loads(json_obj_str)
