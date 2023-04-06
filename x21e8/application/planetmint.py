@@ -1,6 +1,6 @@
 import base58
 from planetmint_driver import Planetmint
-from planetmint_driver.offchain import fulfill_with_signing_delegation
+from planetmint_driver.offchain import fulfill_with_signing_delegation, Transaction
 from x21e8.models.transfer import Transfer
 
 from x21e8.config import PLNTMNT_ENDPOINT
@@ -39,22 +39,26 @@ def transfer(transfer_request: Transfer, wallet: BaseWallet):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
 
     transferable_token = plntmnt.transactions.retrieve(transfer_request.token_id)
-    transferable_token_output = transferable_token["outputs"][transfer_request.output_id]
-    transfer_input = {
-        "fulfillment": transferable_token_output["condition"]["details"],
-        "fulfills": {
-            "output_index": 0,
-            "transaction_id": transferable_token["id"],
-        },
-        "owners_before": transferable_token_output["public_keys"],
-    }
+    transferable_tx = Transaction.from_dict(transferable_token)
+    inputs = transferable_tx.to_inputs()
+
+    amount = int(transfer_request.amount)
+    input_amount = transferable_tx.outputs[transfer_request.output_id].amount
+    if input_amount != amount:
+        recipients = [
+            ([transfer_request.recipient], amount),
+            (transferable_tx.outputs[transfer_request.output_id].public_keys, input_amount - amount),
+        ]
+    else:
+        recipients = [(transfer_request.recipient, amount)]
+
     transfer_tx = plntmnt.transactions.prepare(
         operation="TRANSFER",
         assets=[
-            transferable_token["id"],
+            transferable_tx.id,
         ],
-        inputs=transfer_input,
-        recipients=transfer_request.recipient,
+        inputs=[inputs[transfer_request.output_id].to_dict()],  # transfer_input,
+        recipients=recipients,
     )
     signed_transfer_tx = fulfill_with_signing_delegation(transfer_tx, wallet.planetmint_sign_digest)
     ast_ = ast.literal_eval(str(signed_transfer_tx))
