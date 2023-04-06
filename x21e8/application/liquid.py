@@ -23,9 +23,6 @@ FEE_RATE = 0.00001
 
 
 class LiquidNode:
-    def __init__(self):
-        test = ""
-
     def _get_keys(self, rpc_connection: AuthServiceProxy):
         pubkey = None
         asset_addr = None

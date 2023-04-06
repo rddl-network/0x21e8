@@ -16,7 +16,7 @@ def delete_secret():
 
 
 def test_store_data_valid():
-    response = client.post(
+    client.post(
         "/data",
         headers={"accept": "application/json", "Content-Type": "application/json"},
         json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
@@ -25,7 +25,7 @@ def test_store_data_valid():
 
 def test_store_data_invalid():
     try:
-        response = client.post(
+        client.post(
             "/data",
             headers={"accept": "application/json", "Content-Type": "application/json"},
             json={"NFT_MetaDat"},
@@ -48,9 +48,9 @@ def test_storing_and_retrieving_encrypted_data():
 
 
 def test_get_data_valid():
-    response = client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
+    client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
     try:
-        response = client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
+        client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
         assert False
     except:
         assert True
@@ -129,7 +129,7 @@ def test_machine_attestation():
     assert response1.status_code == 200
     print(f"{response1.json()}")
     try:
-        response2 = client.post(
+        client.post(
             "/machine",
             headers={"accept": "application/json", "Content-Type": "application/json"},
             json={
@@ -149,7 +149,7 @@ def test_machine_attestation():
     assert response3.status_code == 200
 
     try:
-        response4 = client.get("/machine?nft_token=61c557961bdf67e421aeaf26eb9aa406335e259ed7cc8a94c0073dd78b8dsdfac1")
+        client.get("/machine?nft_token=61c557961bdf67e421aeaf26eb9aa406335e259ed7cc8a94c0073dd78b8dsdfac1")
         assert False
     except:
         assert True
