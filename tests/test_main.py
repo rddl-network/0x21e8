@@ -10,9 +10,9 @@ client = TestClient(app)
 
 
 def delete_secret():
-    filePath = "secret.txt"
-    if os.path.exists(filePath):
-        os.remove(filePath)
+    filepath = "secret.txt"
+    if os.path.exists(filepath):
+        os.remove(filepath)
 
 
 def test_store_data_valid():
