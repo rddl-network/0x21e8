@@ -1,5 +1,5 @@
 
-name: Deploy packages
+name: CI
 on: 
   push:
     branches:
