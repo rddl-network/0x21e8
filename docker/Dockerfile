@@ -5,7 +5,10 @@ RUN apt-get update && apt-get install -y curl bash python3-pip autoconf autogen 
 RUN curl https://sh.rustup.rs -sSf | bash -s -- -y
 RUN echo 'source $HOME/.cargo/env' >> $HOME/.bashrc
 
+RUN pip install --upgrade pip
 RUN pip install poetry
+RUN poetry self update
+
 
 COPY x21e8 /x21e8
 COPY poetry.lock pyproject.toml ./
