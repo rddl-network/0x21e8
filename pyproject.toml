@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "x21e8"
-version = "0.5.0"
+version = "0.6.0"
 description = "x"
-authors = ["Firat Berk Cakar <firat@riddleandcode.com>", "JÜrgen Eckel <juergen@riddleandcode.com"]
+authors = ["Firat Berk Cakar <firat@riddleandcode.com>", "Jürgen Eckel <juergen@riddleandcode.com"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
