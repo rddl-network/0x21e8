@@ -18,6 +18,14 @@ RUN poetry config virtualenvs.create false
 RUN poetry install --no-root
 RUN poetry shell
 
+RUN  apt -y install git
+RUN  git clone https://github.com/ElementsProject/libwally-core.git
+RUN  cd libwally-core/ && git checkout release_0.8.6 &&  git submodule init && \
+    git submodule sync --recursive &&  git submodule update --init --recursive && \
+    ./tools/autogen.sh && PYTHON_VERSION=3.9 ./configure --enable-debug --enable-export-all --enable-swig-python && \
+    make && make install
+
+
 EXPOSE 8000:8000
 
 RUN adduser --system --group nonroot
