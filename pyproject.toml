@@ -1,8 +1,8 @@
 [tool.poetry]
 name = "x21e8"
-version = "0.5.0"
+version = "0.6.0"
 description = "x"
-authors = ["Firat Berk Cakar <firat@riddleandcode.com>", "JÜrgen Eckel <juergen@riddleandcode.com"]
+authors = ["Firat Berk Cakar <firat@riddleandcode.com>", "Jürgen Eckel <juergen@riddleandcode.com"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
@@ -21,8 +21,7 @@ python-rapidjson = ">1.0.0"
 python-rapidjson-schema = "0.1.1"
 planetmint-ipld = "^0.0.3"
 uvicorn = "^0.19.0"
-planetmint-driver = "^0.16.0"
-zenroom = "2.3.1"
+planetmint-driver = "0.18.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.2.2"
