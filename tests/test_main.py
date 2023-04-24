@@ -48,7 +48,7 @@ def test_storing_and_retrieving_encrypted_data():
 
 
 def test_get_data_valid():
-    client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
+    client.get("/data?cid=bafkreidbtalllk5s4jo3jkchj6zqt6nhxtrfvvdaxna5g7luttzd4uci2m&link2data=false")
     try:
         client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
         assert False

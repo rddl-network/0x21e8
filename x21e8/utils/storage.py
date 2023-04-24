@@ -1,12 +1,25 @@
+import json
 import urllib3
 import w3storage
 from urllib.request import urlopen
-from ipld import marshal, unmarshal, multihash
+from ipld import multihash
 
 from x21e8.config import WEB3STORAGE_TOKEN, CID_RESOLVER
 from x21e8.utils.encryption import encrypt_bytes, decrypt_2_bytes
 
+ENCODING = "utf-8"
+
 w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
+
+
+def marshal(asset: dict):
+    # one line json without whitespaces as bytes
+    return bytes(json.dumps(asset, separators=(",", ":")), ENCODING)
+
+
+def unmarshal(marshalled_asset: bytes):
+    # unmarshal to dict
+    return json.loads(marshalled_asset.decode(ENCODING))
 
 
 def get_ipfs_link(cid: str):
