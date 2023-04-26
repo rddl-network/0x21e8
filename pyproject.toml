@@ -19,7 +19,7 @@ python-decouple = "^3.6"
 pysha3 = "^1.0.2"
 python-rapidjson = ">1.0.0"
 python-rapidjson-schema = "0.1.1"
-planetmint-ipld = "^0.0.3"
+multiformats = "^0.2.1"
 uvicorn = "^0.19.0"
 planetmint-driver = "0.18.2"
 
