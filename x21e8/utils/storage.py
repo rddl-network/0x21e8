@@ -1,12 +1,25 @@
+import json
 import urllib3
 import w3storage
 from urllib.request import urlopen
-from ipld import marshal, unmarshal, multihash
+from multiformats import CID, multihash
 
 from x21e8.config import WEB3STORAGE_TOKEN, CID_RESOLVER
 from x21e8.utils.encryption import encrypt_bytes, decrypt_2_bytes
 
+ENCODING = "utf-8"
+
 w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
+
+
+def marshal(asset: dict):
+    # one line json without whitespaces as bytes
+    return bytes(json.dumps(asset, separators=(",", ":")), ENCODING)
+
+
+def unmarshal(marshalled_asset: bytes):
+    # unmarshal to dict
+    return json.loads(marshalled_asset.decode(ENCODING))
 
 
 def get_ipfs_link(cid: str):
@@ -50,7 +63,17 @@ def store_asset(asset: dict, encrypt_data: bool = False):
     return asset_cid
 
 
+def get_hashed_marshalled(marshalled_asset: bytes):
+    hashed_marshalled = CID.decode(multihash.digest(marshalled_asset, "sha2-256"))
+    return hashed_marshalled
+
+
+def get_cid_v1(hashed_marshalled: CID):
+    cid = hashed_marshalled.set(base="base32", version=1, codec="raw")
+    return cid
+
+
 def multi_hash(asset: dict, encrypt_data: bool = False):
     marshalled_asset = local_marshal(asset, encrypt_data)
-    hashed_marshalled = multihash(marshalled_asset)
-    return hashed_marshalled
+    hashed_marshalled = get_hashed_marshalled(marshalled_asset)
+    return str(hashed_marshalled)

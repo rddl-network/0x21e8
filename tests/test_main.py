@@ -4,6 +4,7 @@ from datetime import datetime
 
 from fastapi.testclient import TestClient
 from x21e8.main import app
+from x21e8.utils.storage import marshal, get_hashed_marshalled, get_cid_v1
 
 
 client = TestClient(app)
@@ -16,11 +17,18 @@ def delete_secret():
 
 
 def test_store_data_valid():
-    client.post(
+    asset = {"NFT_MetaDat": "mytest", "NFT_emissions": 10}
+    response = client.post(
         "/data",
         headers={"accept": "application/json", "Content-Type": "application/json"},
-        json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
+        json=asset,
     )
+    cid_response = response.json()["cid"]
+    marshalled_asset = marshal(asset)
+    hashed_marshalled = get_hashed_marshalled(marshalled_asset)
+    cid = get_cid_v1(hashed_marshalled)
+    cid_calculated = str(cid)
+    assert cid_response == cid_calculated
 
 
 def test_store_data_invalid():
@@ -48,7 +56,7 @@ def test_storing_and_retrieving_encrypted_data():
 
 
 def test_get_data_valid():
-    client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
+    client.get("/data?cid=bafkreidbtalllk5s4jo3jkchj6zqt6nhxtrfvvdaxna5g7luttzd4uci2m&link2data=false")
     try:
         client.get("/data?cid=bafkreib2es2hnrsee64kufj3z6o5t3wat7z2k3xfobdyrj3v6lrzjq6o5i&link2data=false")
         assert False
