@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "x21e8"
-version = "0.6.0"
+version = "0.6.1"
 description = "x"
 authors = ["Firat Berk Cakar <firat@riddleandcode.com>", "Jürgen Eckel <juergen@riddleandcode.com"]
 readme = "README.md"
@@ -8,7 +8,6 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "^3.9"
 TrezorCryptoTestRc = "*" 
-wallycore = "0.8.6"
 mnemonic = "^0.20"
 fastapi = "^0.85.0"
 bitcoin-utils = "^0.5.6"
