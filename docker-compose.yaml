@@ -14,3 +14,28 @@ services:
       - ./0x21e8:/0x21e8
       - ./x21e8:/x21e8
     command: sh -c "uvicorn x21e8.main:app --host 0.0.0.0 --port 8000 --timeout-keep-alive 240 --reload"
+  'planetmint':
+    image: ghcr.io/planetmint/planetmint-aio:latest-aio
+    ports:
+      - "9984:9984"
+      - "9985:9985"
+      - "26656:26656"
+      - "26657:26657"
+      - "26660:26660"
+    command: 
+      - /bin/bash
+      - -c
+      - |
+        /etc/init.d/tarantool start
+        tendermint node&
+        planetmint start
+    healthcheck:
+      test: ["CMD", "bash", "-c", "curl http://planetmint:9984 && curl http://planetmint:26657/abci_query"]
+      interval: 3s
+      timeout: 5s
+      retries: 5
+  'planetmint-ready':
+    image: busybox
+    depends_on:
+      planetmint:
+        condition: service_healthy
