@@ -191,14 +191,14 @@ files = [
 
 [[package]]
 name = "certifi"
-version = "2022.12.7"
+version = "2023.5.7"
 description = "Python package for providing Mozilla's CA Bundle."
 category = "main"
 optional = false
 python-versions = ">=3.6"
 files = [
-    {file = "certifi-2022.12.7-py3-none-any.whl", hash = "sha256:4ad3232f5e926d6718ec31cfc1fcadfde020920e278684144551c91769c7bc18"},
-    {file = "certifi-2022.12.7.tar.gz", hash = "sha256:35824b4c3a97115964b408844d64aa14db1cc518f6562e8d7261699d1350a9e3"},
+    {file = "certifi-2023.5.7-py3-none-any.whl", hash = "sha256:c6c2e98f5c7869efca1f8916fed228dd91539f9f1b444c314c06eef02980c716"},
+    {file = "certifi-2023.5.7.tar.gz", hash = "sha256:0f0d56dc5a6ad56fd4ba36484d6cc34451e1c6548c61daad8c320169f91eddc7"},
 ]
 
 [[package]]
@@ -542,14 +542,14 @@ files = [
 
 [[package]]
 name = "importlib-metadata"
-version = "6.4.1"
+version = "6.6.0"
 description = "Read metadata from Python packages"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "importlib_metadata-6.4.1-py3-none-any.whl", hash = "sha256:63ace321e24167d12fbb176b6015f4dbe06868c54a2af4f15849586afb9027fd"},
-    {file = "importlib_metadata-6.4.1.tar.gz", hash = "sha256:eb1a7933041f0f85c94cd130258df3fb0dec060ad8c1c9318892ef4192c47ce1"},
+    {file = "importlib_metadata-6.6.0-py3-none-any.whl", hash = "sha256:43dd286a2cd8995d5eaef7fee2066340423b818ed3fd70adf0bad5f1fac53fed"},
+    {file = "importlib_metadata-6.6.0.tar.gz", hash = "sha256:92501cdf9cc66ebd3e612f1b4f0c0765dfa42f0fa38ffb319b6bd84dd675d705"},
 ]
 
 [package.dependencies]
@@ -975,14 +975,14 @@ sha3 = ["pysha3"]
 
 [[package]]
 name = "planetmint-transactions"
-version = "0.8.0"
+version = "0.8.1"
 description = "Python implementation of the planetmint transactions spec"
 category = "main"
 optional = false
 python-versions = ">=3.9,<4.0"
 files = [
-    {file = "planetmint_transactions-0.8.0-py3-none-any.whl", hash = "sha256:83f0aaa35dfc80e80e031cf52fe927ce43aedda691496030a2a70d03a0dba107"},
-    {file = "planetmint_transactions-0.8.0.tar.gz", hash = "sha256:33cf22d5852056164f5d05455d1aa5c893f2d37df99e3bf9f8576f310b9d4b6f"},
+    {file = "planetmint_transactions-0.8.1-py3-none-any.whl", hash = "sha256:25a9d310085b088de1688ca269f2130d455af9c6470cd67f587ba8e6a95bd0f6"},
+    {file = "planetmint_transactions-0.8.1.tar.gz", hash = "sha256:f9c473312731dd0e79445074ce7c23d8a2e7c7a29a82ce15b8efd87a2303f33f"},
 ]
 
 [package.dependencies]
@@ -997,19 +997,19 @@ zenroom = ">=2.20.4,<3.0.0"
 
 [[package]]
 name = "platformdirs"
-version = "3.2.0"
+version = "3.5.0"
 description = "A small Python package for determining appropriate platform-specific dirs, e.g. a \"user data dir\"."
 category = "dev"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "platformdirs-3.2.0-py3-none-any.whl", hash = "sha256:ebe11c0d7a805086e99506aa331612429a72ca7cd52a1f0d277dc4adc20cb10e"},
-    {file = "platformdirs-3.2.0.tar.gz", hash = "sha256:d5b638ca397f25f979350ff789db335903d7ea010ab28903f57b27e1b16c2b08"},
+    {file = "platformdirs-3.5.0-py3-none-any.whl", hash = "sha256:47692bc24c1958e8b0f13dd727307cff1db103fca36399f457da8e05f222fdc4"},
+    {file = "platformdirs-3.5.0.tar.gz", hash = "sha256:7954a68d0ba23558d753f73437c55f89027cf8f5108c19844d4b82e5af396335"},
 ]
 
 [package.extras]
-docs = ["furo (>=2022.12.7)", "proselint (>=0.13)", "sphinx (>=6.1.3)", "sphinx-autodoc-typehints (>=1.22,!=1.23.4)"]
-test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.2.2)", "pytest-cov (>=4)", "pytest-mock (>=3.10)"]
+docs = ["furo (>=2023.3.27)", "proselint (>=0.13)", "sphinx (>=6.1.3)", "sphinx-autodoc-typehints (>=1.23,!=1.23.4)"]
+test = ["appdirs (==1.4.4)", "covdefaults (>=2.3)", "pytest (>=7.3.1)", "pytest-cov (>=4)", "pytest-mock (>=3.10)"]
 
 [[package]]
 name = "pluggy"
@@ -1140,14 +1140,14 @@ email = ["email-validator (>=1.0.3)"]
 
 [[package]]
 name = "pygments"
-version = "2.15.0"
+version = "2.15.1"
 description = "Pygments is a syntax highlighting package written in Python."
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "Pygments-2.15.0-py3-none-any.whl", hash = "sha256:77a3299119af881904cd5ecd1ac6a66214b6e9bed1f2db16993b54adede64094"},
-    {file = "Pygments-2.15.0.tar.gz", hash = "sha256:f7e36cffc4c517fbc252861b9a6e4644ca0e5abadf9a113c72d1358ad09b9500"},
+    {file = "Pygments-2.15.1-py3-none-any.whl", hash = "sha256:db2db3deb4b4179f399a09054b023b6a586b76499d36965813c71aa8ed7b5fd1"},
+    {file = "Pygments-2.15.1.tar.gz", hash = "sha256:8ace4d3c1dd481894b2005f560ead0f9f19ee64fe983366be1a21e171d12775c"},
 ]
 
 [package.extras]
@@ -1443,21 +1443,21 @@ files = [
 
 [[package]]
 name = "requests"
-version = "2.28.2"
+version = "2.30.0"
 description = "Python HTTP for Humans."
 category = "main"
 optional = false
-python-versions = ">=3.7, <4"
+python-versions = ">=3.7"
 files = [
-    {file = "requests-2.28.2-py3-none-any.whl", hash = "sha256:64299f4909223da747622c030b781c0d7811e359c37124b4bd368fb8c6518baa"},
-    {file = "requests-2.28.2.tar.gz", hash = "sha256:98b1b2782e3c6c4904938b84c0eb932721069dfdb9134313beff7c83c2df24bf"},
+    {file = "requests-2.30.0-py3-none-any.whl", hash = "sha256:10e94cc4f3121ee6da529d358cdaeaff2f1c409cd377dbc72b825852f2f7e294"},
+    {file = "requests-2.30.0.tar.gz", hash = "sha256:239d7d4458afcb28a692cdd298d87542235f4ca8d36d03a15bfc128a6559a2f4"},
 ]
 
 [package.dependencies]
 certifi = ">=2017.4.17"
 charset-normalizer = ">=2,<4"
 idna = ">=2.5,<4"
-urllib3 = ">=1.21.1,<1.27"
+urllib3 = ">=1.21.1,<3"
 
 [package.extras]
 socks = ["PySocks (>=1.5.6,!=1.5.7)"]
@@ -1465,14 +1465,14 @@ use-chardet-on-py3 = ["chardet (>=3.0.2,<6)"]
 
 [[package]]
 name = "setuptools"
-version = "67.6.1"
+version = "67.7.2"
 description = "Easily download, build, install, upgrade, and uninstall Python packages"
 category = "main"
 optional = false
 python-versions = ">=3.7"
 files = [
-    {file = "setuptools-67.6.1-py3-none-any.whl", hash = "sha256:e728ca814a823bf7bf60162daf9db95b93d532948c4c0bea762ce62f60189078"},
-    {file = "setuptools-67.6.1.tar.gz", hash = "sha256:257de92a9d50a60b8e22abfcbb771571fde0dbf3ec234463212027a4eeecbe9a"},
+    {file = "setuptools-67.7.2-py3-none-any.whl", hash = "sha256:23aaf86b85ca52ceb801d32703f12d77517b2556af839621c641fca11287952b"},
+    {file = "setuptools-67.7.2.tar.gz", hash = "sha256:f104fa03692a2602fa0fec6c6a9e63b6c8a968de13e17c026957dd1f53d80990"},
 ]
 
 [package.extras]
@@ -1518,21 +1518,21 @@ files = [
 
 [[package]]
 name = "sphinx"
-version = "6.1.3"
+version = "7.0.0"
 description = "Python documentation generator"
 category = "main"
 optional = false
 python-versions = ">=3.8"
 files = [
-    {file = "Sphinx-6.1.3.tar.gz", hash = "sha256:0dac3b698538ffef41716cf97ba26c1c7788dba73ce6f150c1ff5b4720786dd2"},
-    {file = "sphinx-6.1.3-py3-none-any.whl", hash = "sha256:807d1cb3d6be87eb78a381c3e70ebd8d346b9a25f3753e9947e866b2786865fc"},
+    {file = "Sphinx-7.0.0.tar.gz", hash = "sha256:283c44aa28922bb4223777b44ac0d59af50a279ac7690dfe945bb2b9575dc41b"},
+    {file = "sphinx-7.0.0-py3-none-any.whl", hash = "sha256:3cfc1c6756ef1b132687b813ec6ea2214cb7a7e5d1dcb2772006cb895a0fa469"},
 ]
 
 [package.dependencies]
 alabaster = ">=0.7,<0.8"
 babel = ">=2.9"
 colorama = {version = ">=0.4.5", markers = "sys_platform == \"win32\""}
-docutils = ">=0.18,<0.20"
+docutils = ">=0.18.1,<0.20"
 imagesize = ">=1.3"
 importlib-metadata = {version = ">=4.8", markers = "python_version < \"3.10\""}
 Jinja2 = ">=3.0"
@@ -1550,7 +1550,7 @@ sphinxcontrib-serializinghtml = ">=1.1.5"
 [package.extras]
 docs = ["sphinxcontrib-websupport"]
 lint = ["docutils-stubs", "flake8 (>=3.5.0)", "flake8-simplify", "isort", "mypy (>=0.990)", "ruff", "sphinx-lint", "types-requests"]
-test = ["cython", "html5lib", "pytest (>=4.6)"]
+test = ["cython", "filelock", "html5lib", "pytest (>=4.6)"]
 
 [[package]]
 name = "sphinx-press-theme"
@@ -1748,20 +1748,21 @@ dev = ["mypy", "pylint", "pytest", "pytest-cov", "rich"]
 
 [[package]]
 name = "urllib3"
-version = "1.26.15"
+version = "2.0.2"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
 category = "main"
 optional = false
-python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*, !=3.4.*, !=3.5.*"
+python-versions = ">=3.7"
 files = [
-    {file = "urllib3-1.26.15-py2.py3-none-any.whl", hash = "sha256:aa751d169e23c7479ce47a0cb0da579e3ede798f994f5816a74e4f4500dcea42"},
-    {file = "urllib3-1.26.15.tar.gz", hash = "sha256:8a388717b9476f934a21484e8c8e61875ab60644d29b9b39e11e4b9dc1c6b305"},
+    {file = "urllib3-2.0.2-py3-none-any.whl", hash = "sha256:d055c2f9d38dc53c808f6fdc8eab7360b6fdbbde02340ed25cfbcd817c62469e"},
+    {file = "urllib3-2.0.2.tar.gz", hash = "sha256:61717a1095d7e155cdb737ac7bb2f4324a858a1e2e6466f6d03ff630ca68d3cc"},
 ]
 
 [package.extras]
-brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)", "brotlipy (>=0.6.0)"]
-secure = ["certifi", "cryptography (>=1.3.4)", "idna (>=2.0.0)", "ipaddress", "pyOpenSSL (>=0.14)", "urllib3-secure-extra"]
-socks = ["PySocks (>=1.5.6,!=1.5.7,<2.0)"]
+brotli = ["brotli (>=1.0.9)", "brotlicffi (>=0.8.0)"]
+secure = ["certifi", "cryptography (>=1.9)", "idna (>=2.0.0)", "pyopenssl (>=17.1.0)", "urllib3-secure-extra"]
+socks = ["pysocks (>=1.5.6,!=1.5.7,<2.0)"]
+zstd = ["zstandard (>=0.18.0)"]
 
 [[package]]
 name = "uvicorn"
@@ -1809,51 +1810,6 @@ files = [
 requests = "*"
 
 [[package]]
-name = "wallycore"
-version = "0.8.6"
-description = "libwally Bitcoin library"
-category = "main"
-optional = false
-python-versions = "*"
-files = [
-    {file = "wallycore-0.8.6-cp310-cp310-macosx_10_9_universal2.whl", hash = "sha256:e28c7bc9f0e01bf83f3abbcd70b58f1f12fc9360cf1a556df3d32dcd76806e33"},
-    {file = "wallycore-0.8.6-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:ed920576443d5d1357eba4f241bccfab35a1927f46b8010043eeca88ce994114"},
-    {file = "wallycore-0.8.6-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:42c808bb9d7b1325d95b439f19f395007ddba05dcdcfcc9d295c7afe8ee73906"},
-    {file = "wallycore-0.8.6-cp310-cp310-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:2d2605176fccd1bdc6ca6e3885647ad18a2e6138a256741a9bc1b1dbef4091f9"},
-    {file = "wallycore-0.8.6-cp310-cp310-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:96bf04fe2b137362dc78645959853806dca46a70d3a87c3a75ce679c57585bbd"},
-    {file = "wallycore-0.8.6-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:460727b486dd887783e475a60cbc9825eb1ab5a2e75fba890d9518efab70bed1"},
-    {file = "wallycore-0.8.6-cp36-cp36m-macosx_10_9_x86_64.whl", hash = "sha256:caa4966d7c41f91bf84d076a07ffc9253bd3e788b11d0aceef5260bcfebf7d5d"},
-    {file = "wallycore-0.8.6-cp36-cp36m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:de8f0c08a5d4bd68c8aac5e927581ebafeb3cd27bd4678eb55202c19ea779f4b"},
-    {file = "wallycore-0.8.6-cp36-cp36m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:7e37ee8e94fcecb4909efafed8b861a655b02553416c7de5e9dfe938ea6263ef"},
-    {file = "wallycore-0.8.6-cp36-cp36m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:e9e5f3552af44a75e7375dd1d590a56cdd3a0a885df8b17b0e41bb60ea6f2230"},
-    {file = "wallycore-0.8.6-cp36-cp36m-win32.whl", hash = "sha256:4057c8677f990f3fcbb9fe080222b3fce37c2f4eaa7b0e4219fb3bcc04b463e8"},
-    {file = "wallycore-0.8.6-cp36-cp36m-win_amd64.whl", hash = "sha256:737a5df04bb275986653725a9d3c7db915c4c03012a03e36f7417d261e371e69"},
-    {file = "wallycore-0.8.6-cp37-cp37m-macosx_10_9_x86_64.whl", hash = "sha256:b8d8f7ceea57feea6086c9f86b552b81a0a0dc34f4dd342d61ce6390ffbdb514"},
-    {file = "wallycore-0.8.6-cp37-cp37m-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:261913c4449be3c9f1fa16f8250d2d9d957651b9e2bf5e19930197691064c75a"},
-    {file = "wallycore-0.8.6-cp37-cp37m-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:7f6f43e8fb21ad44e9508b791203c9f26782849a4fb51f8ddeb99be7b0830d19"},
-    {file = "wallycore-0.8.6-cp37-cp37m-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:561946deb506b041134e17cbbd0b147eb0a993b42ad384844314e943fff132ac"},
-    {file = "wallycore-0.8.6-cp37-cp37m-win32.whl", hash = "sha256:4e32870bad82e6dade7edf5df323040fdfdda02d13c2ff3e6d99774d19ec886d"},
-    {file = "wallycore-0.8.6-cp37-cp37m-win_amd64.whl", hash = "sha256:62f4485bd31fb713746087ea4bb8f2c45e39369b5e3ab7c7647dcac8fbf7c03c"},
-    {file = "wallycore-0.8.6-cp38-cp38-macosx_10_9_universal2.whl", hash = "sha256:f63b1ca9ad62e030b997f5f66c6fd447c67de4d2ccba4736be34c699d07c532e"},
-    {file = "wallycore-0.8.6-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:c98410a94a579551ed6f07e285fe3bbf30bccb69081123660f1887888a0d3c22"},
-    {file = "wallycore-0.8.6-cp38-cp38-macosx_11_0_arm64.whl", hash = "sha256:249ec9ec79de831c03244b101fc2a4a700bc175af78485dea947d78ad1260ef7"},
-    {file = "wallycore-0.8.6-cp38-cp38-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:034852ac22803659c5808bc4fb67ed401ba4499be1d71666e492450c67e24421"},
-    {file = "wallycore-0.8.6-cp38-cp38-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:cf7a5bfc6c579611a69f06fe5838728406d399f0aa9c961aa6b1b9b2e03ddf58"},
-    {file = "wallycore-0.8.6-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:b33f683ae7fdc1a3479c2af4f6632052ced22d28a5778666ba56f1cfe0378473"},
-    {file = "wallycore-0.8.6-cp38-cp38-win_amd64.whl", hash = "sha256:ab5f17698769f5d182dc769230706c59d1e27f2e89cc6f07a47973f3787286a1"},
-    {file = "wallycore-0.8.6-cp39-cp39-macosx_10_9_universal2.whl", hash = "sha256:ca32a12744c56244e4db7928be6ac82769b79894c3524f9fce3fa6fb866fe279"},
-    {file = "wallycore-0.8.6-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:6dd9f9de687af6c4f5e840c88cde08f49dc06f20aceaba217eb25dc78f3cab36"},
-    {file = "wallycore-0.8.6-cp39-cp39-macosx_11_0_arm64.whl", hash = "sha256:e314f2a14efa2b63bdd6dfae9f8850f4fe89ea5c26d40cab6acc41aa8d8fe15c"},
-    {file = "wallycore-0.8.6-cp39-cp39-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:1876ff23f1e8899b2c26723228fd4fc29362a9cbd5b2dd0ea4f12693c5c8da20"},
-    {file = "wallycore-0.8.6-cp39-cp39-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:503a286af2e0ab775d571d904f3417caddfb623777b2234aa682ec06bb4cddf7"},
-    {file = "wallycore-0.8.6-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.whl", hash = "sha256:646c4cabba4d4205801aa99a3f274ec747852913c532149295a55c9a5bcba44a"},
-    {file = "wallycore-0.8.6-cp39-cp39-win_amd64.whl", hash = "sha256:17079ad69b27b0c682b0ffe8430c42a993f99c8ecd7faada1692a64134f388f6"},
-    {file = "wallycore-0.8.6-pp37-pypy37_pp73-macosx_10_9_x86_64.whl", hash = "sha256:60b9cb46bcf56c33b4591fe3a8c657e6041d542baafea54ee186c9e3b0629100"},
-    {file = "wallycore-0.8.6-pp37-pypy37_pp73-manylinux_2_12_i686.manylinux2010_i686.whl", hash = "sha256:b72b8103a6ee4910a2003bef8b128e442278090efe61725182a2143b0c597604"},
-    {file = "wallycore-0.8.6-pp37-pypy37_pp73-manylinux_2_12_x86_64.manylinux2010_x86_64.whl", hash = "sha256:5968eda43f37dd92edb61d56ecca23bb846da1c6660ca039e1a6ea7f11527a88"},
-]
-
-[[package]]
 name = "wheel"
 version = "0.38.4"
 description = "A built-package format for Python"
@@ -1870,33 +1826,33 @@ test = ["pytest (>=3.0.0)"]
 
 [[package]]
 name = "zenroom"
-version = "2.21.0"
+version = "2.21.1"
 description = "Zenroom for Python: Bindings of Zenroom library for Python."
 category = "main"
 optional = false
 python-versions = ">=3.8, <4"
 files = [
-    {file = "zenroom-2.21.0-cp310-cp310-linux_armv7l.whl", hash = "sha256:13fbbace76f7c336c7c2eb53541b05f39fb55e416d3d9f3861fd090b27755386"},
-    {file = "zenroom-2.21.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:f76d1ece0504507cab83095e8e9b15f04e2b3a1230d31415c13978e345ece3ea"},
-    {file = "zenroom-2.21.0-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:5c1a8357c273b699e8018ee345ff7455050292a68643b924697622a70d16c865"},
-    {file = "zenroom-2.21.0-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:9aa2d6e7878a433da2f229cc2ea4ee735da1ac2d7aa308f0f8629664de7750e8"},
-    {file = "zenroom-2.21.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:4b624b8ece3dbe231ad6321d288969af4fc0982346e852d5bbe7ce780af9cdab"},
-    {file = "zenroom-2.21.0-cp311-cp311-linux_armv7l.whl", hash = "sha256:b90994c98c87badb7a5c774c739d81abbea98a2d9468dff1a0a7c94947fa13f2"},
-    {file = "zenroom-2.21.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:23ed0d85b900f740ea68631509e79c516122bd859f886295591daf4d457d7106"},
-    {file = "zenroom-2.21.0-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:6b5512de3a9d355bea0c26846400b396cfd38636ec7fd11a0bdcda2674e6c3b3"},
-    {file = "zenroom-2.21.0-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:dea0eb71d0e524d47e7c1904f164fb03118bddcfc11fa13941c251b2264e17e1"},
-    {file = "zenroom-2.21.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:402a799532f55285724fcdca6b1bf53b63b0bbc22401bca81db55d35061055ec"},
-    {file = "zenroom-2.21.0-cp38-cp38-linux_armv7l.whl", hash = "sha256:afbbc0b37ea4d44e33e85fcc14acea7b437a1fa9f13bd8b51e1898d44c1d8619"},
-    {file = "zenroom-2.21.0-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:0ac64b57d97a754e6c6d9067ff7433fb3adc833a15c19509e73cb4a6f444d45e"},
-    {file = "zenroom-2.21.0-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:fa34d31f4f50e0e466635af6c99bd6b2e1cd53ba9752c8e6bb1a9bdff5c1fd3e"},
-    {file = "zenroom-2.21.0-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:ffe2e2eaabe5841c9a58f697aa167a6b5e55beb0ba49f71b2a064623b088bd4f"},
-    {file = "zenroom-2.21.0-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:cb0dbd3406ec1c843febecb394d9869b055285b7eb72b3e5d8f21071f724bf25"},
-    {file = "zenroom-2.21.0-cp39-cp39-linux_armv7l.whl", hash = "sha256:278e8f1e97898f4468277e84017551bec685d8fc04a2b0816f14dda85728680b"},
-    {file = "zenroom-2.21.0-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:87eede47ed02331c0d48b2e52c3b4978c2367435c449e22461967df4c3dd2dec"},
-    {file = "zenroom-2.21.0-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:0ca78e993a7c1dc53505bbf17f28344d932783a8e998e9bd75acb2bf6ea5d83b"},
-    {file = "zenroom-2.21.0-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:3aae984ed13e13cc099eaa14636c742983499e4e9ff8dddac6736bf00e15c03e"},
-    {file = "zenroom-2.21.0-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:77a2908b2abc7c22bb387933dedde0e212536e635fa6b1b76ee82a818bd36c58"},
-    {file = "zenroom-2.21.0.tar.gz", hash = "sha256:c79dda45ed521e13d75bdf0ddd5eec497dfbffde66f69278da02b296f30ad17e"},
+    {file = "zenroom-2.21.1-cp310-cp310-linux_armv7l.whl", hash = "sha256:94eae9452c7983772f41bbbf43c6c874abdefdff085e46d6e924b308c34f0dfb"},
+    {file = "zenroom-2.21.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:bb029780b91210b50e45540c6584f81ea38e43342ca17e9c91b38f0de4482f2b"},
+    {file = "zenroom-2.21.1-cp310-cp310-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:404951b959a46b601ce09aab6c35abd59235c92ca0be1189f03562d275c29489"},
+    {file = "zenroom-2.21.1-cp310-cp310-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:11710787cedad368223f4c8408c10c8c50b117cbcfaf8ea24d02c55933fbc4c2"},
+    {file = "zenroom-2.21.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:0647e527cf554c2f0e0bc2ea6aa1f61233168ab6b82cb82d83f5644d9f7a074a"},
+    {file = "zenroom-2.21.1-cp311-cp311-linux_armv7l.whl", hash = "sha256:006184da3df4152ac3cc6d983440053e5096db5602464338c52d75319e9221b0"},
+    {file = "zenroom-2.21.1-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:5ca2395c062606704ba4151a8778ea0eb6dfe34a8b1ceebcd599e071726ae185"},
+    {file = "zenroom-2.21.1-cp311-cp311-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:bd0e53ac82fd80dbb68c7ef315ae47192111a6cad9ab43c12eabcdafd1b090d9"},
+    {file = "zenroom-2.21.1-cp311-cp311-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:01f032cef4e45ac99de8995d62b19ed9bd3fb6221634e6ae6d8754f5df37c0c0"},
+    {file = "zenroom-2.21.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:f185989918fdb44154fe27808f1b9731efd2888066b5c843594eacdc3d7340e5"},
+    {file = "zenroom-2.21.1-cp38-cp38-linux_armv7l.whl", hash = "sha256:936dd340d5187a7b2733c3b5dcb4b9131a780da598e69128d4c270d1096ab8de"},
+    {file = "zenroom-2.21.1-cp38-cp38-macosx_10_9_x86_64.whl", hash = "sha256:32a36f163bc5777e4343681ff843f7785915b8c110337ef8afbaaa4805704bd4"},
+    {file = "zenroom-2.21.1-cp38-cp38-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:bfeab3c4af7d3fc09027d53d2b1b2ef85ea697f7b9c9fdf98abb4787d52f6fce"},
+    {file = "zenroom-2.21.1-cp38-cp38-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:b64f21a85639da9fdc4dcd9c5787ad56880b19ab2a4cf21846b018a8ee0f1855"},
+    {file = "zenroom-2.21.1-cp38-cp38-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:1ef900ddb08001fe9fe00a5764c477ed34d7a1d0a8f976145fa4a6614a77d10a"},
+    {file = "zenroom-2.21.1-cp39-cp39-linux_armv7l.whl", hash = "sha256:e63377b701875d20d89c70087383258da8b4f4713fe700e63d446dc15f800b76"},
+    {file = "zenroom-2.21.1-cp39-cp39-macosx_10_9_x86_64.whl", hash = "sha256:a3e82e291ffc81e568253cb2e75ce3157a742ce60b97697cbc5f9e42215094fa"},
+    {file = "zenroom-2.21.1-cp39-cp39-manylinux_2_17_aarch64.manylinux2014_aarch64.manylinux_2_24_aarch64.whl", hash = "sha256:5030c0f0086b65544dd7a2b7475a2e23d277fd18bf53af8e02a79902d0bdda8b"},
+    {file = "zenroom-2.21.1-cp39-cp39-manylinux_2_17_i686.manylinux2014_i686.manylinux_2_24_i686.whl", hash = "sha256:94e8990ed7e0e9a18034309f9225a5aca4379732d3a7a0207350ef55c6503a3b"},
+    {file = "zenroom-2.21.1-cp39-cp39-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_24_x86_64.whl", hash = "sha256:b2243d356ebc639c379dc61c98f71243f49291b5001b9e42688ce6872f3999e0"},
+    {file = "zenroom-2.21.1.tar.gz", hash = "sha256:4cba4860b0f9f80db0be1334ca32d2f29e72c7c5eba10bced4270ab55db4078c"},
 ]
 
 [package.extras]
@@ -1921,4 +1877,4 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.9"
-content-hash = "1db6193e661f09ba03ff849e2732c13d15296401ba281a66318d6e3ef407b7d8"
+content-hash = "950433f6eb07bfe4ffcfd1255c1e946728da348fe3b72c3b9c53261e96203f3a"
