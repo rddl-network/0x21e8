@@ -27,7 +27,7 @@ services:
       - -c
       - |
         /etc/init.d/tarantool start
-        tendermint node&
+        tendermint node --consensus.create_empty_blocks = false --rpc.laddr=tcp://0.0.0.0:26657&
         planetmint start
     healthcheck:
       test: ["CMD", "bash", "-c", "curl http://planetmint:9984 && curl http://planetmint:26657/abci_query"]
