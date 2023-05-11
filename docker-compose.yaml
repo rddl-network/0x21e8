@@ -15,7 +15,7 @@ services:
       - ./x21e8:/x21e8
     command: sh -c "uvicorn x21e8.main:app --host 0.0.0.0 --port 8000 --timeout-keep-alive 240 --reload"
   'planetmint':
-    image: ghcr.io/planetmint/planetmint-aio:latest-aio
+    image: ghcr.io/planetmint/planetmint-aio:latest
     ports:
       - "9984:9984"
       - "9985:9985"
