@@ -74,7 +74,7 @@ jobs:
           cd ..
 
       - name: Run tests
-        run: docker-compose up -d planetmint-ready && poetry run pytest -vvv tests
+        run: cp .env.local .env && docker-compose up -d planetmint-ready && poetry run pytest -vvv tests
 
 
   release:
