@@ -20,7 +20,7 @@ env:
   LQD_RPC_USER: user
   LQD_RPC_PASSWORD: password
   LQD_RPC_HOST: localhost
-  PLNTMNT_ENDPOINT: http://node4-rddl-testnet.twilightparadox.com:9984
+  PLNTMNT_ENDPOINT: http://localhost:9984
   WEB3STORAGE_TOKEN: ${{ secrets.WEB3STORAGE_TOKEN }}
 
 
@@ -74,7 +74,7 @@ jobs:
           cd ..
 
       - name: Run tests
-        run: poetry run pytest -vvv tests
+        run: touch .env && docker-compose up -d planetmint-ready && poetry run pytest -vvv tests
 
 
   release:
