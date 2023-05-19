@@ -4,7 +4,7 @@ from datetime import datetime
 
 from fastapi.testclient import TestClient
 from x21e8.main import app
-from x21e8.utils.storage import marshal, get_hashed_marshalled, get_cid_v1
+from x21e8.utils.storage import calculate_cid_v1
 
 
 client = TestClient(app)
@@ -17,18 +17,13 @@ def delete_secret():
 
 
 def test_store_data_valid():
-    asset = {"NFT_MetaDat": "mytest", "NFT_emissions": 10}
+    asset = str({"NFT_MetaDat": "mytest", "NFT_emissions": 10, "Consumption": 0.530})
     response = client.post(
-        "/data",
+        f"/data?data={asset}",
         headers={"accept": "application/json", "Content-Type": "application/json"},
-        json=asset,
     )
     cid_response = response.json()["cid"]
-    marshalled_asset = marshal(asset)
-    hashed_marshalled = get_hashed_marshalled(marshalled_asset)
-    cid = get_cid_v1(hashed_marshalled)
-    cid_calculated = str(cid)
-    assert cid_response == cid_calculated
+    assert cid_response == calculate_cid_v1(asset)
 
 
 def test_store_data_invalid():
@@ -46,10 +41,10 @@ def test_store_data_invalid():
 
 
 def test_storing_and_retrieving_encrypted_data():
+    asset = str({"NFT_MetaDat": "mytest", "NFT_emissions": 10})
     response = client.post(
-        "/data?encrypt=True",
+        f"/data?data={asset}&encrypt=True",
         headers={"accept": "application/json", "Content-Type": "application/json"},
-        json={"NFT_MetaDat": "mytest", "NFT_emissions": 10},
     )
     cid = response.json()
     response = client.get("/data?cid=" + cid["cid"] + "&link2data=false&decrypt=true")

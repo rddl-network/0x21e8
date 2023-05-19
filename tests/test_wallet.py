@@ -98,7 +98,7 @@ def test_fungible_token_transfer_planetmint():
     import base58
     import datetime
 
-    cid = store_asset({"test": "test" + str(datetime.datetime.now())})
+    cid = store_asset( str({"test": "test" + str(datetime.datetime.now())}))
     wallet = SoftwareWallet()
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
     pubkey_raw = wallet.get_planetmint_pubkey()

@@ -10,9 +10,9 @@ router = APIRouter(
 
 
 @router.post("", tags=["Data"])
-async def set_data(in_data_dict: dict, encrypt: bool = False):
+async def set_data(data: str, encrypt: bool = False):
     try:
-        cid = store_asset(in_data_dict, encrypt_data=encrypt)
+        cid = store_asset(data, encrypt_data=encrypt)
         return {"cid": cid}
     except FileNotFoundError:
         raise HTTPException(
@@ -34,4 +34,4 @@ async def get_data(cid: str, link2data: bool = False, decrypt: bool = False):
                 detail=f"The requested URL could not be resolved: {e.code} : {e.reason}.",
             )
 
-    return {"cid": data}
+    return {"cid-data": data}
