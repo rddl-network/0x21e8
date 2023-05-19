@@ -12,16 +12,6 @@ ENCODING = "utf-8"
 w3s = w3storage.API(token=WEB3STORAGE_TOKEN)
 
 
-def marshal(asset: dict):
-    # one line json without whitespaces as bytes
-    return bytes(json.dumps(asset, separators=(",", ":")), ENCODING)
-
-
-def unmarshal(marshalled_asset: bytes):
-    # unmarshal to dict
-    return json.loads(marshalled_asset.decode(ENCODING))
-
-
 def get_ipfs_link(cid: str):
     return "https://" + cid + ".ipfs.w3s.link"
 
@@ -34,37 +24,41 @@ def register_cid_url(cid: str, url: str):
     return cid_resp
 
 
+def decryption_layer(data, decrypt_data: bool = False):
+    if decrypt_data:
+        print(f"encrypted : {data}")
+        decrypted_blob = decrypt_2_bytes(data)
+        print(f"decrypted : {decrypted_blob.decode()}")
+        data = decrypted_blob
+    else:
+        print(f"data : '{data.decode()}'")
+
+    return data.decode()
+
+
 def get_ipfs_file(cid: str, decrypt_data: bool = False):
     nft_url = get_ipfs_link(cid)
-    marshalled_nft_data = urlopen(nft_url).read()
-    print(f"marshalled/encrypted : {marshalled_nft_data}")
-    if decrypt_data:
-        decrypted_blob = decrypt_2_bytes(marshalled_nft_data)
-        print(f"decrypted : {decrypted_blob}")
-        nft_data = unmarshal(decrypted_blob)
-    else:
-        nft_data = unmarshal(marshalled_nft_data)
-
-    return nft_data
+    nft_data = urlopen(nft_url).read()
+    return decryption_layer(nft_data, decrypt_data)
 
 
-def local_marshal(asset: dict, encrypt_data: bool = False):
-    marshalled_asset = marshal(asset)
+def encryption_layer(asset: str, encrypt_data: bool = False):
     if not encrypt_data:
-        return marshalled_asset
+        return asset
     else:
-        return encrypt_bytes(marshalled_asset)
+        return encrypt_bytes(bytes(asset, "utf-8"))
 
 
-def store_asset(asset: dict, encrypt_data: bool = False):
-    marshalled_asset = local_marshal(asset, encrypt_data)
+def store_asset(asset: str, encrypt_data: bool = False):
+    marshalled_asset = encryption_layer(asset, encrypt_data)
     asset_cid = w3s.post_upload(marshalled_asset)
     register_cid_url(asset_cid, get_ipfs_link(asset_cid))
     return asset_cid
 
 
-def get_hashed_marshalled(marshalled_asset: bytes):
-    hashed_marshalled = CID.decode(multihash.digest(marshalled_asset, "sha2-256"))
+def get_hashed_marshalled(asset: str):
+    asset_bytes = bytes(asset, "utf-8")
+    hashed_marshalled = CID.decode(multihash.digest(asset_bytes, "sha2-256"))
     return hashed_marshalled
 
 
@@ -74,6 +68,12 @@ def get_cid_v1(hashed_marshalled: CID):
 
 
 def multi_hash(asset: dict, encrypt_data: bool = False):
-    marshalled_asset = local_marshal(asset, encrypt_data)
+    marshalled_asset = encryption_layer(asset, encrypt_data)
     hashed_marshalled = get_hashed_marshalled(marshalled_asset)
     return str(hashed_marshalled)
+
+
+def calculate_cid_v1(asset: str):
+    hashed_asset = get_hashed_marshalled(asset)
+    cid = get_cid_v1(hashed_asset)
+    return str(cid)
