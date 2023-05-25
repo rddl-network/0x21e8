@@ -22,7 +22,8 @@ env:
   LQD_RPC_HOST: localhost
   PLNTMNT_ENDPOINT: http://localhost:9984
   WEB3STORAGE_TOKEN: ${{ secrets.WEB3STORAGE_TOKEN }}
-
+  RDDL_ASSET_REG_ENDPOINT: http://lab.r3c.network:8090/register_asset
+  CID_RESOLVER: https://cid-resolver.rddl.io
 
 jobs:
   lint:

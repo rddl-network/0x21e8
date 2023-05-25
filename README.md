@@ -43,6 +43,8 @@ The service needs the following configurations:
     * RPC user
     * RPC password
 * web3storage token to store data
+* RDDL asset registration endpoint
+* RDDL CID resolver
 
 The configuration is set via environment variables such as
 * LQD_RPC_PORT
@@ -51,6 +53,8 @@ The configuration is set via environment variables such as
 * LQD_RPC_HOST
 * PLNTMNT_ENDPOINT
 * WEB3STORAGE_TOKEN
+* RDDL_ASSET_REG_ENDPOINT
+* CID_RESOLVER
 
 Alternatively, the variables can be defined within the ```.env``` file of the project. A example ```env.example``` file can be adjusted and copied to ```.env```.
 
