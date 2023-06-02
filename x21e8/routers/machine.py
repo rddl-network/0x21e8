@@ -44,7 +44,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
         cid=issuing_request_input.cid,
     )
     try:
-        nft_cid = store_asset(nft_asset.__dict__)
+        nft_cid = store_asset(str(nft_asset.__dict__))
     except FileNotFoundError:
         raise HTTPException(
             status_code=421,
@@ -53,10 +53,10 @@ async def set_machine(issuing_request_input: IssuingRequest):
     try:
         token_nft = create_cid_based_asset(nft_cid, wallet)
     except PlanetmintException as e:
-        print(f"The Planetmint server configured does not support the given transaction schema. {e}")
+        print(f"The Planetmint server configured does not support the given transaction. {e}")
         raise HTTPException(
             status_code=423,
-            detail="The Planetmint server configured does not support the given transaction schema. {e}",
+            detail=f"The Planetmint server configured does not support the given transaction. {e}",
         )
 
     if check_if_tokens_should_be_issued(issuing_request_input):
@@ -67,7 +67,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
             print(f"RDDL asset registration: {response}")
         except Exception as e:
             print(f"Exception: RDDL asset registration - {e}")
-            raise HTTPException(status_code=425, detail="Exception: RDDL asset registration - {e}")
+            raise HTTPException(status_code=425, detail=f"Exception: RDDL asset registration - {e}")
 
     return {
         "w3storage.cid": nft_cid,
