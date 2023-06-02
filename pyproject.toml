@@ -1,7 +1,7 @@
 [tool.poetry]
 name = "x21e8"
-version = "0.7.0"
-description = "x"
+version = "0.7.1"
+description = "x21e8 service to manage RDDL network identities on TrustAnchors and workflows."
 authors = ["Firat Berk Cakar <firat@riddleandcode.com>", "Jürgen Eckel <juergen@riddleandcode.com"]
 readme = "README.md"
 
