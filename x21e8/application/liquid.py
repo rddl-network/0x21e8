@@ -69,7 +69,7 @@ class LiquidNode:
         print(raw_tx)
 
         # get funded raw transaction
-        # this call troughs an exception if there are not enough funds        
+        # this call troughs an exception if there are not enough funds
         frt = rpc_connection.fundrawtransaction(raw_tx, {"feeRate": FEE_RATE})
         print(frt)
         hex_frt = frt["hex"]

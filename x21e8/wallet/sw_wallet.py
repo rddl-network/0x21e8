@@ -20,8 +20,8 @@ class SoftwareWallet(BaseWallet):
         self._init_wallet()
 
     def planetmint_sign_digest(self, input, message: bytes):
-        cc_key = Ed25519SigningKey( self.private_key, "bytes")
-        signature = cc_key.sign( message, encoding="bytes")
+        cc_key = Ed25519SigningKey(self.private_key, "bytes")
+        signature = cc_key.sign(message, encoding="bytes")
         return signature  # signature matches signature from other schemes
 
     def liquid_sign_digest(self, message: bytes):
@@ -49,8 +49,9 @@ class SoftwareWallet(BaseWallet):
 
     def get_planetmint_pubkey(self) -> bytes:
         return self.public_key
+
     def get_planetmint_address(self) -> str:
-        cc_key = Ed25519SigningKey( self.private_key, "bytes")
+        cc_key = Ed25519SigningKey(self.private_key, "bytes")
         encoded_vk = cc_key.get_verifying_key().encode().decode()
         return encoded_vk
 

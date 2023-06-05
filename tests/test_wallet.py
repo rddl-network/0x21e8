@@ -7,6 +7,7 @@ from x21e8.models.transfer import Transfer
 from x21e8.utils.storage import store_asset
 from planetmint_cryptoconditions.crypto import Ed25519SigningKey, Ed25519VerifyingKey
 
+
 def test_libwally_key_creation():
     sw = SoftwareWallet()
     priv_wif_key = sw.derive_liquid_private_wif(0)
@@ -142,7 +143,7 @@ def test_get_address():
     wallet = SoftwareWallet()
     liquid_address = wallet.get_liquid_address()
     planemint_address = wallet.get_planetmint_address()
-    
-    result = { "liquid address": liquid_address, "planetmint address": planemint_address}
+
+    result = {"liquid address": liquid_address, "planetmint address": planemint_address}
     assert len(liquid_address) == 34
     assert len(planemint_address) == 44

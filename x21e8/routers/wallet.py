@@ -12,16 +12,16 @@ router = APIRouter(
     responses={404: {"detail": "Not found"}},
 )
 
+
 @router.get("", tags=["Wallet addresses"])
 async def get_addresses():
     try:
         wallet = SoftwareWallet()
         liquid_address = wallet.get_liquid_address()
         planemint_address = wallet.get_planetmint_address()
-        return { "liquid address": liquid_address, "planetmint address": planemint_address}
+        return {"liquid address": liquid_address, "planetmint address": planemint_address}
     except Exception as e:
         raise HTTPException(status_code=427, detail=e)
-
 
 
 @router.post("", tags=["Wallet"])

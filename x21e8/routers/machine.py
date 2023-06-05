@@ -65,7 +65,7 @@ async def set_machine(issuing_request_input: IssuingRequest):
             asset, asset_id, contract = LiquidNode().issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
             print(f"Liquid issued token: {asset_id}  - {contract}")
         except JSONRPCException as e:
-            print( f"Exception Token issuance : {e}")
+            print(f"Exception Token issuance : {e}")
             raise HTTPException(status_code=425, detail=f"Exception: RDDL token issuance - {e}")
 
         try:
