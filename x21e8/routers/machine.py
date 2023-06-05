@@ -1,8 +1,9 @@
 from urllib.error import URLError
 
 from fastapi import APIRouter, HTTPException
-from planetmint_driver.exceptions import PlanetmintException
+from bitcoinrpc.authproxy import JSONRPCException
 
+from planetmint_driver.exceptions import PlanetmintException
 
 from x21e8.application.liquid import LiquidNode
 from x21e8.config import RDDL_ASSET_REG_ENDPOINT
@@ -60,8 +61,13 @@ async def set_machine(issuing_request_input: IssuingRequest):
         )
 
     if check_if_tokens_should_be_issued(issuing_request_input):
-        asset, asset_id, contract = LiquidNode().issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
-        print(f"Liquid issued token: {asset_id}  - {contract}")
+        try:
+            asset, asset_id, contract = LiquidNode().issue_tokens(issuing_request_input, token_nft["id"], nft_cid)
+            print(f"Liquid issued token: {asset_id}  - {contract}")
+        except JSONRPCException as e:
+            print(f"Exception Token issuance : {e}")
+            raise HTTPException(status_code=425, detail=f"Exception: RDDL token issuance - {e}")
+
         try:
             response = LiquidNode.register_asset(asset, contract, RDDL_ASSET_REG_ENDPOINT)
             print(f"RDDL asset registration: {response}")

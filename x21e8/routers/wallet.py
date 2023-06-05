@@ -3,14 +3,25 @@ from urllib.error import URLError
 from fastapi import APIRouter, HTTPException
 
 from x21e8.models.transfer import Transfer
-from x21e8.utils.cointype import supported_cointypes, symbol_to_cointype
 from x21e8.application.token import token_transfer
+from x21e8.wallet.sw_wallet import SoftwareWallet
 
 router = APIRouter(
     prefix="/wallet",
     tags=["Wallet"],
     responses={404: {"detail": "Not found"}},
 )
+
+
+@router.get("", tags=["Wallet addresses"])
+async def get_addresses():
+    try:
+        wallet = SoftwareWallet()
+        liquid_address = wallet.get_liquid_address()
+        planemint_address = wallet.get_planetmint_address()
+        return {"liquid address": liquid_address, "planetmint address": planemint_address}
+    except Exception as e:
+        raise HTTPException(status_code=427, detail=e)
 
 
 @router.post("", tags=["Wallet"])

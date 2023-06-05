@@ -1,6 +1,6 @@
 import TrezorCrypto
 
-from nacl.signing import SigningKey
+from planetmint_cryptoconditions.crypto import Ed25519SigningKey
 from x21e8.network import liquid
 from x21e8.wallet.base_wallet import BaseWallet
 
@@ -14,19 +14,21 @@ class SoftwareWallet(BaseWallet):
         self.seed = None
         self.private_key = None
         self.public_key = None
+        self.planetmint_address = None
         self.liquid_address = None
+        self.liquid_derived_key = None
         self._init_wallet()
 
     def planetmint_sign_digest(self, input, message: bytes):
-        ncal_sk = SigningKey(self.private_key)
-        res = ncal_sk.sign(message)
-        return res.signature  # signature matches signature from other schemes
+        cc_key = Ed25519SigningKey(self.private_key, "bytes")
+        signature = cc_key.sign(message, encoding="bytes")
+        return signature  # signature matches signature from other schemes
 
     def liquid_sign_digest(self, message: bytes):
         pass
 
     def get_liquid_pubkey(self) -> bytes:
-        pass
+        return self.liquid_address
 
     def get_liquid_address(self) -> bytes:
         return self.liquid_address
@@ -47,6 +49,11 @@ class SoftwareWallet(BaseWallet):
 
     def get_planetmint_pubkey(self) -> bytes:
         return self.public_key
+
+    def get_planetmint_address(self) -> str:
+        cc_key = Ed25519SigningKey(self.private_key, "bytes")
+        encoded_vk = cc_key.get_verifying_key().encode().decode()
+        return encoded_vk
 
     def _get_planetmint_keys_tc(self, id: int):
         self._read_seed()
@@ -74,8 +81,9 @@ class SoftwareWallet(BaseWallet):
         liquid.liquid_api.bip32_key_from_parent_path_str_n(
             master, derivation_path, len(derivation_path), 0, liquid.BIP32_FLAG_KEY_PRIVATE, derived_key
         )
+        self.liquid_derived_key = derived_key
         _, derived_key_address = liquid.liquid_api.wally_bip32_key_to_address(
-            master, liquid.WALLY_ADDRESS_TYPE_P2PKH, liquid.WALLY_ADDRESS_VERSION_P2PKH_LIQUID_TESTNET
+            derived_key, liquid.WALLY_ADDRESS_TYPE_P2PKH, liquid.WALLY_ADDRESS_VERSION_P2PKH_LIQUID_TESTNET
         )
         return derived_key_address
 
