@@ -1,5 +1,4 @@
-import pytest
-from x21e8.utils.storage import get_ipfs_link, get_ipfs_file, store_asset
+from x21e8.utils.storage import get_ipfs_file, store_asset, register_cid_url
 
 
 def test_data_storage_float_with_trailing_zero():
@@ -11,3 +10,11 @@ def test_data_storage_float_with_trailing_zero():
     cid = store_asset(mydata, encrypt_data=False)
     nft_data = get_ipfs_file(cid, decrypt_data=False)
     assert nft_data == mydata
+
+
+def test_register_cid():
+    resp = register_cid_url(
+        "bafkreihyvnspnolgisbaz3qqonmcyiuyybvjajzapce5wxfjzgretrazbq",
+        "https://bafkreihyvnspnolgisbaz3qqonmcyiuyybvjajzapce5wxfjzgretrazbq.ipfs.w3s.link",
+    )
+    assert resp.status == 200

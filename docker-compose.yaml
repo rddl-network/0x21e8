@@ -35,8 +35,28 @@ services:
       interval: 3s
       timeout: 5s
       retries: 5
-  'planetmint-ready':
+  'x21e8-readiness':
     image: busybox
     depends_on:
+      cidresolver:
+        condition: service_started
       planetmint:
         condition: service_healthy
+  'redis':
+    image: redis
+    volumes:
+      - ./conf/redis.conf:/usr/local/etc/redis/redis.conf
+    ports:
+      - '6379:6379'
+  
+  'cidresolver':
+    image: ghcr.io/rddl-network/cid-resolver:latest
+    depends_on:
+      - redis
+    ports:
+      - '8080:8000'
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_AUTH=
+      - JWT_SECRET=ZngzLUI1dFM5dXhTNEJTVnI1c2RQb1dsWm03YWtwMXo5UzRhSHBGWGhCZw==
+      - JWT_DOMAIN=m2m.rddl.io

@@ -20,9 +20,12 @@ class SoftwareWallet(BaseWallet):
         self._init_wallet()
 
     def planetmint_sign_digest(self, input, message: bytes):
-        cc_key = Ed25519SigningKey(self.private_key, "bytes")
-        signature = cc_key.sign(message, encoding="bytes")
-        return signature  # signature matches signature from other schemes
+        return self.planetmint_sign_challenge(message, encoding="bytes")
+
+    def planetmint_sign_challenge(self, challenge, encoding="base58"):
+        sk = Ed25519SigningKey(self.private_key, "bytes")
+        signature = sk.sign(challenge, encoding)
+        return signature
 
     def liquid_sign_digest(self, message: bytes):
         pass

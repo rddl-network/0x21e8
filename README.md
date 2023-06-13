@@ -45,6 +45,7 @@ The service needs the following configurations:
 * web3storage token to store data
 * RDDL asset registration endpoint
 * RDDL CID resolver
+* RDDL Authentication service to be able to authenticate with EdDSA to RDDL services
 
 The configuration is set via environment variables such as
 * LQD_RPC_PORT
@@ -55,6 +56,7 @@ The configuration is set via environment variables such as
 * WEB3STORAGE_TOKEN
 * RDDL_ASSET_REG_ENDPOINT
 * CID_RESOLVER
+* RDDL_AUTH
 
 Alternatively, the variables can be defined within the ```.env``` file of the project. A example ```env.example``` file can be adjusted and copied to ```.env```.
 
