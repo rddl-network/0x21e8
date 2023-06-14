@@ -1,9 +1,8 @@
-import json
 import urllib3
 import w3storage
 from urllib.request import urlopen
 from multiformats import CID, multihash
-
+from x21e8.utils.eddsa_auth import get_jwt_token
 from x21e8.config import WEB3STORAGE_TOKEN, CID_RESOLVER
 from x21e8.utils.encryption import encrypt_bytes, decrypt_2_bytes
 
@@ -18,8 +17,12 @@ def get_ipfs_link(cid: str):
 
 def register_cid_url(cid: str, url: str):
     http = urllib3.PoolManager()
+    token = get_jwt_token()
+    print(f"TOKEN {token}")
     cid_resp = http.request(
-        "POST", CID_RESOLVER + "/entry?cid=" + cid + "&url=" + url, headers={"Content-Type": "application/json"}
+        "POST",
+        CID_RESOLVER + "/entry?cid=" + cid + "&url=" + url,
+        headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}"},
     )
     return cid_resp
 

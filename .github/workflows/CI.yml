@@ -25,7 +25,8 @@ env:
   PLNTMNT_ENDPOINT: http://localhost:9984
   WEB3STORAGE_TOKEN: ${{ secrets.WEB3STORAGE_TOKEN }}
   RDDL_ASSET_REG_ENDPOINT: http://lab.r3c.network:8090/register_asset
-  CID_RESOLVER: https://cid-resolver.rddl.io
+  CID_RESOLVER: http://localhost:8080
+  RDDL_AUTH: http://localhost:8080
 
 jobs:
   lint:
@@ -77,7 +78,7 @@ jobs:
           cd ..
 
       - name: Run tests
-        run: touch .env && docker-compose up -d planetmint-ready && poetry run pytest -vvv tests
+        run: touch .env && docker-compose up -d x21e8-readiness && poetry run pytest -vvv tests
 
 
   release:
