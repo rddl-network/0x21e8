@@ -104,7 +104,6 @@ def test_fungible_token_transfer_planetmint():
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
     pubkey_raw = wallet.get_planetmint_pubkey()
     pubkey = base58.b58encode(pubkey_raw).decode()
-    print(pubkey)
     tx = plntmnt.transactions.prepare(
         operation="CREATE", signers=[pubkey], assets=[{"data": cid}], recipients=[([pubkey], 100)]
     )

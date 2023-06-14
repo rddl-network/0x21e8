@@ -13,7 +13,6 @@ import ast
 def create_cid_based_asset(cid: str, wallet: BaseWallet):
     plntmnt = Planetmint(PLNTMNT_ENDPOINT)
     pubkey = wallet.get_planetmint_pubkey()
-    print(pubkey)
     tx = plntmnt.transactions.prepare(
         operation="CREATE",
         signers=[base58.b58encode(pubkey).decode()],

@@ -18,7 +18,6 @@ def get_ipfs_link(cid: str):
 def register_cid_url(cid: str, url: str):
     http = urllib3.PoolManager()
     token = get_jwt_token()
-    print(f"TOKEN {token}")
     cid_resp = http.request(
         "POST",
         CID_RESOLVER + "/entry?cid=" + cid + "&url=" + url,
