@@ -18,11 +18,9 @@ def get_ipfs_link(cid: str):
 def register_cid_url(cid: str, url: str):
     http = urllib3.PoolManager()
     token = get_jwt_token()
-    cid_resp = http.request(
-        "POST",
-        CID_RESOLVER + "/entry?cid=" + cid + "&url=" + url,
-        headers={"Content-Type": "application/json", "Authorization": f"Bearer {token}"},
-    )
+    headers = {"Content-Type": "application/json", "accept": "application/json", "Authorization": f"Bearer {token}"}
+    url = CID_RESOLVER + "/entry/?cid=" + cid + "&url=" + url
+    cid_resp = http.request( "POST", url, headers=headers )
     return cid_resp
 
 
