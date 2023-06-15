@@ -20,7 +20,7 @@ def register_cid_url(cid: str, url: str):
     token = get_jwt_token()
     headers = {"Content-Type": "application/json", "accept": "application/json", "Authorization": f"Bearer {token}"}
     url = CID_RESOLVER + "/entry/?cid=" + cid + "&url=" + url
-    cid_resp = http.request( "POST", url, headers=headers )
+    cid_resp = http.request("POST", url, headers=headers)
     return cid_resp
 
 
