@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "x21e8"
-version = "0.9.1"
+version = "0.9.2"
 description = "x21e8 service to manage RDDL network identities on TrustAnchors and workflows."
 authors = ["Firat Berk Cakar <firat@riddleandcode.com>", "Jürgen Eckel <juergen@riddleandcode.com"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-TrezorCryptoTestRc = "*" 
+TrezorCryptoTestRc = "*"
 mnemonic = "^0.20"
 fastapi = "^0.85.0"
 bitcoin-utils = "^0.5.6"
@@ -15,7 +15,6 @@ w3storage = "^0.0.1"
 requests = ">2.20.0"
 mypy = "^0.982"
 python-decouple = "^3.6"
-pysha3 = "^1.0.2"
 python-rapidjson = ">1.0.0"
 python-rapidjson-schema = "0.1.1"
 multiformats = "^0.2.1"

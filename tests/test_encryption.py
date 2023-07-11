@@ -1,4 +1,4 @@
-import sha3
+import hashlib
 import nacl.secret
 from x21e8.wallet.seed import create_and_save_seed
 from x21e8.utils.encryption import (
@@ -13,7 +13,7 @@ from x21e8.utils.encryption import (
 try:
     secret = open("secret.txt", "r")
     seed = bytes.fromhex(secret.readline())
-    assert nacl.secret.SecretBox.KEY_SIZE == sha3.sha3_256(seed).digest_size
+    assert nacl.secret.SecretBox.KEY_SIZE == hashlib.sha3_256(seed).digest_size
 except FileNotFoundError:
     create_and_save_seed(128)
 

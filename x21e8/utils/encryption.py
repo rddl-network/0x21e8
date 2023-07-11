@@ -1,7 +1,7 @@
 import ast
 import nacl.secret
 import nacl.utils
-from sha3 import sha3_256
+from hashlib import sha3_256
 
 
 def get_secret_box():
