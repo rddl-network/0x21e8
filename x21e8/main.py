@@ -1,4 +1,7 @@
+import os
+
 from fastapi import FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 
 from x21e8.routers import assets, data, machine, seed, utils, config, wallet
 
@@ -22,6 +25,26 @@ tags_metadata = [
 ]
 
 app = FastAPI(openapi_tags=tags_metadata)
+
+origins_list = os.getenv("ORIGINS")
+origins = (
+    origins_list.split(",")
+    if origins_list
+    else [
+        "http://localhost:3000",
+        "https://app-development.r3c.dev:443",
+        "https://app-staging.r3c.dev:443",
+        "https://app.riddleandcode.com:443",
+    ]
+)
+
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 app.include_router(assets.router)
 app.include_router(data.router)
